@@ -20,6 +20,20 @@ Basiert auf der offiziellen Spezifikation der [Bosch Home Comfort Developer API]
 
 ---
 
+## Screenshots
+
+### Geräte-Übersicht
+Automatische Erkennung und Zuordnung aller Anlagenkomponenten (Gateway, Heizkreise, Kessel, Wärmepumpe, Solarkreis, Warmwasser):
+
+![Geräte-Übersicht](images/devices.png)
+
+### Geräte-Details & Sensoren
+Übersichtliche Darstellung aller Live-Betriebswerte, Temperaturen und Statusinformationen:
+
+![Sensoren-Übersicht](images/sensors.png)
+
+---
+
 ## Technische Details
 
 | Eigenschaft | Wert |
