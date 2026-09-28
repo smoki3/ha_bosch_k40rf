@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bosch Connect-Key K 40 RF / Buderus MX400",
+        "description": "Before submitting, press the WLAN and Wireless buttons simultaneously on your gateway for 1 second (LEDs will briefly flash blue).\n\nNote: Hyphens in the password are automatically stripped.",
+        "data": {
+          "host": "Host / IP Address",
+          "login": "Login Name (from device label)",
+          "password": "Password (from device label)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthenticate K 40 RF",
+        "description": "Please press the WLAN and Wireless buttons on the gateway ({host}) for 1 second again, then enter your password.",
+        "data": {
+          "password": "Password"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure / Rescan K 40 RF",
+        "description": "Update the host/IP address or trigger a manual search for newly added devices and metrics on the gateway ({host}).",
+        "data": {
+          "host": "Host / IP Address",
+          "rescan_devices": "Search for new devices & entities",
+          "prune_orphaned": "Manually delete orphaned entities without data"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to gateway. Please check host / IP address and network.",
+      "different_device": "The specified IP address belongs to a different gateway.",
+      "invalid_auth": "Invalid credentials. Please verify login and password from device label.",
+      "proximity_unproven": "Buttons were not pressed or the 5-minute pairing window expired. Press WLAN and Wireless buttons for 1 second.",
+      "token_database_full": "Gateway token database is full (max 10 tokens). Please revoke unused tokens.",
+      "unknown": "Unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This gateway is already configured.",
+      "reauth_successful": "Reauthentication was successful.",
+      "reconfigure_successful": "Reconfiguration and search for new entities completed successfully."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Bosch K 40 RF Options",
+        "description": "Manage settings for the gateway.",
+        "data": {
+          "rescan_devices": "Search for new devices & entities now",
+          "prune_orphaned": "Delete orphaned entities without data"
+        }
+      }
+    }
+  }
+}

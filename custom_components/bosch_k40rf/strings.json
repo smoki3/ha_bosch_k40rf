@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bosch Connect-Key K 40 RF / Buderus MX400",
+        "description": "Bitte vor dem Absenden die WLAN- und Wireless-Taste am Gateway gleichzeitig für 1 Sekunde drücken (die LEDs blinken kurz blau).\n\nHinweis: Bindestriche im Passwort werden automatisch entfernt.",
+        "data": {
+          "host": "Host / IP-Adresse",
+          "login": "Login-Name (vom Typenschild)",
+          "password": "Passwort (vom Typenschild)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Erneute Authentifizierung K 40 RF",
+        "description": "Bitte drücken Sie erneut für 1 Sekunde die WLAN- und Wireless-Taste am Gateway ({host}) und geben Sie das Passwort ein.",
+        "data": {
+          "password": "Passwort"
+        }
+      },
+      "reconfigure": {
+        "title": "K 40 RF neu konfigurieren / scannen",
+        "description": "Hier können Sie die Host / IP-Adresse anpassen oder die automatische Suche nach neu hinzugekommenen Geräten und Messwerten manuell anstoßen ({host}).",
+        "data": {
+          "host": "Host / IP-Adresse",
+          "rescan_devices": "Nach neuen Geräten & Entitäten suchen",
+          "prune_orphaned": "Nicht mehr vorhandene Entitäten ohne Daten manuell löschen"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Gateway fehlgeschlagen. Bitte Host / IP-Adresse und Netzwerk prüfen.",
+      "different_device": "Die angegebene IP-Adresse gehört zu einem anderen Gateway.",
+      "invalid_auth": "Ungültige Anmeldedaten. Bitte Login und Passwort vom Typenschild prüfen.",
+      "proximity_unproven": "Tasten wurden nicht gedrückt oder das 5-Minuten-Zeitfenster ist abgelaufen. Bitte die WLAN- und Wireless-Taste am Gateway erneut für 1 Sekunde drücken.",
+      "token_database_full": "Die Token-Datenbank auf dem Gateway ist voll (max. 10 Tokens). Bitte ungenutzte Tokens widerrufen.",
+      "unknown": "Unerwarteter Fehler aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses Gateway ist bereits eingerichtet.",
+      "reauth_successful": "Die erneute Authentifizierung war erfolgreich.",
+      "reconfigure_successful": "Die Neukonfiguration und Suche nach neuen Entitäten wurde erfolgreich abgeschlossen."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Bosch K 40 RF Optionen",
+        "description": "Verwalten Sie die Einstellungen für das Gateway.",
+        "data": {
+          "rescan_devices": "Jetzt nach neuen Geräten & Entitäten suchen",
+          "prune_orphaned": "Nicht mehr vorhandene Entitäten ohne Daten löschen"
+        }
+      }
+    }
+  }
+}
