@@ -42,8 +42,18 @@ Automatische Erkennung und Zuordnung aller Anlagenkomponenten (Gateway, Heizkrei
 | **Authentifizierungs-Port** | `9442` (HTTPS POST `/auth/token`) |
 | **Daten-Port** | `9443` (HTTPS GET mit Bearer Token) |
 | **Protokoll** | Lokales HTTPS (`verify_ssl=False` aufgrund selbstsignierter Gateway-Zertifikate) |
+| **Mindest-Firmware** | `15.00.01` (Bosch Connect-Key K 40 RF / Buderus MX400) |
 | **Scan-Intervall** | 60 Sekunden (Standard) |
 | **API-Referenz** | [Bosch Home Comfort API Docs](https://github.com/bosch-home-comfort/api-docs) |
+
+---
+
+## Voraussetzungen
+
+- **Unterstützte Gateways:** Bosch Connect-Key K 40 RF oder Buderus MX400 (sowie baugleiche IVT / Vulcano / Worcester K 40 RF).
+- **Mindest-Firmware:** Gateway-Firmware **`15.00.01`** oder neuer (erst ab dieser Version stellt Bosch die lokale REST-Schnittstelle zur Verfügung).
+- **Netzwerk:** Das Gateway und Home Assistant müssen sich im selben lokalen Netzwerk befinden.
+- **Physischer Zugang:** Für das einmalige Pairing müssen die Tasten am Gateway gedrückt werden (Nachweis physischer Nähe).
 
 ---
 
