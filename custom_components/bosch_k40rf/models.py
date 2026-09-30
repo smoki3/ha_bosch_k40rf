@@ -5,6 +5,8 @@ from __future__ import annotations
 import base64
 from dataclasses import dataclass
 from datetime import date
+import json
+from pathlib import Path
 import re
 from typing import Any, Callable
 
@@ -3382,6 +3384,53 @@ def translate_leaf_name(leaf: str) -> str:
     words = leaf.split()
     translated_words = [FALLBACK_TRANSLATIONS.get(w, w) for w in words]
     return " ".join(translated_words)
+
+
+_TRANSLATION_CACHE: dict[str, dict[str, Any]] = {}
+
+
+def get_translated_name(
+    platform: str,
+    translation_key: str | None,
+    lang: str = "de",
+    device_name: str | None = None,
+) -> str | None:
+    """Return translated entity name from translation files with optional device suffix."""
+    if not translation_key:
+        return None
+    lang_code = "en" if lang.startswith("en") else "de"
+    if lang_code not in _TRANSLATION_CACHE:
+        try:
+            translations_path = Path(__file__).parent / "translations" / f"{lang_code}.json"
+            with open(translations_path, "r", encoding="utf-8") as f:
+                _TRANSLATION_CACHE[lang_code] = json.load(f)
+        except Exception:
+            _TRANSLATION_CACHE[lang_code] = {}
+
+    entity_data = (
+        _TRANSLATION_CACHE.get(lang_code, {})
+        .get("entity", {})
+        .get(platform, {})
+        .get(translation_key)
+    )
+    if not isinstance(entity_data, dict):
+        return None
+    name = entity_data.get("name")
+    if not name:
+        return None
+
+    if device_name and lang_code == "en":
+        dev_en = (
+            device_name.replace("Heizkreis", "Heating circuit")
+            .replace("Warmwasser", "DHW")
+            .replace("Solarkreis", "Solar circuit")
+            .replace("Kessel", "Boiler")
+            .replace("Wärmepumpe", "Heat pump")
+        )
+        if device_name not in name and dev_en not in name:
+            name = f"{name} {dev_en}"
+
+    return name
 
 
 def create_dynamic_binary_sensor_description(

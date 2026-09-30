@@ -38,7 +38,7 @@ from .const import (
     DOMAIN,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
-from .models import BoschK40SensorEntityDescription, sanitize_serial_number
+from .models import BoschK40SensorEntityDescription, get_translated_name, sanitize_serial_number
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -105,7 +105,6 @@ async def async_setup_entry(
 class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEntity):
     """Representation of a Bosch K 40 RF sensor entity."""
 
-    _attr_has_entity_name = True
     entity_description: BoschK40SensorEntityDescription
 
     def __init__(
@@ -128,8 +127,47 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
     @property
     def name(self) -> str | None:
         """Return friendly name with smart hybrid naming."""
-        if self.entity_description.translation_key:
-            return None
+        lang = getattr(self.coordinator.hass.config, "language", "de") or "de"
+        if lang.startswith("en") and self.entity_description.translation_key:
+            en_name = get_translated_name(
+                "sensor",
+                self.entity_description.translation_key,
+                lang,
+                self.entity_description.device_name,
+            )
+            if en_name:
+                if self.coordinator.is_hybrid_system:
+                    if self.entity_description.resource_id == "/heatSources/numberOfStarts":
+                        return "Total burner starts"
+                    if self.entity_description.resource_id == "/heatSources/workingTime/totalSystem":
+                        return "Total boiler operating time"
+                    if self.entity_description.resource_id == "/heatSources/actualModulation":
+                        return "Boiler modulation"
+                    if self.entity_description.resource_id == "/heatSources/actualHeatDemand":
+                        return "Boiler heat demand"
+                    if (
+                        self.entity_description.resource_id == "/heatSources/emon/totalConsumption"
+                        and self.entity_description.value_key == "outputProduced"
+                    ):
+                        return "Boiler total heat energy produced"
+                    if (
+                        self.entity_description.resource_id == "/heatSources/emon/chConsumption"
+                        and self.entity_description.value_key == "outputProduced"
+                    ):
+                        return "Boiler heating heat energy produced"
+                    if (
+                        self.entity_description.resource_id == "/heatSources/emon/dhwConsumption"
+                        and self.entity_description.value_key == "outputProduced"
+                    ):
+                        return "Boiler DHW heat energy produced"
+                    if self.entity_description.device_sub_id == "hs1":
+                        return en_name.replace(" HS1", " Boiler").replace(" hs1", " Boiler")
+                    if self.entity_description.device_sub_id == "hs2":
+                        return en_name.replace(" HS2", " Heat pump").replace(" hs2", " Heat pump")
+                elif self.entity_description.device_sub_id == "hs1":
+                    return en_name.replace(" HS1", "").replace(" hs1", "")
+                return en_name
+
         base_name = self.entity_description.name
         if not base_name:
             return None

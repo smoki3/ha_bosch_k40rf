@@ -788,6 +788,93 @@
       },
       "hybman_odumonitor_tr6temp": {
         "name": "Outdoor unit TR6 temperature"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Highest permitted temperature"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Min outdoor temperature heating limit"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Max outdoor temperature summer shut-off"
+      },
+      "hybman_timetillnextcompressorstart": {
+        "name": "Time until next compressor start"
+      },
+      "hybman_timetillnextcompressorstop": {
+        "name": "Time until next compressor stop"
+      },
+      "hybman_optimecompressorheating": {
+        "name": "Compressor runtime heating"
+      },
+      "hybman_optimecompressordhw": {
+        "name": "Compressor runtime DHW"
+      },
+      "hybman_smartgridmode": {
+        "name": "Smart grid mode"
+      },
+      "hybman_emergencymodestatus": {
+        "name": "Emergency mode status"
+      },
+      "src_outdoortemp": {
+        "name": "Outdoor temperature"
+      },
+      "src_intflowtemp": {
+        "name": "Supply temperature"
+      },
+      "src_intdhw_cyltemp": {
+        "name": "DHW cylinder temperature"
+      },
+      "src_fan_actualspeed": {
+        "name": "Fan speed"
+      },
+      "src_flamecurrent": {
+        "name": "Flame current"
+      },
+      "src_displaycode": {
+        "name": "Display code"
+      },
+      "hc1mod_flowtemp": {
+        "name": "Supply temperature"
+      },
+      "sc_hc1_flowtempsetp": {
+        "name": "Supply temperature setpoint"
+      },
+      "sc_hc1_maxflowtempsetp": {
+        "name": "Max supply temperature setpoint"
+      },
+      "sc_introomtemp": {
+        "name": "Internal room temperature"
+      },
+      "sc_dampoutdtemp": {
+        "name": "Damped outdoor temperature"
+      },
+      "sc_hc1_holidaymode": {
+        "name": "Holiday mode"
+      },
+      "sc_dhw1_holidaymode": {
+        "name": "Holiday mode"
+      },
+      "solar_heatcount_minus1dailysolargain": {
+        "name": "Solar gain previous day"
+      },
+      "solar_heatcount_minus1monthlysolargain": {
+        "name": "Solar gain previous month"
+      },
+      "solar_heatcount_minus1yearlysolargain": {
+        "name": "Solar gain previous year"
+      },
+      "solar_heatcount_totallastminus1hourgain": {
+        "name": "Solar gain last hour"
+      },
+      "gweebus_cem_id": {
+        "name": "EEBus CEM ID"
+      },
+      "gweebus_status": {
+        "name": "EEBus status"
+      },
+      "gweebus_commissioningstatus": {
+        "name": "EEBus commissioning status"
       }
     },
     "binary_sensor": {
@@ -1000,6 +1087,93 @@
       },
       "pump_on_hm200": {
         "name": "Pump active"
+      },
+      "hybman_pumpon": {
+        "name": "Pump active"
+      },
+      "hybman_can_defrostactive": {
+        "name": "Defrost active"
+      },
+      "hybman_can_fourwayvalveactive": {
+        "name": "4-way valve active"
+      },
+      "hybman_can_drippanheateractive": {
+        "name": "Drip pan heater active"
+      },
+      "hybman_lownoisemodeactive": {
+        "name": "Low noise mode active"
+      },
+      "hybman_heatupsequence": {
+        "name": "Heat-up sequence active"
+      },
+      "hybman_compspeedlimitedduetosilentmode": {
+        "name": "Compressor limited due to silent mode"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Heating stopped low outdoor temperature"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Highest permitted temperature exceeded"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Heating stopped high outdoor temperature (summer)"
+      },
+      "src_relaystatus_3wayvalve": {
+        "name": "Boiler 3-way valve"
+      },
+      "src_diginput_airpressureswitch": {
+        "name": "Boiler air pressure switch"
+      },
+      "src_autofillingactive": {
+        "name": "Automatic filling active"
+      },
+      "src_relaystatus_chpump": {
+        "name": "Boiler heating circuit pump"
+      },
+      "src_opstatus_chimneysweeper": {
+        "name": "Chimney sweeper mode"
+      },
+      "src_intdhw_circpumpstatus": {
+        "name": "DHW circulation pump"
+      },
+      "src_intdhw_dhurunning": {
+        "name": "DHW heating active"
+      },
+      "src_diginput_extcutoff": {
+        "name": "Boiler external cutoff"
+      },
+      "src_intdhw_extraactive": {
+        "name": "DHW extra charge active"
+      },
+      "src_relaystatus_fan": {
+        "name": "Boiler fan"
+      },
+      "src_relaystatus_gasvalve1": {
+        "name": "Boiler gas valve 1"
+      },
+      "src_relaystatus_gasvalve2": {
+        "name": "Boiler gas valve 2"
+      },
+      "src_diginput_oiltemperaturehigh": {
+        "name": "Oil temperature high"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "DHW heat-up active"
+      },
+      "sc_hc1_rtsd_preventionecomodeactive": {
+        "name": "Frost protection eco mode active"
+      },
+      "sc_hc1_fpd_active": {
+        "name": "Frost protection active"
+      },
+      "sc_dhw1_sd_extraactive": {
+        "name": "DHW extra charge active"
+      },
+      "sc_hc1_rotempsetpopt_heatupstatus": {
+        "name": "Fast heat-up active"
+      },
+      "hc1mod_flowctrl_pumprequest": {
+        "name": "Heating circuit 1 pump request"
       }
     }
   }

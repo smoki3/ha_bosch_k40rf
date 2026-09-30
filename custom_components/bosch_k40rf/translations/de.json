@@ -788,6 +788,93 @@
       },
       "hybman_odumonitor_tr6temp": {
         "name": "Außeneinheit TR6 Temperatur"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Höchste zulässige Temperatur"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Min. Außentemperatur Heizgrenze"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Max. Außentemperatur Sommerabschaltung"
+      },
+      "hybman_timetillnextcompressorstart": {
+        "name": "Restzeit bis Verdichterstart"
+      },
+      "hybman_timetillnextcompressorstop": {
+        "name": "Restzeit bis Verdichterstopp"
+      },
+      "hybman_optimecompressorheating": {
+        "name": "Verdichterlaufzeit Heizen"
+      },
+      "hybman_optimecompressordhw": {
+        "name": "Verdichterlaufzeit Warmwasser"
+      },
+      "hybman_smartgridmode": {
+        "name": "Smart Grid Modus"
+      },
+      "hybman_emergencymodestatus": {
+        "name": "Notbetrieb Status"
+      },
+      "src_outdoortemp": {
+        "name": "Außentemperatur"
+      },
+      "src_intflowtemp": {
+        "name": "Vorlauftemperatur"
+      },
+      "src_intdhw_cyltemp": {
+        "name": "Warmwassertemperatur"
+      },
+      "src_fan_actualspeed": {
+        "name": "Gebläsedrehzahl"
+      },
+      "src_flamecurrent": {
+        "name": "Flammenstrom"
+      },
+      "src_displaycode": {
+        "name": "Display-Code"
+      },
+      "hc1mod_flowtemp": {
+        "name": "Vorlauftemperatur"
+      },
+      "sc_hc1_flowtempsetp": {
+        "name": "Vorlauf Sollwert"
+      },
+      "sc_hc1_maxflowtempsetp": {
+        "name": "Max. Vorlauf Sollwert"
+      },
+      "sc_introomtemp": {
+        "name": "Raumtemperatur Intern"
+      },
+      "sc_dampoutdtemp": {
+        "name": "Gedämpfte Außentemperatur"
+      },
+      "sc_hc1_holidaymode": {
+        "name": "Urlaubsmodus"
+      },
+      "sc_dhw1_holidaymode": {
+        "name": "Urlaubsmodus"
+      },
+      "solar_heatcount_minus1dailysolargain": {
+        "name": "Solarertrag Vortag"
+      },
+      "solar_heatcount_minus1monthlysolargain": {
+        "name": "Solarertrag Vormonat"
+      },
+      "solar_heatcount_minus1yearlysolargain": {
+        "name": "Solarertrag Vorjahr"
+      },
+      "solar_heatcount_totallastminus1hourgain": {
+        "name": "Solarertrag Letzte Stunde"
+      },
+      "gweebus_cem_id": {
+        "name": "EEBus CEM ID"
+      },
+      "gweebus_status": {
+        "name": "EEBus Status"
+      },
+      "gweebus_commissioningstatus": {
+        "name": "EEBus Inbetriebnahme Status"
       }
     },
     "binary_sensor": {
@@ -1000,6 +1087,93 @@
       },
       "pump_on_hm200": {
         "name": "Pumpe aktiv"
+      },
+      "hybman_pumpon": {
+        "name": "Pumpe aktiv"
+      },
+      "hybman_can_defrostactive": {
+        "name": "Abtauung aktiv"
+      },
+      "hybman_can_fourwayvalveactive": {
+        "name": "4-Wege-Ventil aktiv"
+      },
+      "hybman_can_drippanheateractive": {
+        "name": "Kondensatwannenheizung aktiv"
+      },
+      "hybman_lownoisemodeactive": {
+        "name": "Flüsterbetrieb aktiv"
+      },
+      "hybman_heatupsequence": {
+        "name": "Aufheizsequenz aktiv"
+      },
+      "hybman_compspeedlimitedduetosilentmode": {
+        "name": "Verdichter im Flüsterbetrieb begrenzt"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Heizstopp Niedrige Außentemperatur"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Höchste zulässige Temperatur überschritten"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Heizstopp Hohe Außentemperatur (Sommer)"
+      },
+      "src_relaystatus_3wayvalve": {
+        "name": "3-Wege-Ventil Kessel"
+      },
+      "src_diginput_airpressureswitch": {
+        "name": "Differenzdruckwächter Kessel"
+      },
+      "src_autofillingactive": {
+        "name": "Automatische Befüllung aktiv"
+      },
+      "src_relaystatus_chpump": {
+        "name": "Heizkreispumpe Kessel"
+      },
+      "src_opstatus_chimneysweeper": {
+        "name": "Schornsteinfegerbetrieb"
+      },
+      "src_intdhw_circpumpstatus": {
+        "name": "Zirkulationspumpe Warmwasser"
+      },
+      "src_intdhw_dhurunning": {
+        "name": "Warmwasserbereitung aktiv"
+      },
+      "src_diginput_extcutoff": {
+        "name": "Externe Abschaltung Kessel"
+      },
+      "src_intdhw_extraactive": {
+        "name": "Warmwasser Extra-Ladung aktiv"
+      },
+      "src_relaystatus_fan": {
+        "name": "Gebläse Kessel"
+      },
+      "src_relaystatus_gasvalve1": {
+        "name": "Gasventil 1 Kessel"
+      },
+      "src_relaystatus_gasvalve2": {
+        "name": "Gasventil 2 Kessel"
+      },
+      "src_diginput_oiltemperaturehigh": {
+        "name": "Öltemperatur zu hoch"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "Warmwasser Aufheizung aktiv"
+      },
+      "sc_hc1_rtsd_preventionecomodeactive": {
+        "name": "Frostschutz Eco-Modus aktiv"
+      },
+      "sc_hc1_fpd_active": {
+        "name": "Frostschutz aktiv"
+      },
+      "sc_dhw1_sd_extraactive": {
+        "name": "Warmwasser Extra-Ladung aktiv"
+      },
+      "sc_hc1_rotempsetpopt_heatupstatus": {
+        "name": "Schnellaufheizung aktiv"
+      },
+      "hc1mod_flowctrl_pumprequest": {
+        "name": "Pumpenanforderung Heizkreis 1"
       }
     }
   }

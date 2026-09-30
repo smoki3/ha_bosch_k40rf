@@ -35,7 +35,7 @@ from .const import (
     DOMAIN,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
-from .models import BoschK40BinarySensorEntityDescription, sanitize_serial_number
+from .models import BoschK40BinarySensorEntityDescription, get_translated_name, sanitize_serial_number
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -97,7 +97,6 @@ async def async_setup_entry(
 class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], BinarySensorEntity):
     """Representation of a Bosch K 40 RF binary sensor entity."""
 
-    _attr_has_entity_name = True
     entity_description: BoschK40BinarySensorEntityDescription
 
     def __init__(
@@ -119,8 +118,26 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
     @property
     def name(self) -> str | None:
         """Return friendly name with smart hybrid naming."""
-        if self.entity_description.translation_key:
-            return None
+        lang = getattr(self.coordinator.hass.config, "language", "de") or "de"
+        if lang.startswith("en") and self.entity_description.translation_key:
+            en_name = get_translated_name(
+                "binary_sensor",
+                self.entity_description.translation_key,
+                lang,
+                self.entity_description.device_name,
+            )
+            if en_name:
+                if self.coordinator.is_hybrid_system:
+                    if self.entity_description.resource_id == "/heatSources/flameStatus":
+                        return "Boiler flame status"
+                    if self.entity_description.device_sub_id == "hs1":
+                        return en_name.replace(" HS1", " Boiler").replace(" hs1", " Boiler")
+                    if self.entity_description.device_sub_id == "hs2":
+                        return en_name.replace(" HS2", " Heat pump").replace(" hs2", " Heat pump")
+                elif self.entity_description.device_sub_id == "hs1":
+                    return en_name.replace(" HS1", "").replace(" hs1", "")
+                return en_name
+
         base_name = self.entity_description.name
         if not base_name:
             return None
