@@ -97,6 +97,7 @@ async def async_setup_entry(
 class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], BinarySensorEntity):
     """Representation of a Bosch K 40 RF binary sensor entity."""
 
+    _attr_has_entity_name = True
     entity_description: BoschK40BinarySensorEntityDescription
 
     def __init__(
@@ -118,6 +119,8 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
     @property
     def name(self) -> str | None:
         """Return friendly name with smart hybrid naming."""
+        if self.entity_description.translation_key:
+            return None
         base_name = self.entity_description.name
         if not base_name:
             return None

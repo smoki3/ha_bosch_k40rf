@@ -52,5 +52,955 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "gateway_uuid": {
+        "name": "UUID"
+      },
+      "gateway_brand": {
+        "name": "Marke"
+      },
+      "gateway_firmware": {
+        "name": "Firmware-Version"
+      },
+      "gateway_hardware": {
+        "name": "Hardware-Version"
+      },
+      "gateway_eth_mac": {
+        "name": "Ethernet MAC-Adresse"
+      },
+      "gateway_wifi_mac": {
+        "name": "WLAN MAC-Adresse"
+      },
+      "gateway_eth_ip": {
+        "name": "Ethernet IP-Adresse"
+      },
+      "gateway_wifi_ip": {
+        "name": "WLAN IP-Adresse"
+      },
+      "gateway_wifi_ssid": {
+        "name": "WLAN SSID"
+      },
+      "gateway_wifi_rssi": {
+        "name": "WLAN Signalstärke"
+      },
+      "gateway_data_processing": {
+        "name": "Datenverarbeitung Status"
+      },
+      "gateway_timezone": {
+        "name": "Zeitzone"
+      },
+      "gateway_hotspot_remaining": {
+        "name": "Hotspot Restzeit"
+      },
+      "system_bus": {
+        "name": "Bus-System"
+      },
+      "system_type": {
+        "name": "Systemtyp"
+      },
+      "system_notifications": {
+        "name": "Systemmeldungen / Störungen"
+      },
+      "gateway_update_status": {
+        "name": "Gateway Update Status"
+      },
+      "system_update_status": {
+        "name": "System Update Status"
+      },
+      "gateway_update_report": {
+        "name": "Gateway Update Bericht"
+      },
+      "gateway_wifi_pairing_status": {
+        "name": "WLAN Pairing Status"
+      },
+      "sc_installation_date": {
+        "name": "Installationsdatum"
+      },
+      "smart_grid_mode": {
+        "name": "Smart Grid Modus",
+        "state": {
+          "0": "Standard",
+          "1": "Gesperrt (Modus 1)",
+          "2": "Normalbetrieb (Modus 2)",
+          "3": "Empfohlener Betrieb (Modus 3)",
+          "4": "Zwangsstart (Modus 4)"
+        }
+      },
+      "time_till_next_compressor_start": {
+        "name": "Restzeit bis Verdichterstart"
+      },
+      "time_till_next_compressor_stop": {
+        "name": "Restzeit bis Verdichterstopp"
+      },
+      "outdoor_temperature": {
+        "name": "Außentemperatur"
+      },
+      "supply_temperature": {
+        "name": "Vorlauftemperatur Ist"
+      },
+      "actual_supply_temperature": {
+        "name": "Vorlauftemperatur Ist"
+      },
+      "target_supply_temperature": {
+        "name": "Vorlauftemperatur Soll"
+      },
+      "current_supply_setpoint": {
+        "name": "Vorlauftemperatur Soll"
+      },
+      "return_temperature": {
+        "name": "Rücklauftemperatur"
+      },
+      "system_pressure": {
+        "name": "Systemdruck"
+      },
+      "boiler_actual_modulation": {
+        "name": "Modulation Kessel"
+      },
+      "actual_modulation": {
+        "name": "Modulation"
+      },
+      "boiler_actual_heat_demand": {
+        "name": "Wärmebedarf Kessel"
+      },
+      "actual_heat_demand": {
+        "name": "Wärmebedarf"
+      },
+      "boiler_number_of_starts": {
+        "name": "Brennerstarts Gesamt"
+      },
+      "number_of_starts": {
+        "name": "Brenner- / Verdichterstarts Gesamt"
+      },
+      "working_time_total_system": {
+        "name": "Betriebszeit Kessel Gesamt"
+      },
+      "refrigerant_circuits_online": {
+        "name": "Kältekreise online"
+      },
+      "active_heat_source": {
+        "name": "Aktiver Wärmeerzeuger",
+        "state": {
+          "none": "Keiner (Standby)",
+          "heat_pump": "Wärmepumpe",
+          "boiler": "Kessel",
+          "parallel": "Parallelbetrieb",
+          "unknown": "Wird ermittelt",
+          "off": "Aus"
+        }
+      },
+      "evaporator_temp_tl1": {
+        "name": "Verdampfertemperatur TL1"
+      },
+      "evaporator_temp_tl2": {
+        "name": "Verdampfertemperatur TL2"
+      },
+      "cylinder_temperature": {
+        "name": "Warmwasserspeicher Temperatur"
+      },
+      "cylinder_upper_temp": {
+        "name": "Warmwasserspeicher Temperatur oben"
+      },
+      "collector_temperature": {
+        "name": "Kollektortemperatur"
+      },
+      "compressor_power_actual": {
+        "name": "Verdichter Leistung Ist"
+      },
+      "compressor_frequency": {
+        "name": "Verdichterfrequenz"
+      },
+      "compressor_speed": {
+        "name": "Verdichterdrehzahl"
+      },
+      "eheater_power_actual": {
+        "name": "Zuheizer Leistung"
+      },
+      "working_time_total": {
+        "name": "Betriebszeit Gesamt"
+      },
+      "working_time_ch": {
+        "name": "Betriebszeit Heizung"
+      },
+      "working_time_dhw": {
+        "name": "Betriebszeit Warmwasser"
+      },
+      "starts_total": {
+        "name": "Starts Gesamt"
+      },
+      "starts_ch": {
+        "name": "Starts Heizung"
+      },
+      "starts_dhw": {
+        "name": "Starts Warmwasser"
+      },
+      "pump_flow_rate": {
+        "name": "Pumpen-Durchfluss"
+      },
+      "return_flow_temperature": {
+        "name": "Rücklauftemperatur"
+      },
+      "fan_speed": {
+        "name": "Lüfterdrehzahl"
+      },
+      "flame_current": {
+        "name": "Flammenstrom"
+      },
+      "nominal_power": {
+        "name": "Nennleistung"
+      },
+      "max_nominal_power": {
+        "name": "Max. Nennleistung"
+      },
+      "min_nominal_power": {
+        "name": "Min. Nennleistung"
+      },
+      "chimney_temperature": {
+        "name": "Abgastemperatur"
+      },
+      "oil_preheater_temperature": {
+        "name": "Ölvorwärmung Temperatur"
+      },
+      "oil_pressure": {
+        "name": "Öldruck"
+      },
+      "condensate_level": {
+        "name": "Kondensatfüllstand"
+      },
+      "burner_run_time_stage1": {
+        "name": "Brennerlaufzeit Stufe 1"
+      },
+      "burner_run_time_stage2": {
+        "name": "Brennerlaufzeit Stufe 2"
+      },
+      "burner_starts_stage1": {
+        "name": "Brennerstarts Stufe 1"
+      },
+      "burner_starts_stage2": {
+        "name": "Brennerstarts Stufe 2"
+      },
+      "emon_total_output": {
+        "name": "Erzeugte Wärmeenergie Gesamt"
+      },
+      "emon_total_electricity": {
+        "name": "Elektrische Energie Gesamt"
+      },
+      "emon_total_gas": {
+        "name": "Gasverbrauch Gesamt"
+      },
+      "emon_total_oil": {
+        "name": "Ölverbrauch Gesamt"
+      },
+      "emon_total_solar": {
+        "name": "Solarertrag Gesamt"
+      },
+      "emon_total_compressor": {
+        "name": "Verdichter Energie Gesamt"
+      },
+      "emon_ch_output": {
+        "name": "Erzeugte Wärmeenergie Heizung"
+      },
+      "emon_ch_electricity": {
+        "name": "Elektrische Energie Heizung"
+      },
+      "emon_ch_compressor": {
+        "name": "Verdichter Energie Heizung"
+      },
+      "emon_dhw_output": {
+        "name": "Erzeugte Wärmeenergie Warmwasser"
+      },
+      "emon_dhw_electricity": {
+        "name": "Elektrische Energie Warmwasser"
+      },
+      "emon_dhw_compressor": {
+        "name": "Verdichter Energie Warmwasser"
+      },
+      "room_temperature": {
+        "name": "Raumtemperatur"
+      },
+      "room_temperature_setpoint": {
+        "name": "Raumtemperatur Soll"
+      },
+      "actual_humidity": {
+        "name": "Luftfeuchtigkeit"
+      },
+      "max_flow_temp": {
+        "name": "Maximale Vorlauftemperatur"
+      },
+      "mixer_position": {
+        "name": "Mischerposition"
+      },
+      "current_su_wi_mode": {
+        "name": "Sommer-/Winterbetrieb"
+      },
+      "overall_status": {
+        "name": "Status",
+        "state": {
+          "dhw_enabled": "Warmwasser aktiv",
+          "dhw_disabled": "Warmwasser aus",
+          "floor_drying": "Estrichtrocknung",
+          "td": "Thermische Desinfektion",
+          "extra": "Extra-Ladung (Boost)",
+          "away": "Abwesend",
+          "holiday": "Urlaub",
+          "manual_on_high": "Manuell (Hoch)",
+          "manual_on_low": "Manuell (Niedrig)",
+          "manual_on_eco": "Manuell (Eco)",
+          "manual_off": "Manuell aus",
+          "auto": "Automatik",
+          "ch_enabled": "Heizbetrieb aktiv",
+          "ch_disabled": "Heizbetrieb aus",
+          "emergency_mode": "Notbetrieb",
+          "summer_idle": "Sommerbetrieb (Inaktiv)",
+          "boost": "Schnellaufheizung (Boost)",
+          "cooling_manual_on": "Kühlen manuell an",
+          "cooling_manual_off": "Kühlen manuell aus",
+          "heating_manual_on": "Heizen manuell an",
+          "heating_manual_off": "Heizen manuell aus",
+          "heating_auto": "Heizen Automatik"
+        }
+      },
+      "boost_remaining_time": {
+        "name": "Boost Restzeit"
+      },
+      "holiday_mode": {
+        "name": "Urlaubsmodus",
+        "state": {
+          "0": "Aus",
+          "1": "Urlaub zu Hause",
+          "2": "Urlaub abwesend"
+        }
+      },
+      "dhw_temperature": {
+        "name": "Warmwassertemperatur Ist"
+      },
+      "target_dhw_temperature": {
+        "name": "Warmwassertemperatur Soll"
+      },
+      "out_temperature": {
+        "name": "Auslauftemperatur"
+      },
+      "friwa_supply_temp": {
+        "name": "Frischwasser Vorlauf"
+      },
+      "friwa_primary_pump_modulation": {
+        "name": "Frischwasser Primärpumpe Modulation"
+      },
+      "volume_flow": {
+        "name": "Durchflussmenge"
+      },
+      "temperature_level": {
+        "name": "Temperaturniveau"
+      },
+      "charge_remaining_time": {
+        "name": "Lade-Restzeit"
+      },
+      "thermal_disinfection_status": {
+        "name": "Thermische Desinfektion Status"
+      },
+      "solar_collector_temperature": {
+        "name": "Kollektortemperatur"
+      },
+      "solar_storage_temperature": {
+        "name": "Solarspeicher Temperatur unten"
+      },
+      "solar_pump_modulation": {
+        "name": "Solarpumpe Modulation"
+      },
+      "solar_yield": {
+        "name": "Solarertrag"
+      },
+      "supply_air_temp": {
+        "name": "Zulufttemperatur"
+      },
+      "extract_air_temp": {
+        "name": "Ablufttemperatur"
+      },
+      "exhaust_air_temp": {
+        "name": "Fortlufttemperatur"
+      },
+      "internal_humidity": {
+        "name": "Raumluftfeuchtigkeit"
+      },
+      "external_humidity": {
+        "name": "Außenluftfeuchtigkeit"
+      },
+      "internal_air_quality": {
+        "name": "Raumluftqualität"
+      },
+      "external_air_quality": {
+        "name": "Außenluftqualität"
+      },
+      "supply_fan_speed": {
+        "name": "Zuluftventilator Drehzahl"
+      },
+      "exhaust_fan_speed": {
+        "name": "Abluftventilator Drehzahl"
+      },
+      "supply_fan_power": {
+        "name": "Zuluft Leistung"
+      },
+      "exhaust_fan_power": {
+        "name": "Abluft Leistung"
+      },
+      "exhaust_fan_level": {
+        "name": "Lüfterstufe"
+      },
+      "filter_remaining_time": {
+        "name": "Filter Restzeit"
+      },
+      "appliance_run_time": {
+        "name": "Betriebszeit"
+      },
+      "el_aux_heater_power": {
+        "name": "Zuheizer Leistung"
+      },
+      "electrical_aux_heater_power": {
+        "name": "Elektrischer Zuheizer Leistung"
+      },
+      "summer_bypass_flap_power": {
+        "name": "Sommerbypass Klappenstellung"
+      },
+      "pool_temperature": {
+        "name": "Pooltemperatur"
+      },
+      "heating_mode": {
+        "name": "Heizmodus"
+      },
+      "cooling_mode": {
+        "name": "Kühlmodus"
+      },
+      "manual_heating_setpoint": {
+        "name": "Sollwert Manuell Heizen"
+      },
+      "temporary_heating_setpoint": {
+        "name": "Sollwert Temporär Heizen"
+      },
+      "manual_cooling_setpoint": {
+        "name": "Sollwert Manuell Kühlen"
+      },
+      "temporary_cooling_setpoint": {
+        "name": "Sollwert Temporär Kühlen"
+      },
+      "battery": {
+        "name": "Batterie"
+      },
+      "signal_strength": {
+        "name": "Signalstärke"
+      },
+      "signal_rating": {
+        "name": "Signalbewertung"
+      },
+      "actuator_modulation": {
+        "name": "Stellantrieb Modulation"
+      },
+      "actuator_power": {
+        "name": "Stellantrieb Leistung"
+      },
+      "operation_mode": {
+        "name": "Betriebsmodus"
+      },
+      "rf_error_cause": {
+        "name": "Funkfehler Ursache"
+      },
+      "rf_connection_lost_time": {
+        "name": "Verbindungsverlust Zeitstempel"
+      },
+      "sgtin": {
+        "name": "Seriennummer (SGTIN)"
+      },
+      "device_errors": {
+        "name": "Gerätefehler"
+      },
+      "hybman_can_positionvr1": {
+        "name": "3-Wege-Ventil Position VR1"
+      },
+      "hybman_can_compressorsetp": {
+        "name": "Verdichter Solldrehzahl"
+      },
+      "hybman_pumpspeedsetp": {
+        "name": "Pumpendrehzahl Sollwert"
+      },
+      "hybman_tempflowheatpump": {
+        "name": "Vorlauftemperatur Wärmepumpe"
+      },
+      "hybman_tempreturnheatpump": {
+        "name": "Rücklauftemperatur Wärmepumpe"
+      },
+      "hybman_tempsysreturn": {
+        "name": "System-Rücklauftemperatur"
+      },
+      "hybman_tempmaxhp": {
+        "name": "Maximaltemperatur Wärmepumpe"
+      },
+      "hybman_odumonitor_compressorspeedcurr": {
+        "name": "Verdichterdrehzahl Außeneinheit"
+      },
+      "hybman_odumonitor_jr0temp": {
+        "name": "Außeneinheit JR0 Temperatur"
+      },
+      "hybman_odumonitor_ta4temp": {
+        "name": "Außeneinheit TA4 Temperatur"
+      },
+      "hybman_odumonitor_tc0temp": {
+        "name": "Außeneinheit TC0 Temperatur"
+      },
+      "hybman_odumonitor_tc3temp": {
+        "name": "Außeneinheit TC3 Temperatur"
+      },
+      "hybman_odumonitor_tl2temp": {
+        "name": "Außeneinheit TL2 Temperatur"
+      },
+      "hybman_odumonitor_tr1temp": {
+        "name": "Außeneinheit TR1 Temperatur"
+      },
+      "src_relativetime": {
+        "name": "Relative Betriebszeit Kessel"
+      },
+      "src_systempowersetp": {
+        "name": "Modulationsvorgabe Kessel"
+      },
+      "sc_hc1_rtsd_currentroomtempsetp": {
+        "name": "Raumsolltemperatur aktuell"
+      },
+      "sc_hc1_currentopstatus": {
+        "name": "Betriebsstatus Heizkreis"
+      },
+      "sc_hc1_wdc_roominfluence": {
+        "name": "Raumeinfluss Heizkreis"
+      },
+      "sc_hc1_wdc_solarinfluence": {
+        "name": "Solareinfluss Heizkreis"
+      },
+      "sc_rtc_relativetimer": {
+        "name": "Relative Betriebszeit Systemregler"
+      },
+      "solar_actuatorstatistics_pumpruntimebasicfunction1": {
+        "name": "Pumpenlaufzeit Solar"
+      },
+      "hc1mod_flowctrl_mixerposition": {
+        "name": "Mischerposition"
+      },
+      "additional_heater_flow_temp": {
+        "name": "Zuheizer Vorlauftemperatur"
+      },
+      "eheater_power_actual_low_res": {
+        "name": "Zuheizer Leistung"
+      },
+      "emon_total_burner": {
+        "name": "Brenner Energie Gesamt"
+      },
+      "emon_total_eheater": {
+        "name": "Zuheizer Energie Gesamt"
+      },
+      "emon_ch_burner": {
+        "name": "Brenner Energie Heizung"
+      },
+      "emon_ch_eheater": {
+        "name": "Zuheizer Energie Heizung"
+      },
+      "emon_dhw_burner": {
+        "name": "Brenner Energie Warmwasser"
+      },
+      "emon_dhw_eheater": {
+        "name": "Zuheizer Energie Warmwasser"
+      },
+      "emon_cooling_output": {
+        "name": "Kühlenergie Erzeugt"
+      },
+      "emon_cooling_electricity": {
+        "name": "Elektrische Energie Kühlung"
+      },
+      "emon_pool_output": {
+        "name": "Wärmeenergie Pool"
+      },
+      "tariff_ch_setpoint": {
+        "name": "Solltemperatur Tarif Heizung"
+      },
+      "tariff_price_categorization": {
+        "name": "Strompreis-Einstufung"
+      },
+      "tariff_id": {
+        "name": "Aktiver Stromtarif"
+      },
+      "heat_sources_em_status": {
+        "name": "Energiemanager Status"
+      },
+      "variable_tariff_support_status": {
+        "name": "Variabler Stromtarif Unterstützung"
+      },
+      "variable_tariff_ch_status": {
+        "name": "Variabler Tarif Heizung Status"
+      },
+      "variable_tariff_dhw_status": {
+        "name": "Variabler Tarif Warmwasser Status"
+      },
+      "variable_tariff_dhw_current_opmode": {
+        "name": "Variabler Tarif Warmwasser Betriebsmodus"
+      },
+      "variable_tariff_ch_high_price_delta": {
+        "name": "Variabler Tarif Hochpreis Temperaturverschiebung"
+      },
+      "variable_tariff_ch_low_price_delta": {
+        "name": "Variabler Tarif Niedrigpreis Temperaturverschiebung"
+      },
+      "variable_tariff_ch_mid_price_setpoint": {
+        "name": "Variabler Tarif Normalpreis Sollwert"
+      },
+      "devices_inclusion_time": {
+        "name": "Geräte Anlernzeit Rest"
+      },
+      "devices_rhc_assigned": {
+        "name": "Raumthermostat Heizkreis Zuordnung"
+      },
+      "devices_uhc_assigned": {
+        "name": "Fußbodenheizung Heizkreis Zuordnung"
+      },
+      "zones_configuration_max": {
+        "name": "Maximal unterstützte Zonen"
+      },
+      "pc_aff_additional_heater_ch": {
+        "name": "Leistungsbegrenzung Zuheizer Heizung"
+      },
+      "pc_aff_additional_heater_dhw_tank": {
+        "name": "Leistungsbegrenzung Zuheizer Warmwasserspeicher"
+      },
+      "pc_aff_additional_heater_pri": {
+        "name": "Leistungsbegrenzung Zuheizer Primärkreis"
+      },
+      "pc_aff_ch": {
+        "name": "Leistungsbegrenzung Heizung"
+      },
+      "pc_aff_cooling": {
+        "name": "Leistungsbegrenzung Kühlung"
+      },
+      "pc_aff_dhw": {
+        "name": "Leistungsbegrenzung Warmwasser"
+      },
+      "pc_aff_pool": {
+        "name": "Leistungsbegrenzung Pool"
+      },
+      "pc_aff_refrigerant_circuit": {
+        "name": "Leistungsbegrenzung Kältekreis"
+      },
+      "heat_pump_type": {
+        "name": "Wärmepumpentyp"
+      },
+      "odu_fan_speed": {
+        "name": "Lüfterdrehzahl Außeneinheit"
+      },
+      "pump_volume_flow": {
+        "name": "Pumpendurchfluss"
+      },
+      "return_flow_temp": {
+        "name": "Rücklauftemperatur"
+      },
+      "supply_flow_condenser_temp": {
+        "name": "Kondensator Vorlauftemperatur"
+      },
+      "compressor_actual_speed": {
+        "name": "Verdichter Drehzahl"
+      },
+      "compressor_temp": {
+        "name": "Verdichtertemperatur"
+      },
+      "heat_carrier_pump_speed": {
+        "name": "Wärmeträgerpumpe Drehzahl"
+      },
+      "high_pressure_temp": {
+        "name": "Hochdrucktemperatur"
+      },
+      "hot_gas_temp": {
+        "name": "Heißgastemperatur"
+      },
+      "liquid_pipe_cooling_temp": {
+        "name": "Flüssigkeitsleitung Kühlung"
+      },
+      "liquid_pipe_heating_temp": {
+        "name": "Flüssigkeitsleitung Heizung"
+      },
+      "low_pressure_temp": {
+        "name": "Niederdrucktemperatur"
+      },
+      "refrigerant_status": {
+        "name": "Kältekreis Status"
+      },
+      "suction_gas_temp": {
+        "name": "Sauggastemperatur"
+      },
+      "safety_board_status": {
+        "name": "Sicherheitsplatine Status"
+      },
+      "brine_collector_inflow": {
+        "name": "Solekreis Zulauftemperatur"
+      },
+      "brine_collector_outflow": {
+        "name": "Solekreis Ablauftemperatur"
+      },
+      "brine_pressure": {
+        "name": "Soledruck"
+      },
+      "brine_pump_speed": {
+        "name": "Solepumpe Drehzahl"
+      },
+      "brine_volume_flow": {
+        "name": "Sole Durchfluss"
+      },
+      "max_indoor_air_quality": {
+        "name": "Max. Raumluftqualität Grenzwert"
+      },
+      "max_relative_humidity": {
+        "name": "Max. Raumluftfeuchtigkeit Grenzwert"
+      },
+      "zone_name": {
+        "name": "Zonenname"
+      },
+      "zone_icon": {
+        "name": "Zonensymbol"
+      },
+      "device_model": {
+        "name": "Modell"
+      },
+      "device_type": {
+        "name": "Typ"
+      },
+      "device_firmware": {
+        "name": "Firmware-Version"
+      },
+      "assigned_heating_circuit": {
+        "name": "Zugeordneter Heizkreis"
+      },
+      "assigned_zone": {
+        "name": "Zugeordnete Zone"
+      },
+      "hybman_odumonitor_jr1temp": {
+        "name": "Außeneinheit JR1 Temperatur"
+      },
+      "hybman_odumonitor_tr3temp": {
+        "name": "Außeneinheit TR3 Temperatur"
+      },
+      "hybman_odumonitor_tr4temp": {
+        "name": "Außeneinheit TR4 Temperatur"
+      },
+      "hybman_odumonitor_tr5temp": {
+        "name": "Außeneinheit TR5 Temperatur"
+      },
+      "hybman_odumonitor_tr6temp": {
+        "name": "Außeneinheit TR6 Temperatur"
+      }
+    },
+    "binary_sensor": {
+      "flame_status": {
+        "name": "Flammenstatus"
+      },
+      "smart_function_active": {
+        "name": "Smart-Funktion aktiv"
+      },
+      "pv_contact_state": {
+        "name": "PV-Kontakt"
+      },
+      "fallback_operation_status": {
+        "name": "Notbetrieb"
+      },
+      "power_guard_active": {
+        "name": "Power Guard aktiv"
+      },
+      "power_limitation_active": {
+        "name": "Leistungsbegrenzung aktiv"
+      },
+      "silent_mode_status": {
+        "name": "Flüsterbetrieb aktiv"
+      },
+      "maintenance_mode_status": {
+        "name": "Wartungsmodus"
+      },
+      "pc_heating_block": {
+        "name": "Heizsperre aktiv"
+      },
+      "pc_cooling_block": {
+        "name": "Kühlsperre aktiv"
+      },
+      "pc_dhw_block": {
+        "name": "Warmwassersperre aktiv"
+      },
+      "pc_pv_status": {
+        "name": "PV-Überschuss aktiv"
+      },
+      "pc_additional_heater_block": {
+        "name": "Zuheizersperre aktiv"
+      },
+      "pc_appliance_power_block": {
+        "name": "Geräteleistungssperre aktiv"
+      },
+      "pc_high_source_temp_stop_cooling": {
+        "name": "Kühlsperre Hochtemperaturschutz aktiv"
+      },
+      "pc_high_source_temp_stop_heating": {
+        "name": "Heizsperre Hochtemperaturschutz aktiv"
+      },
+      "pc_low_source_temp_stop_cooling": {
+        "name": "Kühlsperre Tieftemperaturschutz aktiv"
+      },
+      "pc_low_source_temp_stop_heating": {
+        "name": "Heizsperre Tieftemperaturschutz aktiv"
+      },
+      "pc_power_elec_desired": {
+        "name": "Elektrische Leistungsvorgabe aktiv"
+      },
+      "pc_user_additional_heater_block": {
+        "name": "Benutzer Zuheizersperre aktiv"
+      },
+      "vt_dhw_high_price_enable": {
+        "name": "Variabler Tarif Warmwasser Hochpreis aktiv"
+      },
+      "vt_dhw_low_price_enable": {
+        "name": "Variabler Tarif Warmwasser Niedrigpreis aktiv"
+      },
+      "additional_heater_primary_status": {
+        "name": "Zuheizer Primärstatus"
+      },
+      "eheater_status": {
+        "name": "Elektroheizer Status"
+      },
+      "external_input_1_state": {
+        "name": "Externer Eingang 1"
+      },
+      "external_input_2_state": {
+        "name": "Externer Eingang 2"
+      },
+      "external_input_3_state": {
+        "name": "Externer Eingang 3"
+      },
+      "external_input_4_state": {
+        "name": "Externer Eingang 4"
+      },
+      "external_inputs_cooling_block": {
+        "name": "Kühlsperre Extern aktiv"
+      },
+      "power_constraints_power_guard_status": {
+        "name": "PowerGuard Status"
+      },
+      "power_constraints_power_elec_limitation_status": {
+        "name": "Elektrische Leistungsbegrenzung aktiv"
+      },
+      "power_constraints_dhw_reduce_alarm": {
+        "name": "Warmwasser Reduzierung bei Alarm aktiv"
+      },
+      "power_constraints_appliance_power_limit": {
+        "name": "Geräteleistungsgrenze aktiv"
+      },
+      "variable_tariff_ch_optimization": {
+        "name": "Variabler Tarif Heizung Optimierung aktiv"
+      },
+      "variable_tariff_dhw_optimization": {
+        "name": "Variabler Tarif Warmwasser Optimierung aktiv"
+      },
+      "thermal_disinfection_running": {
+        "name": "Thermische Desinfektion"
+      },
+      "child_lock": {
+        "name": "Kindersicherung"
+      },
+      "heating_circuit_pump": {
+        "name": "Heizkreispumpe"
+      },
+      "open_window_detection": {
+        "name": "Fenster-Offen-Erkennung"
+      },
+      "rf_connection_status": {
+        "name": "Verbindung"
+      },
+      "rf_paired_status": {
+        "name": "Pairing"
+      },
+      "burner_active": {
+        "name": "Brenner aktiv"
+      },
+      "defrost_active": {
+        "name": "Abtauung aktiv"
+      },
+      "four_way_valve": {
+        "name": "4-Wege-Ventil aktiv"
+      },
+      "drip_pan_heater": {
+        "name": "Kondensatwannenheizung aktiv"
+      },
+      "silent_mode": {
+        "name": "Flüsterbetrieb aktiv"
+      },
+      "compressor_silent_limited": {
+        "name": "Verdichter im Flüsterbetrieb begrenzt"
+      },
+      "heat_up_sequence": {
+        "name": "Aufheizsequenz aktiv"
+      },
+      "low_outdoor_temp_stop": {
+        "name": "Heizstopp Niedrige Außentemperatur"
+      },
+      "high_outdoor_temp_stop": {
+        "name": "Heizstopp Hohe Außentemperatur (Sommer)"
+      },
+      "highest_permitted_temp": {
+        "name": "Höchste zulässige Temperatur überschritten"
+      },
+      "three_way_valve_boiler": {
+        "name": "3-Wege-Ventil Kessel"
+      },
+      "air_pressure_switch": {
+        "name": "Differenzdruckwächter Kessel"
+      },
+      "auto_filling_active": {
+        "name": "Automatische Befüllung aktiv"
+      },
+      "ch_pump_boiler": {
+        "name": "Heizkreispumpe Kessel"
+      },
+      "chimney_sweeper": {
+        "name": "Schornsteinfegerbetrieb"
+      },
+      "circ_pump_dhw": {
+        "name": "Zirkulationspumpe Warmwasser"
+      },
+      "dhw_running": {
+        "name": "Warmwasserbereitung aktiv"
+      },
+      "ext_cut_off": {
+        "name": "Externe Abschaltung Kessel"
+      },
+      "extra_dhw_active": {
+        "name": "Warmwasser Extra-Ladung aktiv"
+      },
+      "fan_boiler": {
+        "name": "Gebläse Kessel"
+      },
+      "gas_valve_1": {
+        "name": "Gasventil 1 Kessel"
+      },
+      "gas_valve_2": {
+        "name": "Gasventil 2 Kessel"
+      },
+      "oil_temperature_high": {
+        "name": "Öltemperatur zu hoch"
+      },
+      "dhw_heat_up_active": {
+        "name": "Warmwasser Aufheizung aktiv"
+      },
+      "frost_protection_eco": {
+        "name": "Frostschutz Eco-Modus aktiv"
+      },
+      "frost_protection_active": {
+        "name": "Frostschutz aktiv"
+      },
+      "quick_heat_up_active": {
+        "name": "Schnellaufheizung aktiv"
+      },
+      "pump_request_hc": {
+        "name": "Pumpenanforderung Heizkreis 1"
+      },
+      "pump_on_hm200": {
+        "name": "Pumpe aktiv"
+      }
+    }
   }
 }

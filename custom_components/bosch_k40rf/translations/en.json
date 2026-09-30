@@ -52,5 +52,955 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "gateway_uuid": {
+        "name": "UUID"
+      },
+      "gateway_brand": {
+        "name": "Brand"
+      },
+      "gateway_firmware": {
+        "name": "Firmware version"
+      },
+      "gateway_hardware": {
+        "name": "Hardware version"
+      },
+      "gateway_eth_mac": {
+        "name": "Ethernet MAC address"
+      },
+      "gateway_wifi_mac": {
+        "name": "Wi-Fi MAC address"
+      },
+      "gateway_eth_ip": {
+        "name": "Ethernet IP address"
+      },
+      "gateway_wifi_ip": {
+        "name": "Wi-Fi IP address"
+      },
+      "gateway_wifi_ssid": {
+        "name": "Wi-Fi SSID"
+      },
+      "gateway_wifi_rssi": {
+        "name": "Wi-Fi signal strength"
+      },
+      "gateway_data_processing": {
+        "name": "Data processing status"
+      },
+      "gateway_timezone": {
+        "name": "Timezone"
+      },
+      "gateway_hotspot_remaining": {
+        "name": "Hotspot remaining time"
+      },
+      "system_bus": {
+        "name": "Bus system"
+      },
+      "system_type": {
+        "name": "System type"
+      },
+      "system_notifications": {
+        "name": "System notifications"
+      },
+      "gateway_update_status": {
+        "name": "Gateway update status"
+      },
+      "system_update_status": {
+        "name": "System update status"
+      },
+      "gateway_update_report": {
+        "name": "Gateway update report"
+      },
+      "gateway_wifi_pairing_status": {
+        "name": "Wi-Fi pairing status"
+      },
+      "sc_installation_date": {
+        "name": "Installation date"
+      },
+      "smart_grid_mode": {
+        "name": "Smart grid mode",
+        "state": {
+          "0": "Standard",
+          "1": "Blocked (Mode 1)",
+          "2": "Normal operation (Mode 2)",
+          "3": "Recommended operation (Mode 3)",
+          "4": "Forced start (Mode 4)"
+        }
+      },
+      "time_till_next_compressor_start": {
+        "name": "Time until compressor start"
+      },
+      "time_till_next_compressor_stop": {
+        "name": "Time until compressor stop"
+      },
+      "outdoor_temperature": {
+        "name": "Outdoor temperature"
+      },
+      "supply_temperature": {
+        "name": "Supply temperature"
+      },
+      "actual_supply_temperature": {
+        "name": "Supply temperature"
+      },
+      "target_supply_temperature": {
+        "name": "Target supply temperature"
+      },
+      "current_supply_setpoint": {
+        "name": "Target supply temperature"
+      },
+      "return_temperature": {
+        "name": "Return temperature"
+      },
+      "system_pressure": {
+        "name": "System pressure"
+      },
+      "boiler_actual_modulation": {
+        "name": "Boiler modulation"
+      },
+      "actual_modulation": {
+        "name": "Modulation"
+      },
+      "boiler_actual_heat_demand": {
+        "name": "Boiler heat demand"
+      },
+      "actual_heat_demand": {
+        "name": "Heat demand"
+      },
+      "boiler_number_of_starts": {
+        "name": "Total burner starts"
+      },
+      "number_of_starts": {
+        "name": "Total starts"
+      },
+      "working_time_total_system": {
+        "name": "Total system operating time"
+      },
+      "refrigerant_circuits_online": {
+        "name": "Refrigerant circuits online"
+      },
+      "active_heat_source": {
+        "name": "Active heat source",
+        "state": {
+          "none": "None (Standby)",
+          "heat_pump": "Heat pump",
+          "boiler": "Boiler",
+          "parallel": "Parallel operation",
+          "unknown": "Determining",
+          "off": "Off"
+        }
+      },
+      "evaporator_temp_tl1": {
+        "name": "Evaporator temperature TL1"
+      },
+      "evaporator_temp_tl2": {
+        "name": "Evaporator temperature TL2"
+      },
+      "cylinder_temperature": {
+        "name": "DHW storage temperature"
+      },
+      "cylinder_upper_temp": {
+        "name": "DHW storage temperature top"
+      },
+      "collector_temperature": {
+        "name": "Collector temperature"
+      },
+      "compressor_power_actual": {
+        "name": "Compressor electric power"
+      },
+      "compressor_frequency": {
+        "name": "Compressor frequency"
+      },
+      "compressor_speed": {
+        "name": "Compressor speed"
+      },
+      "eheater_power_actual": {
+        "name": "Electric auxiliary heater power"
+      },
+      "working_time_total": {
+        "name": "Total operating time"
+      },
+      "working_time_ch": {
+        "name": "Operating time heating"
+      },
+      "working_time_dhw": {
+        "name": "Operating time DHW"
+      },
+      "starts_total": {
+        "name": "Total starts"
+      },
+      "starts_ch": {
+        "name": "Starts heating"
+      },
+      "starts_dhw": {
+        "name": "Starts DHW"
+      },
+      "pump_flow_rate": {
+        "name": "Pump flow rate"
+      },
+      "return_flow_temperature": {
+        "name": "Return temperature"
+      },
+      "fan_speed": {
+        "name": "Fan speed"
+      },
+      "flame_current": {
+        "name": "Flame current"
+      },
+      "nominal_power": {
+        "name": "Nominal power"
+      },
+      "max_nominal_power": {
+        "name": "Max nominal power"
+      },
+      "min_nominal_power": {
+        "name": "Min nominal power"
+      },
+      "chimney_temperature": {
+        "name": "Chimney temperature"
+      },
+      "oil_preheater_temperature": {
+        "name": "Oil preheater temperature"
+      },
+      "oil_pressure": {
+        "name": "Oil pressure"
+      },
+      "condensate_level": {
+        "name": "Condensate level"
+      },
+      "burner_run_time_stage1": {
+        "name": "Burner runtime stage 1"
+      },
+      "burner_run_time_stage2": {
+        "name": "Burner runtime stage 2"
+      },
+      "burner_starts_stage1": {
+        "name": "Burner starts stage 1"
+      },
+      "burner_starts_stage2": {
+        "name": "Burner starts stage 2"
+      },
+      "emon_total_output": {
+        "name": "Total heat energy produced"
+      },
+      "emon_total_electricity": {
+        "name": "Total electricity consumption"
+      },
+      "emon_total_gas": {
+        "name": "Total gas consumption"
+      },
+      "emon_total_oil": {
+        "name": "Total oil consumption"
+      },
+      "emon_total_solar": {
+        "name": "Total solar yield"
+      },
+      "emon_total_compressor": {
+        "name": "Compressor energy total"
+      },
+      "emon_ch_output": {
+        "name": "Heat energy produced heating"
+      },
+      "emon_ch_electricity": {
+        "name": "Electricity consumption heating"
+      },
+      "emon_ch_compressor": {
+        "name": "Compressor energy heating"
+      },
+      "emon_dhw_output": {
+        "name": "Heat energy produced DHW"
+      },
+      "emon_dhw_electricity": {
+        "name": "Electricity consumption DHW"
+      },
+      "emon_dhw_compressor": {
+        "name": "Compressor energy DHW"
+      },
+      "room_temperature": {
+        "name": "Room temperature"
+      },
+      "room_temperature_setpoint": {
+        "name": "Room temperature setpoint"
+      },
+      "actual_humidity": {
+        "name": "Humidity"
+      },
+      "max_flow_temp": {
+        "name": "Max flow temperature"
+      },
+      "mixer_position": {
+        "name": "Mixer position"
+      },
+      "current_su_wi_mode": {
+        "name": "Summer/winter mode"
+      },
+      "overall_status": {
+        "name": "Overall status",
+        "state": {
+          "dhw_enabled": "DHW enabled",
+          "dhw_disabled": "DHW disabled",
+          "floor_drying": "Screed drying",
+          "td": "Thermal disinfection",
+          "extra": "Extra charge (Boost)",
+          "away": "Away",
+          "holiday": "Holiday",
+          "manual_on_high": "Manual (High)",
+          "manual_on_low": "Manual (Low)",
+          "manual_on_eco": "Manual (Eco)",
+          "manual_off": "Manual off",
+          "auto": "Auto",
+          "ch_enabled": "Heating enabled",
+          "ch_disabled": "Heating disabled",
+          "emergency_mode": "Emergency mode",
+          "summer_idle": "Summer mode (Idle)",
+          "boost": "Boost heating",
+          "cooling_manual_on": "Cooling manual on",
+          "cooling_manual_off": "Cooling manual off",
+          "heating_manual_on": "Heating manual on",
+          "heating_manual_off": "Heating manual off",
+          "heating_auto": "Heating auto"
+        }
+      },
+      "boost_remaining_time": {
+        "name": "Boost remaining time"
+      },
+      "holiday_mode": {
+        "name": "Holiday mode",
+        "state": {
+          "0": "Off",
+          "1": "Holiday at home",
+          "2": "Holiday away"
+        }
+      },
+      "dhw_temperature": {
+        "name": "DHW temperature"
+      },
+      "target_dhw_temperature": {
+        "name": "Target DHW temperature"
+      },
+      "out_temperature": {
+        "name": "Outlet temperature"
+      },
+      "friwa_supply_temp": {
+        "name": "Fresh water supply temperature"
+      },
+      "friwa_primary_pump_modulation": {
+        "name": "Fresh water primary pump modulation"
+      },
+      "volume_flow": {
+        "name": "Flow rate"
+      },
+      "temperature_level": {
+        "name": "Temperature level"
+      },
+      "charge_remaining_time": {
+        "name": "Charge remaining time"
+      },
+      "thermal_disinfection_status": {
+        "name": "Thermal disinfection status"
+      },
+      "solar_collector_temperature": {
+        "name": "Solar collector temperature"
+      },
+      "solar_storage_temperature": {
+        "name": "Solar storage temperature"
+      },
+      "solar_pump_modulation": {
+        "name": "Solar pump modulation"
+      },
+      "solar_yield": {
+        "name": "Solar yield"
+      },
+      "supply_air_temp": {
+        "name": "Supply air temperature"
+      },
+      "extract_air_temp": {
+        "name": "Extract air temperature"
+      },
+      "exhaust_air_temp": {
+        "name": "Exhaust air temperature"
+      },
+      "internal_humidity": {
+        "name": "Indoor humidity"
+      },
+      "external_humidity": {
+        "name": "Outdoor humidity"
+      },
+      "internal_air_quality": {
+        "name": "Indoor air quality"
+      },
+      "external_air_quality": {
+        "name": "Outdoor air quality"
+      },
+      "supply_fan_speed": {
+        "name": "Supply fan speed"
+      },
+      "exhaust_fan_speed": {
+        "name": "Exhaust fan speed"
+      },
+      "supply_fan_power": {
+        "name": "Supply fan power"
+      },
+      "exhaust_fan_power": {
+        "name": "Exhaust fan power"
+      },
+      "exhaust_fan_level": {
+        "name": "Fan level"
+      },
+      "filter_remaining_time": {
+        "name": "Filter remaining time"
+      },
+      "appliance_run_time": {
+        "name": "Operating time"
+      },
+      "el_aux_heater_power": {
+        "name": "Auxiliary heater power"
+      },
+      "electrical_aux_heater_power": {
+        "name": "Electric auxiliary heater power"
+      },
+      "summer_bypass_flap_power": {
+        "name": "Summer bypass damper position"
+      },
+      "pool_temperature": {
+        "name": "Pool temperature"
+      },
+      "heating_mode": {
+        "name": "Heating mode"
+      },
+      "cooling_mode": {
+        "name": "Cooling mode"
+      },
+      "manual_heating_setpoint": {
+        "name": "Manual heating setpoint"
+      },
+      "temporary_heating_setpoint": {
+        "name": "Temporary heating setpoint"
+      },
+      "manual_cooling_setpoint": {
+        "name": "Manual cooling setpoint"
+      },
+      "temporary_cooling_setpoint": {
+        "name": "Temporary cooling setpoint"
+      },
+      "battery": {
+        "name": "Battery"
+      },
+      "signal_strength": {
+        "name": "Signal strength"
+      },
+      "signal_rating": {
+        "name": "Signal rating"
+      },
+      "actuator_modulation": {
+        "name": "Actuator modulation"
+      },
+      "actuator_power": {
+        "name": "Actuator power"
+      },
+      "operation_mode": {
+        "name": "Operation mode"
+      },
+      "rf_error_cause": {
+        "name": "RF error cause"
+      },
+      "rf_connection_lost_time": {
+        "name": "Connection lost timestamp"
+      },
+      "sgtin": {
+        "name": "Serial number (SGTIN)"
+      },
+      "device_errors": {
+        "name": "Device errors"
+      },
+      "hybman_can_positionvr1": {
+        "name": "3-way valve position VR1"
+      },
+      "hybman_can_compressorsetp": {
+        "name": "Compressor target speed"
+      },
+      "hybman_pumpspeedsetp": {
+        "name": "Pump speed setpoint"
+      },
+      "hybman_tempflowheatpump": {
+        "name": "Heat pump flow temperature"
+      },
+      "hybman_tempreturnheatpump": {
+        "name": "Heat pump return temperature"
+      },
+      "hybman_tempsysreturn": {
+        "name": "System return temperature"
+      },
+      "hybman_tempmaxhp": {
+        "name": "Heat pump maximum temperature"
+      },
+      "hybman_odumonitor_compressorspeedcurr": {
+        "name": "Outdoor unit compressor speed"
+      },
+      "hybman_odumonitor_jr0temp": {
+        "name": "Outdoor unit JR0 temperature"
+      },
+      "hybman_odumonitor_ta4temp": {
+        "name": "Outdoor unit TA4 temperature"
+      },
+      "hybman_odumonitor_tc0temp": {
+        "name": "Outdoor unit TC0 temperature"
+      },
+      "hybman_odumonitor_tc3temp": {
+        "name": "Outdoor unit TC3 temperature"
+      },
+      "hybman_odumonitor_tl2temp": {
+        "name": "Outdoor unit TL2 temperature"
+      },
+      "hybman_odumonitor_tr1temp": {
+        "name": "Outdoor unit TR1 temperature"
+      },
+      "src_relativetime": {
+        "name": "Relative operating time boiler"
+      },
+      "src_systempowersetp": {
+        "name": "Boiler modulation setpoint"
+      },
+      "sc_hc1_rtsd_currentroomtempsetp": {
+        "name": "Current room temperature setpoint"
+      },
+      "sc_hc1_currentopstatus": {
+        "name": "Heating circuit operation status"
+      },
+      "sc_hc1_wdc_roominfluence": {
+        "name": "Heating circuit room influence"
+      },
+      "sc_hc1_wdc_solarinfluence": {
+        "name": "Heating circuit solar influence"
+      },
+      "sc_rtc_relativetimer": {
+        "name": "Relative operating time system controller"
+      },
+      "solar_actuatorstatistics_pumpruntimebasicfunction1": {
+        "name": "Solar pump runtime"
+      },
+      "hc1mod_flowctrl_mixerposition": {
+        "name": "Mixer position"
+      },
+      "additional_heater_flow_temp": {
+        "name": "Auxiliary heater flow temperature"
+      },
+      "eheater_power_actual_low_res": {
+        "name": "Auxiliary heater electric power"
+      },
+      "emon_total_burner": {
+        "name": "Burner energy total"
+      },
+      "emon_total_eheater": {
+        "name": "Auxiliary heater energy total"
+      },
+      "emon_ch_burner": {
+        "name": "Burner energy heating"
+      },
+      "emon_ch_eheater": {
+        "name": "Auxiliary heater energy heating"
+      },
+      "emon_dhw_burner": {
+        "name": "Burner energy DHW"
+      },
+      "emon_dhw_eheater": {
+        "name": "Auxiliary heater energy DHW"
+      },
+      "emon_cooling_output": {
+        "name": "Cooling energy produced"
+      },
+      "emon_cooling_electricity": {
+        "name": "Electricity consumption cooling"
+      },
+      "emon_pool_output": {
+        "name": "Heat energy produced pool"
+      },
+      "tariff_ch_setpoint": {
+        "name": "Heating temperature setpoint tariff"
+      },
+      "tariff_price_categorization": {
+        "name": "Electricity price level"
+      },
+      "tariff_id": {
+        "name": "Active electricity tariff"
+      },
+      "heat_sources_em_status": {
+        "name": "Energy management status"
+      },
+      "variable_tariff_support_status": {
+        "name": "Variable electricity tariff support"
+      },
+      "variable_tariff_ch_status": {
+        "name": "Variable tariff heating status"
+      },
+      "variable_tariff_dhw_status": {
+        "name": "Variable tariff DHW status"
+      },
+      "variable_tariff_dhw_current_opmode": {
+        "name": "Variable tariff DHW operation mode"
+      },
+      "variable_tariff_ch_high_price_delta": {
+        "name": "Variable tariff high price delta"
+      },
+      "variable_tariff_ch_low_price_delta": {
+        "name": "Variable tariff low price delta"
+      },
+      "variable_tariff_ch_mid_price_setpoint": {
+        "name": "Variable tariff normal price setpoint"
+      },
+      "devices_inclusion_time": {
+        "name": "Device pairing time remaining"
+      },
+      "devices_rhc_assigned": {
+        "name": "Room thermostat circuit assignment"
+      },
+      "devices_uhc_assigned": {
+        "name": "Underfloor heating circuit assignment"
+      },
+      "zones_configuration_max": {
+        "name": "Maximum supported zones"
+      },
+      "pc_aff_additional_heater_ch": {
+        "name": "Power limit auxiliary heater heating"
+      },
+      "pc_aff_additional_heater_dhw_tank": {
+        "name": "Power limit auxiliary heater DHW"
+      },
+      "pc_aff_additional_heater_pri": {
+        "name": "Power limit auxiliary heater primary"
+      },
+      "pc_aff_ch": {
+        "name": "Power limit heating"
+      },
+      "pc_aff_cooling": {
+        "name": "Power limit cooling"
+      },
+      "pc_aff_dhw": {
+        "name": "Power limit DHW"
+      },
+      "pc_aff_pool": {
+        "name": "Power limit pool"
+      },
+      "pc_aff_refrigerant_circuit": {
+        "name": "Power limit refrigerant circuit"
+      },
+      "heat_pump_type": {
+        "name": "Heat pump type"
+      },
+      "odu_fan_speed": {
+        "name": "Outdoor unit fan speed"
+      },
+      "pump_volume_flow": {
+        "name": "Pump flow rate"
+      },
+      "return_flow_temp": {
+        "name": "Return flow temperature"
+      },
+      "supply_flow_condenser_temp": {
+        "name": "Condenser supply temperature"
+      },
+      "compressor_actual_speed": {
+        "name": "Compressor speed"
+      },
+      "compressor_temp": {
+        "name": "Compressor temperature"
+      },
+      "heat_carrier_pump_speed": {
+        "name": "Heat carrier pump speed"
+      },
+      "high_pressure_temp": {
+        "name": "High pressure temperature"
+      },
+      "hot_gas_temp": {
+        "name": "Hot gas temperature"
+      },
+      "liquid_pipe_cooling_temp": {
+        "name": "Liquid pipe cooling temperature"
+      },
+      "liquid_pipe_heating_temp": {
+        "name": "Liquid pipe heating temperature"
+      },
+      "low_pressure_temp": {
+        "name": "Low pressure temperature"
+      },
+      "refrigerant_status": {
+        "name": "Refrigerant circuit status"
+      },
+      "suction_gas_temp": {
+        "name": "Suction gas temperature"
+      },
+      "safety_board_status": {
+        "name": "Safety board status"
+      },
+      "brine_collector_inflow": {
+        "name": "Brine circuit inflow temperature"
+      },
+      "brine_collector_outflow": {
+        "name": "Brine circuit outflow temperature"
+      },
+      "brine_pressure": {
+        "name": "Brine pressure"
+      },
+      "brine_pump_speed": {
+        "name": "Brine pump speed"
+      },
+      "brine_volume_flow": {
+        "name": "Brine flow rate"
+      },
+      "max_indoor_air_quality": {
+        "name": "Max indoor air quality limit"
+      },
+      "max_relative_humidity": {
+        "name": "Max relative humidity limit"
+      },
+      "zone_name": {
+        "name": "Zone name"
+      },
+      "zone_icon": {
+        "name": "Zone icon"
+      },
+      "device_model": {
+        "name": "Model"
+      },
+      "device_type": {
+        "name": "Device type"
+      },
+      "device_firmware": {
+        "name": "Firmware version"
+      },
+      "assigned_heating_circuit": {
+        "name": "Assigned heating circuit"
+      },
+      "assigned_zone": {
+        "name": "Assigned zone"
+      },
+      "hybman_odumonitor_jr1temp": {
+        "name": "Outdoor unit JR1 temperature"
+      },
+      "hybman_odumonitor_tr3temp": {
+        "name": "Outdoor unit TR3 temperature"
+      },
+      "hybman_odumonitor_tr4temp": {
+        "name": "Outdoor unit TR4 temperature"
+      },
+      "hybman_odumonitor_tr5temp": {
+        "name": "Outdoor unit TR5 temperature"
+      },
+      "hybman_odumonitor_tr6temp": {
+        "name": "Outdoor unit TR6 temperature"
+      }
+    },
+    "binary_sensor": {
+      "flame_status": {
+        "name": "Flame status"
+      },
+      "smart_function_active": {
+        "name": "Smart function active"
+      },
+      "pv_contact_state": {
+        "name": "PV contact"
+      },
+      "fallback_operation_status": {
+        "name": "Fallback operation active"
+      },
+      "power_guard_active": {
+        "name": "Power Guard active"
+      },
+      "power_limitation_active": {
+        "name": "Power limitation active"
+      },
+      "silent_mode_status": {
+        "name": "Silent mode active"
+      },
+      "maintenance_mode_status": {
+        "name": "Maintenance mode"
+      },
+      "pc_heating_block": {
+        "name": "Heating blocked"
+      },
+      "pc_cooling_block": {
+        "name": "Cooling blocked"
+      },
+      "pc_dhw_block": {
+        "name": "DHW blocked"
+      },
+      "pc_pv_status": {
+        "name": "PV surplus active"
+      },
+      "pc_additional_heater_block": {
+        "name": "Auxiliary heater blocked"
+      },
+      "pc_appliance_power_block": {
+        "name": "Appliance power blocked"
+      },
+      "pc_high_source_temp_stop_cooling": {
+        "name": "High source temp cooling stop active"
+      },
+      "pc_high_source_temp_stop_heating": {
+        "name": "High source temp heating stop active"
+      },
+      "pc_low_source_temp_stop_cooling": {
+        "name": "Low source temp cooling stop active"
+      },
+      "pc_low_source_temp_stop_heating": {
+        "name": "Low source temp heating stop active"
+      },
+      "pc_power_elec_desired": {
+        "name": "Desired electrical power active"
+      },
+      "pc_user_additional_heater_block": {
+        "name": "User auxiliary heater blocked"
+      },
+      "vt_dhw_high_price_enable": {
+        "name": "Variable tariff DHW high price active"
+      },
+      "vt_dhw_low_price_enable": {
+        "name": "Variable tariff DHW low price active"
+      },
+      "additional_heater_primary_status": {
+        "name": "Auxiliary heater primary status"
+      },
+      "eheater_status": {
+        "name": "Electric auxiliary heater status"
+      },
+      "external_input_1_state": {
+        "name": "External input 1"
+      },
+      "external_input_2_state": {
+        "name": "External input 2"
+      },
+      "external_input_3_state": {
+        "name": "External input 3"
+      },
+      "external_input_4_state": {
+        "name": "External input 4"
+      },
+      "external_inputs_cooling_block": {
+        "name": "External cooling blocked"
+      },
+      "power_constraints_power_guard_status": {
+        "name": "PowerGuard status"
+      },
+      "power_constraints_power_elec_limitation_status": {
+        "name": "Electrical power limitation active"
+      },
+      "power_constraints_dhw_reduce_alarm": {
+        "name": "DHW reduction on alarm active"
+      },
+      "power_constraints_appliance_power_limit": {
+        "name": "Appliance power limit active"
+      },
+      "variable_tariff_ch_optimization": {
+        "name": "Variable tariff heating optimization active"
+      },
+      "variable_tariff_dhw_optimization": {
+        "name": "Variable tariff DHW optimization active"
+      },
+      "thermal_disinfection_running": {
+        "name": "Thermal disinfection active"
+      },
+      "child_lock": {
+        "name": "Child lock"
+      },
+      "heating_circuit_pump": {
+        "name": "Heating circuit pump"
+      },
+      "open_window_detection": {
+        "name": "Open window detection"
+      },
+      "rf_connection_status": {
+        "name": "Connection status"
+      },
+      "rf_paired_status": {
+        "name": "Pairing status"
+      },
+      "burner_active": {
+        "name": "Burner active"
+      },
+      "defrost_active": {
+        "name": "Defrost active"
+      },
+      "four_way_valve": {
+        "name": "4-way valve active"
+      },
+      "drip_pan_heater": {
+        "name": "Condensate drip pan heater active"
+      },
+      "silent_mode": {
+        "name": "Silent mode active"
+      },
+      "compressor_silent_limited": {
+        "name": "Compressor limited due to silent mode"
+      },
+      "heat_up_sequence": {
+        "name": "Heat-up sequence active"
+      },
+      "low_outdoor_temp_stop": {
+        "name": "Low outdoor temperature stop heating"
+      },
+      "high_outdoor_temp_stop": {
+        "name": "High outdoor temperature stop heating (Summer)"
+      },
+      "highest_permitted_temp": {
+        "name": "Highest permitted temperature exceeded"
+      },
+      "three_way_valve_boiler": {
+        "name": "3-way valve boiler"
+      },
+      "air_pressure_switch": {
+        "name": "Air pressure switch boiler"
+      },
+      "auto_filling_active": {
+        "name": "Automatic filling active"
+      },
+      "ch_pump_boiler": {
+        "name": "Heating circuit pump boiler"
+      },
+      "chimney_sweeper": {
+        "name": "Chimney sweeper mode"
+      },
+      "circ_pump_dhw": {
+        "name": "Circulation pump DHW"
+      },
+      "dhw_running": {
+        "name": "DHW heating active"
+      },
+      "ext_cut_off": {
+        "name": "External shut-off boiler"
+      },
+      "extra_dhw_active": {
+        "name": "Extra DHW charge active"
+      },
+      "fan_boiler": {
+        "name": "Fan boiler"
+      },
+      "gas_valve_1": {
+        "name": "Gas valve 1 boiler"
+      },
+      "gas_valve_2": {
+        "name": "Gas valve 2 boiler"
+      },
+      "oil_temperature_high": {
+        "name": "Oil temperature high"
+      },
+      "dhw_heat_up_active": {
+        "name": "DHW heat-up active"
+      },
+      "frost_protection_eco": {
+        "name": "Frost protection eco mode active"
+      },
+      "frost_protection_active": {
+        "name": "Frost protection active"
+      },
+      "quick_heat_up_active": {
+        "name": "Quick heat-up active"
+      },
+      "pump_request_hc": {
+        "name": "Pump request heating circuit 1"
+      },
+      "pump_on_hm200": {
+        "name": "Pump active"
+      }
+    }
   }
 }

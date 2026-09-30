@@ -402,6 +402,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
     return [
         BoschK40SensorEntityDescription(
             key="gateway_brand",
+            translation_key="gateway_brand",
             resource_id="/gateway/brand",
             name="Marke",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -410,6 +411,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_firmware",
+            translation_key="gateway_firmware",
             resource_id="/gateway/versionFirmware",
             name="Firmware-Version",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -418,6 +420,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_hardware",
+            translation_key="gateway_hardware",
             resource_id="/gateway/versionHardware",
             name="Hardware-Version",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -426,6 +429,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_eth_mac",
+            translation_key="gateway_eth_mac",
             resource_id="/gateway/eth/mac",
             name="Ethernet MAC",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -434,6 +438,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_wifi_mac",
+            translation_key="gateway_wifi_mac",
             resource_id="/gateway/wifi/mac",
             name="WLAN MAC",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -442,6 +447,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_eth_ip",
+            translation_key="gateway_eth_ip",
             resource_id="/gateway/eth/ip/ipv4",
             name="Ethernet IP",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -450,6 +456,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_wifi_ip",
+            translation_key="gateway_wifi_ip",
             resource_id="/gateway/wifi/ip/ipv4",
             name="WLAN IP",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -458,6 +465,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_wifi_ssid",
+            translation_key="gateway_wifi_ssid",
             resource_id="/gateway/wifi/ssid",
             name="WLAN SSID",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -466,6 +474,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_data_processing",
+            translation_key="gateway_data_processing",
             resource_id="/gateway/dataProcessing/status",
             name="Datenverarbeitung Status",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -474,6 +483,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_timezone",
+            translation_key="gateway_timezone",
             resource_id="/gateway/tzInfo/timeZone",
             name="Zeitzone",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -482,6 +492,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_hotspot_remaining",
+            translation_key="gateway_hotspot_remaining",
             resource_id="/gateway/wifi/hotspotRemainingTime",
             name="Hotspot Restzeit",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -492,6 +503,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="system_bus",
+            translation_key="system_bus",
             resource_id="/system/bus",
             name="Bus-System",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -500,6 +512,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="system_type",
+            translation_key="system_type",
             resource_id="/system/type",
             name="Systemtyp",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -508,6 +521,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="system_notifications",
+            translation_key="system_notifications",
             resource_id="/notifications",
             name="Systemmeldungen / Störungen",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -517,6 +531,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_update_status",
+            translation_key="gateway_update_status",
             resource_id="/gateway/update/status",
             name="Gateway Update Status",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -526,6 +541,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="system_update_status",
+            translation_key="system_update_status",
             resource_id="/system/update/status",
             name="System Update Status",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -535,6 +551,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_update_report",
+            translation_key="gateway_update_report",
             resource_id="/gateway/update/report",
             name="Gateway Update Bericht",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -544,6 +561,7 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="gateway_wifi_pairing_status",
+            translation_key="gateway_wifi_pairing_status",
             resource_id="/gateway/wifi/pairingStatus",
             name="WLAN Pairing Status",
             target_device_type=DEV_TYPE_GATEWAY,
@@ -558,6 +576,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
     return [
         BoschK40SensorEntityDescription(
             key="sc_installation_date",
+            translation_key="sc_installation_date",
             resource_id="/signals/SC.InstallationDate",
             name="Installationsdatum",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -570,6 +589,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="smart_grid_mode",
+            translation_key="smart_grid_mode",
             resource_id="/signals/HYBMAN.SmartGridMode",
             name="Smart Grid Modus",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -580,6 +600,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="hybman_time_till_next_compressor_start",
+            translation_key="time_till_next_compressor_start",
             resource_id="/signals/HYBMAN.TimeTillNextCompressorStart",
             name="Restzeit bis Verdichterstart",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -592,6 +613,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="hybman_time_till_next_compressor_stop",
+            translation_key="time_till_next_compressor_stop",
             resource_id="/signals/HYBMAN.TimeTillNextCompressorStop",
             name="Restzeit bis Verdichterstopp",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -604,6 +626,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="outdoor_temperature",
+            translation_key="outdoor_temperature",
             resource_id="/system/sensors/temperatures/outdoor_t1",
             name="Außentemperatur",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -614,6 +637,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="actual_supply_temperature",
+            translation_key="actual_supply_temperature",
             resource_id="/heatSources/actualSupplyTemperature",
             name="Vorlauftemperatur Ist",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -624,6 +648,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="current_supply_setpoint",
+            translation_key="current_supply_setpoint",
             resource_id="/heatSources/currentSupplySetpoint",
             name="Vorlauftemperatur Soll",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -634,6 +659,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="return_temperature",
+            translation_key="return_temperature",
             resource_id="/heatSources/returnTemperature",
             name="Rücklauftemperatur",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -644,6 +670,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="system_pressure",
+            translation_key="system_pressure",
             resource_id="/heatSources/systemPressure",
             name="Systemdruck",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -654,6 +681,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="actual_modulation",
+            translation_key="actual_modulation",
             resource_id="/heatSources/actualModulation",
             name="Modulation",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -663,6 +691,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="actual_heat_demand",
+            translation_key="actual_heat_demand",
             resource_id="/heatSources/actualHeatDemand",
             name="Wärmebedarf",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -672,6 +701,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="number_of_starts",
+            translation_key="number_of_starts",
             resource_id="/heatSources/numberOfStarts",
             name="Brenner- / Verdichterstarts Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -680,6 +710,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="refrigerant_circuits_online",
+            translation_key="refrigerant_circuits_online",
             resource_id="/heatSources/numberOfRefrigerantCircuitsOnline",
             name="Kältekreise online",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -688,6 +719,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="hybrid_active_heat_source",
+            translation_key="active_heat_source",
             resource_id="/heatSources/hybrid/activeHeatSource",
             name="Aktiver Wärmeerzeuger",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -698,6 +730,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="evaporator_temp_tl1",
+            translation_key="evaporator_temp_tl1",
             resource_id="/heatSources/sensors/evaporatorTemp_tl1",
             name="Verdampfertemperatur TL1",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -708,6 +741,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="evaporator_temp_tl2",
+            translation_key="evaporator_temp_tl2",
             resource_id="/heatSources/sensors/evaporatorTemp_tl2",
             name="Verdampfertemperatur TL2",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -718,6 +752,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="cylinder_temperature",
+            translation_key="cylinder_temperature",
             resource_id="/heatSources/dhw/cylinderTemperature",
             name="Warmwasserspeicher Temperatur",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -728,6 +763,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="cylinder_upper_temp",
+            translation_key="cylinder_upper_temp",
             resource_id="/heatSources/dhw/cylinderUpperTemp",
             name="Warmwasserspeicher Temperatur oben",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -738,6 +774,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="additional_heater_flow_temp",
+            translation_key="additional_heater_flow_temp",
             resource_id="/heatSources/additionalHeater/flowTemp",
             name="Zuheizer Vorlauftemperatur",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -748,6 +785,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="compressor_power_actual",
+            translation_key="compressor_power_actual",
             resource_id="/heatSources/compressor/powerElecActual",
             name="Verdichter elektrische Leistung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -758,6 +796,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="eheater_power_actual",
+            translation_key="eheater_power_actual",
             resource_id="/heatSources/eHeater/powerElecActual",
             name="Elektroheizer Leistung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -768,6 +807,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="eheater_power_actual_low_res",
+            translation_key="eheater_power_actual_low_res",
             resource_id="/heatSources/eHeater/powerElecActualLowResolution",
             name="Elektroheizer Leistung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -778,6 +818,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="working_time_total_system",
+            translation_key="working_time_total_system",
             resource_id="/heatSources/workingTime/totalSystem",
             name="Betriebszeit Gesamtsystem",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -794,6 +835,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Gesamt
         BoschK40SensorEntityDescription(
             key="emon_total_output",
+            translation_key="emon_total_output",
             resource_id="/heatSources/emon/totalConsumption",
             name="Erzeugte Wärmeenergie Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -805,6 +847,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_total_burner",
+            translation_key="emon_total_burner",
             resource_id="/heatSources/emon/totalConsumption",
             name="Brennerenergie Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -816,6 +859,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_total_solar",
+            translation_key="emon_total_solar",
             resource_id="/heatSources/emon/totalConsumption",
             name="Solarenergie Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -827,6 +871,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_total_electricity",
+            translation_key="emon_total_electricity",
             resource_id="/heatSources/emon/totalConsumption",
             name="Stromverbrauch Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -838,6 +883,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_total_eheater",
+            translation_key="emon_total_eheater",
             resource_id="/heatSources/emon/totalConsumption",
             name="Zuheizer Energie Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -849,6 +895,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_total_compressor",
+            translation_key="emon_total_compressor",
             resource_id="/heatSources/emon/totalConsumption",
             name="Verdichter Energie Gesamt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -861,6 +908,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Heizung (ch)
         BoschK40SensorEntityDescription(
             key="emon_ch_output",
+            translation_key="emon_ch_output",
             resource_id="/heatSources/emon/chConsumption",
             name="Erzeugte Wärmeenergie Heizung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -872,6 +920,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_ch_burner",
+            translation_key="emon_ch_burner",
             resource_id="/heatSources/emon/chConsumption",
             name="Brennerenergie Heizung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -883,6 +932,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_ch_electricity",
+            translation_key="emon_ch_electricity",
             resource_id="/heatSources/emon/chConsumption",
             name="Stromverbrauch Heizung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -894,6 +944,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_ch_eheater",
+            translation_key="emon_ch_eheater",
             resource_id="/heatSources/emon/chConsumption",
             name="Zuheizer Energie Heizung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -906,6 +957,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Warmwasser (dhw)
         BoschK40SensorEntityDescription(
             key="emon_dhw_output",
+            translation_key="emon_dhw_output",
             resource_id="/heatSources/emon/dhwConsumption",
             name="Erzeugte Wärmeenergie Warmwasser",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -917,6 +969,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_dhw_burner",
+            translation_key="emon_dhw_burner",
             resource_id="/heatSources/emon/dhwConsumption",
             name="Brennerenergie Warmwasser",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -928,6 +981,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_dhw_electricity",
+            translation_key="emon_dhw_electricity",
             resource_id="/heatSources/emon/dhwConsumption",
             name="Stromverbrauch Warmwasser",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -939,6 +993,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_dhw_eheater",
+            translation_key="emon_dhw_eheater",
             resource_id="/heatSources/emon/dhwConsumption",
             name="Zuheizer Energie Warmwasser",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -951,6 +1006,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Kühlung
         BoschK40SensorEntityDescription(
             key="emon_cooling_output",
+            translation_key="emon_cooling_output",
             resource_id="/heatSources/emon/coolingConsumption",
             name="Kälteenergie Erzeugt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -962,6 +1018,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="emon_cooling_electricity",
+            translation_key="emon_cooling_electricity",
             resource_id="/heatSources/emon/coolingConsumption",
             name="Stromverbrauch Kühlung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -974,6 +1031,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Pool
         BoschK40SensorEntityDescription(
             key="emon_pool_output",
+            translation_key="emon_pool_output",
             resource_id="/heatSources/emon/poolConsumption",
             name="Wärmeenergie Pool",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -986,6 +1044,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Variable tariff
         BoschK40SensorEntityDescription(
             key="tariff_ch_setpoint",
+            translation_key="tariff_ch_setpoint",
             resource_id="/system/variableTariff/ch/currentSetpoint",
             name="Variabler Tarif Heizung Sollwert",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -995,6 +1054,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="tariff_price_categorization",
+            translation_key="tariff_price_categorization",
             resource_id="/system/variableTariff/currentPriceCatagorization",
             name="Variabler Tarif Preiskategorie",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1003,6 +1063,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="tariff_id",
+            translation_key="tariff_id",
             resource_id="/system/variableTariff/tariffId",
             name="Tarif-ID",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1011,6 +1072,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="heat_sources_em_status",
+            translation_key="heat_sources_em_status",
             resource_id="/heatSources/emStatus",
             name="Energiemanager Status",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1020,6 +1082,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         # Variable Tariff
         BoschK40SensorEntityDescription(
             key="variable_tariff_support_status",
+            translation_key="variable_tariff_support_status",
             resource_id="/system/variableTariff/supportStatus",
             name="Variabler Tarif Support",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1028,6 +1091,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="variable_tariff_ch_status",
+            translation_key="variable_tariff_ch_status",
             resource_id="/system/variableTariff/ch/status",
             name="Variabler Tarif Heizung Status",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1036,6 +1100,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="variable_tariff_dhw_status",
+            translation_key="variable_tariff_dhw_status",
             resource_id="/system/variableTariff/dhw/status",
             name="Variabler Tarif Warmwasser Status",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1044,6 +1109,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="variable_tariff_dhw_current_opmode",
+            translation_key="variable_tariff_dhw_current_opmode",
             resource_id="/system/variableTariff/dhw/currentOpmode",
             name="Variabler Tarif Warmwasser Betriebsart",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1052,6 +1118,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="variable_tariff_ch_high_price_delta",
+            translation_key="variable_tariff_ch_high_price_delta",
             resource_id="/system/variableTariff/ch/highPriceDelta",
             name="Variabler Tarif Heizung Hochpreis Delta",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1062,6 +1129,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="variable_tariff_ch_low_price_delta",
+            translation_key="variable_tariff_ch_low_price_delta",
             resource_id="/system/variableTariff/ch/lowPriceDelta",
             name="Variabler Tarif Heizung Niedrigpreis Delta",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1072,6 +1140,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="variable_tariff_ch_mid_price_setpoint",
+            translation_key="variable_tariff_ch_mid_price_setpoint",
             resource_id="/system/variableTariff/ch/midPriceSetpoint",
             name="Variabler Tarif Heizung Normalpreis Sollwert",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1082,6 +1151,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="devices_inclusion_time",
+            translation_key="devices_inclusion_time",
             resource_id="/devices/inclusionTime",
             name="Geräte Anlernzeit",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1092,6 +1162,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="devices_rhc_assigned",
+            translation_key="devices_rhc_assigned",
             resource_id="/devices/rhc/assignedTo",
             name="Raumthermostat Heizkreis Zuordnung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1100,6 +1171,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="devices_uhc_assigned",
+            translation_key="devices_uhc_assigned",
             resource_id="/devices/uhc/assignedTo",
             name="Fußbodenheizung Heizkreis Zuordnung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1108,6 +1180,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="zones_configuration_max",
+            translation_key="zones_configuration_max",
             resource_id="/zones/configuration",
             name="Maximal unterstützte Zonen",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1117,6 +1190,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_additional_heater_ch",
+            translation_key="pc_aff_additional_heater_ch",
             resource_id="/system/powerConstraints/affectedDomain/additionalHeaterCh",
             name="Leistungsbegrenzung Zuheizer Heizung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1125,6 +1199,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_additional_heater_dhw_tank",
+            translation_key="pc_aff_additional_heater_dhw_tank",
             resource_id="/system/powerConstraints/affectedDomain/additionalHeaterDhwTank",
             name="Leistungsbegrenzung Zuheizer Warmwasserspeicher",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1133,6 +1208,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_additional_heater_pri",
+            translation_key="pc_aff_additional_heater_pri",
             resource_id="/system/powerConstraints/affectedDomain/additionalHeaterPrimaryCircuit",
             name="Leistungsbegrenzung Zuheizer Primärkreis",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1141,6 +1217,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_ch",
+            translation_key="pc_aff_ch",
             resource_id="/system/powerConstraints/affectedDomain/ch",
             name="Leistungsbegrenzung Heizung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1149,6 +1226,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_cooling",
+            translation_key="pc_aff_cooling",
             resource_id="/system/powerConstraints/affectedDomain/cooling",
             name="Leistungsbegrenzung Kühlung",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1157,6 +1235,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_dhw",
+            translation_key="pc_aff_dhw",
             resource_id="/system/powerConstraints/affectedDomain/dhw",
             name="Leistungsbegrenzung Warmwasser",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1165,6 +1244,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_pool",
+            translation_key="pc_aff_pool",
             resource_id="/system/powerConstraints/affectedDomain/pool",
             name="Leistungsbegrenzung Pool",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1173,6 +1253,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key="pc_aff_refrigerant_circuit",
+            translation_key="pc_aff_refrigerant_circuit",
             resource_id="/system/powerConstraints/affectedDomain/refrigerantCircuit",
             name="Leistungsbegrenzung Kältekreis",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1188,6 +1269,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
     return [
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_heat_pump_type",
+            translation_key="heat_pump_type",
             resource_id=f"/heatSources/{hs_id}/heatPumpType",
             name=f"Wärmepumpentyp {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1198,6 +1280,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         # Starts Aufteilung (ch, dhw, total)
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_starts_total",
+            translation_key="starts_total",
             resource_id=f"/heatSources/{hs_id}/numberOfStarts",
             name=f"Starts Gesamt {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1209,6 +1292,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_starts_ch",
+            translation_key="starts_ch",
             resource_id=f"/heatSources/{hs_id}/numberOfStarts",
             name=f"Starts Heizung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1220,6 +1304,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_starts_dhw",
+            translation_key="starts_dhw",
             resource_id=f"/heatSources/{hs_id}/numberOfStarts",
             name=f"Starts Warmwasser {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1232,6 +1317,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         # Working time
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_working_time_total",
+            translation_key="working_time_total",
             resource_id=f"/heatSources/{hs_id}/workingTime",
             name=f"Betriebszeit Gesamt {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1247,6 +1333,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_working_time_ch",
+            translation_key="working_time_ch",
             resource_id=f"/heatSources/{hs_id}/workingTime",
             name=f"Betriebszeit Heizung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1262,6 +1349,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_working_time_dhw",
+            translation_key="working_time_dhw",
             resource_id=f"/heatSources/{hs_id}/workingTime",
             name=f"Betriebszeit Warmwasser {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1277,6 +1365,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_odu_fan_speed",
+            translation_key="odu_fan_speed",
             resource_id=f"/heatSources/{hs_id}/oduFanSpeed",
             name=f"Lüfterdrehzahl Außeneinheit {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1288,6 +1377,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_pump_volume_flow",
+            translation_key="pump_volume_flow",
             resource_id=f"/heatSources/{hs_id}/pumpVolumeFlow",
             name=f"Pumpendurchfluss {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1300,6 +1390,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_return_flow_temp",
+            translation_key="return_flow_temp",
             resource_id=f"/heatSources/{hs_id}/returnFlowTemp",
             name=f"Rücklauftemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1312,6 +1403,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_supply_flow_condenser_temp",
+            translation_key="supply_flow_condenser_temp",
             resource_id=f"/heatSources/{hs_id}/supplyFlowCondenserTemp",
             name=f"Kondensator Vorlauftemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1324,6 +1416,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_compressor_actual_speed",
+            translation_key="compressor_actual_speed",
             resource_id=f"/heatSources/{hs_id}/refrigerant/compressorActualSpeed",
             name=f"Verdichter Drehzahl {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1335,6 +1428,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_compressor_power_actual",
+            translation_key="compressor_power_actual",
             resource_id=f"/heatSources/{hs_id}/refrigerant/compressorElecPowerActual",
             name=f"Verdichter Leistung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1347,6 +1441,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_compressor_temp",
+            translation_key="compressor_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/compressorTemp",
             name=f"Verdichtertemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1359,6 +1454,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_heat_carrier_pump_speed",
+            translation_key="heat_carrier_pump_speed",
             resource_id=f"/heatSources/{hs_id}/refrigerant/heatCarrierPumpSpeed",
             name=f"Wärmeträgerpumpe Drehzahl {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1370,6 +1466,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_high_pressure_temp",
+            translation_key="high_pressure_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/highPressureTemp",
             name=f"Hochdrucktemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1382,6 +1479,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_hot_gas_temp",
+            translation_key="hot_gas_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/hotGasTemp",
             name=f"Heißgastemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1394,6 +1492,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_liquid_pipe_cooling_temp",
+            translation_key="liquid_pipe_cooling_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/liquidPipeCoolingTemp",
             name=f"Flüssigkeitsleitung Kühlung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1406,6 +1505,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_liquid_pipe_heating_temp",
+            translation_key="liquid_pipe_heating_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/liquidPipeHeatingTemp",
             name=f"Flüssigkeitsleitung Heizung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1418,6 +1518,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_low_pressure_temp",
+            translation_key="low_pressure_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/lowPressureTemp",
             name=f"Niederdrucktemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1430,6 +1531,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_refrigerant_status",
+            translation_key="refrigerant_status",
             resource_id=f"/heatSources/{hs_id}/refrigerant/status",
             name=f"Kältekreis Status {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1439,6 +1541,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_suction_gas_temp",
+            translation_key="suction_gas_temp",
             resource_id=f"/heatSources/{hs_id}/refrigerant/suctionGasTemp",
             name=f"Sauggastemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1451,6 +1554,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_safety_board_status",
+            translation_key="safety_board_status",
             resource_id=f"/heatSources/{hs_id}/safetyBoard/status",
             name=f"Sicherheitsplatine Status {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1461,6 +1565,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         # Brine circuit (Erdwärme / Sole)
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_brine_collector_inflow",
+            translation_key="brine_collector_inflow",
             resource_id=f"/heatSources/{hs_id}/brineCircuit/collectorInflowTemp",
             name=f"Solekreis Zulauftemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1473,6 +1578,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_brine_collector_outflow",
+            translation_key="brine_collector_outflow",
             resource_id=f"/heatSources/{hs_id}/brineCircuit/collectorOutflowTemp",
             name=f"Solekreis Ablauftemperatur {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1485,6 +1591,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_brine_pressure",
+            translation_key="brine_pressure",
             resource_id=f"/heatSources/{hs_id}/brineCircuit/pressure",
             name=f"Soledruck {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1497,6 +1604,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_brine_pump_speed",
+            translation_key="brine_pump_speed",
             resource_id=f"/heatSources/{hs_id}/brineCircuit/pumpSpeed",
             name=f"Solepumpe Drehzahl {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1508,6 +1616,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_brine_volume_flow",
+            translation_key="brine_volume_flow",
             resource_id=f"/heatSources/{hs_id}/brineCircuit/volumeFlow",
             name=f"Sole Durchfluss {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1521,6 +1630,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         # Unit-specific emon sensors
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_emon_total_output",
+            translation_key="emon_total_output",
             resource_id=f"/heatSources/{hs_id}/emon/totalConsumption",
             name=f"Erzeugte Wärmeenergie Gesamt {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1534,6 +1644,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_emon_total_compressor",
+            translation_key="emon_total_compressor",
             resource_id=f"/heatSources/{hs_id}/emon/totalConsumption",
             name=f"Verdichter Energie Gesamt {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1547,6 +1658,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_emon_ch_output",
+            translation_key="emon_ch_output",
             resource_id=f"/heatSources/{hs_id}/emon/chConsumption",
             name=f"Erzeugte Wärmeenergie Heizung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1560,6 +1672,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_emon_ch_compressor",
+            translation_key="emon_ch_compressor",
             resource_id=f"/heatSources/{hs_id}/emon/chConsumption",
             name=f"Verdichter Energie Heizung {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1573,6 +1686,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_emon_dhw_output",
+            translation_key="emon_dhw_output",
             resource_id=f"/heatSources/{hs_id}/emon/dhwConsumption",
             name=f"Erzeugte Wärmeenergie Warmwasser {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1586,6 +1700,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_emon_dhw_compressor",
+            translation_key="emon_dhw_compressor",
             resource_id=f"/heatSources/{hs_id}/emon/dhwConsumption",
             name=f"Verdichter Energie Warmwasser {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -1607,6 +1722,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
     return [
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_room_temperature",
+            translation_key="room_temperature",
             resource_id=f"/heatingCircuits/{hc_id}/roomtemperature",
             name=f"Raumtemperatur {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1619,6 +1735,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_current_room_setpoint",
+            translation_key="room_temperature_setpoint",
             resource_id=f"/heatingCircuits/{hc_id}/currentRoomSetpoint",
             name=f"Raumtemperatur Soll {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1631,6 +1748,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_actual_humidity",
+            translation_key="actual_humidity",
             resource_id=f"/heatingCircuits/{hc_id}/actualHumidity",
             name=f"Luftfeuchtigkeit {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1643,6 +1761,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_max_flow_temp",
+            translation_key="max_flow_temp",
             resource_id=f"/heatingCircuits/{hc_id}/maxFlowTemp",
             name=f"Maximale Vorlauftemperatur {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1655,6 +1774,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_mixer_position",
+            translation_key="mixer_position",
             resource_id=f"/heatingCircuits/{hc_id}/mixerPosition",
             name=f"Mischerposition {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1666,6 +1786,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_current_su_wi_mode",
+            translation_key="current_su_wi_mode",
             resource_id=f"/heatingCircuits/{hc_id}/currentSuWiMode",
             name=f"Sommer-/Winterbetrieb {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1675,6 +1796,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_overall_status",
+            translation_key="overall_status",
             resource_id=f"/heatingCircuits/{hc_id}/overallStatus",
             name=f"Status {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1685,6 +1807,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_boost_remaining_time",
+            translation_key="boost_remaining_time",
             resource_id=f"/heatingCircuits/{hc_id}/boostRemainingTime",
             name=f"Boost Restzeit {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1696,6 +1819,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_holiday_mode",
+            translation_key="holiday_mode",
             resource_id=f"/signals/SC.{hc_id.upper()}.HolidayMode",
             name=f"Urlaubsmodus {dev_name}",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -1714,6 +1838,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
     return [
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_actual_temp",
+            translation_key="dhw_temperature",
             resource_id=f"/dhwCircuits/{dhw_id}/actualTemp",
             name=f"Warmwassertemperatur Ist {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1726,6 +1851,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_current_setpoint",
+            translation_key="target_dhw_temperature",
             resource_id=f"/dhwCircuits/{dhw_id}/currentSetpoint",
             name=f"Warmwassertemperatur Soll {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1738,6 +1864,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_out_temp",
+            translation_key="out_temperature",
             resource_id=f"/dhwCircuits/{dhw_id}/outTemp",
             name=f"Auslauftemperatur {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1750,6 +1877,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_current_friwa_supply_temp",
+            translation_key="friwa_supply_temp",
             resource_id=f"/dhwCircuits/{dhw_id}/currentFriwaSupplyTemperature",
             name=f"Frischwasser Vorlauf {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1762,6 +1890,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_friwa_primary_pump_modulation",
+            translation_key="friwa_primary_pump_modulation",
             resource_id=f"/dhwCircuits/{dhw_id}/friwaPrimaryPumpModulation",
             name=f"Frischwasser Primärpumpe Modulation {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1773,6 +1902,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_volume_flow",
+            translation_key="volume_flow",
             resource_id=f"/dhwCircuits/{dhw_id}/volumeFlow",
             name=f"Durchflussmenge {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1784,6 +1914,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_current_temperature_level",
+            translation_key="temperature_level",
             resource_id=f"/dhwCircuits/{dhw_id}/currentTemperatureLevel",
             name=f"Temperaturniveau {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1793,6 +1924,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_overall_status",
+            translation_key="overall_status",
             resource_id=f"/dhwCircuits/{dhw_id}/overallStatus",
             name=f"Status {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1803,6 +1935,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_charge_remaining_time",
+            translation_key="charge_remaining_time",
             resource_id=f"/dhwCircuits/{dhw_id}/chargeRemainingTime",
             name=f"Lade-Restzeit {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1814,6 +1947,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_holiday_mode",
+            translation_key="holiday_mode",
             resource_id=f"/signals/SC.{dhw_id.upper()}.HolidayMode",
             name=f"Urlaubsmodus {dev_name}",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -1832,6 +1966,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
     return [
         BoschK40SensorEntityDescription(
             key=f"{sc_id}_collector_temp",
+            translation_key="solar_collector_temperature",
             resource_id=f"/solarCircuits/{sc_id}/collectorTemperature",
             name=f"Kollektortemperatur {dev_name}",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
@@ -1844,6 +1979,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
         ),
         BoschK40SensorEntityDescription(
             key=f"{sc_id}_dhw_tank_bottom_temp",
+            translation_key="solar_storage_temperature",
             resource_id=f"/solarCircuits/{sc_id}/dhwTankBottomTemperature",
             name=f"Solarspeicher Temperatur unten {dev_name}",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
@@ -1856,6 +1992,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
         ),
         BoschK40SensorEntityDescription(
             key=f"{sc_id}_pump_modulation",
+            translation_key="solar_pump_modulation",
             resource_id=f"/solarCircuits/{sc_id}/pumpModulation",
             name=f"Solarpumpe Modulation {dev_name}",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
@@ -1867,6 +2004,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
         ),
         BoschK40SensorEntityDescription(
             key=f"{sc_id}_solar_yield",
+            translation_key="solar_yield",
             resource_id=f"/solarCircuits/{sc_id}/solarYield",
             name=f"Solarertrag {dev_name}",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
@@ -1886,6 +2024,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
     return [
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_outdoor_temp",
+            translation_key="outdoor_temperature",
             resource_id=f"/ventilation/{vz_id}/sensors/outdoorTemp",
             name=f"Außentemperatur {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1898,6 +2037,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_supply_temp",
+            translation_key="supply_air_temp",
             resource_id=f"/ventilation/{vz_id}/sensors/supplyTemp",
             name=f"Zulufttemperatur {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1910,6 +2050,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_extract_temp",
+            translation_key="extract_air_temp",
             resource_id=f"/ventilation/{vz_id}/sensors/extractTemp",
             name=f"Ablufttemperatur {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1922,6 +2063,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_exhaust_temp",
+            translation_key="exhaust_air_temp",
             resource_id=f"/ventilation/{vz_id}/sensors/exhaustTemp",
             name=f"Fortlufttemperatur {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1934,6 +2076,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_internal_humidity",
+            translation_key="internal_humidity",
             resource_id=f"/ventilation/{vz_id}/sensors/internalHumidity",
             name=f"Raumluftfeuchtigkeit {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1946,6 +2089,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_external_humidity",
+            translation_key="external_humidity",
             resource_id=f"/ventilation/{vz_id}/sensors/externalHumidity",
             name=f"Außenluftfeuchtigkeit {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1958,6 +2102,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_internal_air_quality",
+            translation_key="internal_air_quality",
             resource_id=f"/ventilation/{vz_id}/sensors/internalAirQuality",
             name=f"Raumluftqualität {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1970,6 +2115,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_external_air_quality",
+            translation_key="external_air_quality",
             resource_id=f"/ventilation/{vz_id}/sensors/externalAirQuality",
             name=f"Außenluftqualität {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1982,6 +2128,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_supply_fan_speed",
+            translation_key="supply_fan_speed",
             resource_id=f"/ventilation/{vz_id}/sensors/supplyFanRotation",
             name=f"Zuluftventilator Drehzahl {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -1993,6 +2140,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_exhaust_fan_speed",
+            translation_key="exhaust_fan_speed",
             resource_id=f"/ventilation/{vz_id}/exhaustFanSpeed",
             name=f"Abluftventilator Drehzahl {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2004,6 +2152,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_supply_fan_power",
+            translation_key="supply_fan_power",
             resource_id=f"/ventilation/{vz_id}/supplyFanPower",
             name=f"Zuluft Leistung {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2015,6 +2164,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_exhaust_fan_power",
+            translation_key="exhaust_fan_power",
             resource_id=f"/ventilation/{vz_id}/exhaustFanPower",
             name=f"Abluft Leistung {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2026,6 +2176,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_exhaust_fan_level",
+            translation_key="exhaust_fan_level",
             resource_id=f"/ventilation/{vz_id}/exhaustFanLevel",
             name=f"Lüfterstufe {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2035,6 +2186,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_filter_remaining_time",
+            translation_key="filter_remaining_time",
             resource_id=f"/ventilation/{vz_id}/filter/remainingTime",
             name=f"Filter Restzeit {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2046,6 +2198,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_appliance_run_time",
+            translation_key="appliance_run_time",
             resource_id=f"/ventilation/{vz_id}/applianceRunTime",
             name=f"Betriebszeit {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2058,6 +2211,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_el_aux_heater_power",
+            translation_key="el_aux_heater_power",
             resource_id=f"/ventilation/{vz_id}/elAuxHeaterPower",
             name=f"Zuheizer Leistung {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2069,6 +2223,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_electrical_aux_heater_power",
+            translation_key="electrical_aux_heater_power",
             resource_id=f"/ventilation/{vz_id}/electricalAuxHeaterPower",
             name=f"Elektrischer Zuheizer Leistung {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2080,6 +2235,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_max_indoor_air_quality",
+            translation_key="max_indoor_air_quality",
             resource_id=f"/ventilation/{vz_id}/maxIndoorAirQuality",
             name=f"Max. Raumluftqualität Grenzwert {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2093,6 +2249,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_max_relative_humidity",
+            translation_key="max_relative_humidity",
             resource_id=f"/ventilation/{vz_id}/maxRelativeHumidity",
             name=f"Max. Raumluftfeuchtigkeit Grenzwert {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2106,6 +2263,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
         ),
         BoschK40SensorEntityDescription(
             key=f"{vz_id}_summer_bypass_flap_power",
+            translation_key="summer_bypass_flap_power",
             resource_id=f"/ventilation/{vz_id}/summerBypass/flapPower",
             name=f"Sommerbypass Klappenstellung {dev_name}",
             target_device_type=DEV_TYPE_VENTILATION,
@@ -2122,6 +2280,7 @@ def build_pool_sensor() -> BoschK40SensorEntityDescription:
     """Build sensor description for pool."""
     return BoschK40SensorEntityDescription(
         key="pool_current_temperature",
+        translation_key="pool_temperature",
         resource_id="/pool/currentTemp",
         name="Pooltemperatur",
         target_device_type=DEV_TYPE_POOL,
@@ -2139,6 +2298,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
     return [
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_average_current_temp",
+            translation_key="room_temperature",
             resource_id=f"/zones/{zone_id}/averageCurrentTemperature",
             name=f"Raumtemperatur {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2151,6 +2311,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_average_actual_humidity",
+            translation_key="actual_humidity",
             resource_id=f"/zones/{zone_id}/averageActualHumidity",
             name=f"Luftfeuchtigkeit {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2163,6 +2324,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_current_room_setpoint",
+            translation_key="room_temperature_setpoint",
             resource_id=f"/zones/{zone_id}/currentRoomSetpoint",
             name=f"Raumtemperatur Soll {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2175,6 +2337,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_heating_operation_mode",
+            translation_key="heating_mode",
             resource_id=f"/zones/{zone_id}/heating/operationMode",
             name=f"Heizmodus {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2184,6 +2347,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_cooling_operation_mode",
+            translation_key="cooling_mode",
             resource_id=f"/zones/{zone_id}/cooling/operationMode",
             name=f"Kühlmodus {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2193,6 +2357,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_name",
+            translation_key="zone_name",
             resource_id=f"/zones/{zone_id}/name",
             name=f"Zonenname {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2204,6 +2369,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_heating_manual_setpoint",
+            translation_key="manual_heating_setpoint",
             resource_id=f"/zones/{zone_id}/heating/manualRoomSetpoint",
             name=f"Sollwert Manuell Heizen {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2216,6 +2382,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_heating_temp_setpoint",
+            translation_key="temporary_heating_setpoint",
             resource_id=f"/zones/{zone_id}/heating/temporaryRoomSetpoint",
             name=f"Sollwert Temporär Heizen {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2228,6 +2395,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_cooling_manual_setpoint",
+            translation_key="manual_cooling_setpoint",
             resource_id=f"/zones/{zone_id}/cooling/manualRoomSetpoint",
             name=f"Sollwert Manuell Kühlen {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2240,6 +2408,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_cooling_temp_setpoint",
+            translation_key="temporary_cooling_setpoint",
             resource_id=f"/zones/{zone_id}/cooling/temporaryRoomSetpoint",
             name=f"Sollwert Temporär Kühlen {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2252,6 +2421,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
         ),
         BoschK40SensorEntityDescription(
             key=f"{zone_id}_icon",
+            translation_key="zone_icon",
             resource_id=f"/zones/{zone_id}/icon",
             name=f"Zonensymbol {dev_name}",
             target_device_type=DEV_TYPE_ZONE,
@@ -2270,6 +2440,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
     return [
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_room_temperature",
+            translation_key="room_temperature",
             resource_id=f"/devices/{dev_id}/roomtemperature",
             name=f"Raumtemperatur {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2282,6 +2453,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_current_room_setpoint",
+            translation_key="room_temperature_setpoint",
             resource_id=f"/devices/{dev_id}/currentRoomSetpoint",
             name=f"Raumtemperatur Soll {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2294,6 +2466,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_actual_humidity",
+            translation_key="actual_humidity",
             resource_id=f"/devices/{dev_id}/actualHumidity",
             name=f"Luftfeuchtigkeit {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2306,6 +2479,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_actuator_modulation",
+            translation_key="actuator_modulation",
             resource_id=f"/devices/{dev_id}/actuatorModulation",
             name=f"Stellantrieb Modulation {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2317,6 +2491,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_battery",
+            translation_key="battery",
             resource_id=f"/devices/{dev_id}/battery",
             name=f"Batterie {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2326,6 +2501,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_signal",
+            translation_key="signal_strength",
             resource_id=f"/devices/{dev_id}/signal",
             name=f"Signalstärke {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2339,6 +2515,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_signal_icon",
+            translation_key="signal_rating",
             resource_id=f"/devices/{dev_id}/signalIcon",
             name=f"Signalbewertung {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2349,6 +2526,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_name",
+            translation_key="device_model",
             resource_id=f"/devices/{dev_id}/name",
             name=f"Modell {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2359,6 +2537,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_type",
+            translation_key="device_type",
             resource_id=f"/devices/{dev_id}/type",
             name=f"Typ {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2369,6 +2548,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_firmware",
+            translation_key="device_firmware",
             resource_id=f"/devices/{dev_id}/versionFirmware",
             name=f"Firmware {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2379,6 +2559,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_assigned_hc",
+            translation_key="assigned_heating_circuit",
             resource_id=f"/devices/{dev_id}/assignedHC",
             name=f"Zugeordneter Heizkreis {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2389,6 +2570,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_actuator_power",
+            translation_key="actuator_power",
             resource_id=f"/devices/{dev_id}/actuatorPower",
             name=f"Stellantrieb Leistung {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2400,6 +2582,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_operation_mode",
+            translation_key="operation_mode",
             resource_id=f"/devices/{dev_id}/operationMode",
             name=f"Betriebsmodus {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2409,6 +2592,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_rf_error_cause",
+            translation_key="rf_error_cause",
             resource_id=f"/devices/{dev_id}/rfErrorCause",
             name=f"Funkfehler Ursache {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2419,6 +2603,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_rf_time_connection_lost",
+            translation_key="rf_connection_lost_time",
             resource_id=f"/devices/{dev_id}/rfTimeofConnectionLost",
             name=f"Verbindungsverlust Zeitstempel {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2429,6 +2614,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_sgtin",
+            translation_key="sgtin",
             resource_id=f"/devices/{dev_id}/sgtin",
             name=f"Seriennummer (SGTIN) {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2439,6 +2625,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_zone_id",
+            translation_key="assigned_zone",
             resource_id=f"/devices/{dev_id}/zoneId",
             name=f"Zugeordnete Zone {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2449,6 +2636,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
         ),
         BoschK40SensorEntityDescription(
             key=f"{dev_id}_errors",
+            translation_key="device_errors",
             resource_id=f"/devices/{dev_id}/errors",
             name=f"Gerätefehler {dev_name}",
             target_device_type=DEV_TYPE_DEVICE,
@@ -2471,6 +2659,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         # Heat source / boiler
         BoschK40BinarySensorEntityDescription(
             key="flame_status",
+            translation_key="flame_status",
             resource_id="/heatSources/flameStatus",
             name="Flammenstatus",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2479,6 +2668,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="smart_function_active",
+            translation_key="smart_function_active",
             resource_id="/heatSources/smartFunction/active",
             name="Smart-Funktion aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2486,6 +2676,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pv_contact_state",
+            translation_key="pv_contact_state",
             resource_id="/heatSources/pvContactState",
             name="PV-Kontakt",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2493,6 +2684,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="fallback_operation_status",
+            translation_key="fallback_operation_status",
             resource_id="/heatSources/fallbackOperation/status",
             name="Notbetrieb",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2502,6 +2694,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         # System constraints & powers
         BoschK40BinarySensorEntityDescription(
             key="power_guard_active",
+            translation_key="power_guard_active",
             resource_id="/system/powerGuard/active",
             name="Power Guard aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2509,6 +2702,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="power_limitation_active",
+            translation_key="power_limitation_active",
             resource_id="/system/powerLimitation/active",
             name="Leistungsbegrenzung aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2516,6 +2710,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="silent_mode_status",
+            translation_key="silent_mode_status",
             resource_id="/system/powerConstraints/silentMode/status",
             name="Flüsterbetrieb aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2523,6 +2718,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="maintenance_mode_status",
+            translation_key="maintenance_mode_status",
             resource_id="/system/powerConstraints/maintenanceMode/status",
             name="Wartungsmodus",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2530,6 +2726,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_heating_block",
+            translation_key="pc_heating_block",
             resource_id="/system/powerConstraints/externalInputs/heatingBlock/status",
             name="Heizsperre aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2537,6 +2734,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_cooling_block",
+            translation_key="pc_cooling_block",
             resource_id="/system/powerConstraints/externalInputs/coolingBlock/status",
             name="Kühlsperre aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2544,6 +2742,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_dhw_block",
+            translation_key="pc_dhw_block",
             resource_id="/system/powerConstraints/externalInputs/dhwBlock/status",
             name="Warmwassersperre aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2551,6 +2750,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_pv_status",
+            translation_key="pc_pv_status",
             resource_id="/system/powerConstraints/externalInputs/pv/status",
             name="PV-Überschuss aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2558,6 +2758,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_additional_heater_block",
+            translation_key="pc_additional_heater_block",
             resource_id="/system/powerConstraints/externalInputs/additionalHeaterBlock/status",
             name="Zuheizersperre aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2565,6 +2766,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_appliance_power_block",
+            translation_key="pc_appliance_power_block",
             resource_id="/system/powerConstraints/externalInputs/appliancePowerBlock/status",
             name="Geräteleistungssperre aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2572,6 +2774,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_high_source_temp_stop_cooling",
+            translation_key="pc_high_source_temp_stop_cooling",
             resource_id="/system/powerConstraints/highSourceTempStopCooling/status",
             name="Kühlsperre Hochtemperaturschutz aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2580,6 +2783,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_high_source_temp_stop_heating",
+            translation_key="pc_high_source_temp_stop_heating",
             resource_id="/system/powerConstraints/highSourceTempStopHeating/status",
             name="Heizsperre Hochtemperaturschutz aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2588,6 +2792,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_low_source_temp_stop_cooling",
+            translation_key="pc_low_source_temp_stop_cooling",
             resource_id="/system/powerConstraints/lowSourceTempStopCooling/status",
             name="Kühlsperre Tieftemperaturschutz aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2596,6 +2801,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_low_source_temp_stop_heating",
+            translation_key="pc_low_source_temp_stop_heating",
             resource_id="/system/powerConstraints/lowSourceTempStopHeating/status",
             name="Heizsperre Tieftemperaturschutz aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2604,6 +2810,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_power_elec_desired",
+            translation_key="pc_power_elec_desired",
             resource_id="/system/powerConstraints/powerElecDesired/status",
             name="Elektrische Leistungsvorgabe aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2612,6 +2819,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="pc_user_additional_heater_block",
+            translation_key="pc_user_additional_heater_block",
             resource_id="/system/powerConstraints/userAdditionalHeaterBlock/status",
             name="Benutzer Zuheizersperre aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2619,6 +2827,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="vt_dhw_high_price_enable",
+            translation_key="vt_dhw_high_price_enable",
             resource_id="/system/variableTariff/dhw/highPriceEnable",
             name="Variabler Tarif Warmwasser Hochpreis aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2626,6 +2835,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="vt_dhw_low_price_enable",
+            translation_key="vt_dhw_low_price_enable",
             resource_id="/system/variableTariff/dhw/lowPriceEnable",
             name="Variabler Tarif Warmwasser Niedrigpreis aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2633,6 +2843,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="additional_heater_primary_status",
+            translation_key="additional_heater_primary_status",
             resource_id="/heatSources/additionalHeater/primary/status",
             name="Zuheizer Primärstatus",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2641,6 +2852,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="eheater_status",
+            translation_key="eheater_status",
             resource_id="/heatSources/Source/eHeater/status",
             name="Elektroheizer Status",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2649,6 +2861,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="external_input_1_state",
+            translation_key="external_input_1_state",
             resource_id="/heatSources/externalInputs/input1/state",
             name="Externer Eingang 1",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2656,6 +2869,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="external_input_2_state",
+            translation_key="external_input_2_state",
             resource_id="/heatSources/externalInputs/input2/state",
             name="Externer Eingang 2",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2663,6 +2877,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="external_input_3_state",
+            translation_key="external_input_3_state",
             resource_id="/heatSources/externalInputs/input3/state",
             name="Externer Eingang 3",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2670,6 +2885,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="external_input_4_state",
+            translation_key="external_input_4_state",
             resource_id="/heatSources/externalInputs/input4/state",
             name="Externer Eingang 4",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2677,6 +2893,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="external_inputs_cooling_block",
+            translation_key="external_inputs_cooling_block",
             resource_id="/heatSources/externalInputs/status/coolingBlock",
             name="Kühlsperre Extern aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2685,6 +2902,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="power_constraints_power_guard_status",
+            translation_key="power_constraints_power_guard_status",
             resource_id="/system/powerConstraints/powerGuard/status",
             name="PowerGuard Status",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2692,6 +2910,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="power_constraints_power_elec_limitation_status",
+            translation_key="power_constraints_power_elec_limitation_status",
             resource_id="/system/powerConstraints/powerElecLimitation/status",
             name="Elektrische Leistungsbegrenzung aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2699,6 +2918,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="power_constraints_dhw_reduce_alarm",
+            translation_key="power_constraints_dhw_reduce_alarm",
             resource_id="/system/powerConstraints/dhwReduceTempOnAlarm/status",
             name="Warmwasser Reduzierung bei Alarm aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2707,6 +2927,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="power_constraints_appliance_power_limit",
+            translation_key="power_constraints_appliance_power_limit",
             resource_id="/system/powerConstraints/externalInputs/appliancePowerLimit/status",
             name="Geräteleistungsgrenze aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2714,6 +2935,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="variable_tariff_ch_optimization",
+            translation_key="variable_tariff_ch_optimization",
             resource_id="/system/variableTariff/ch/optimization",
             name="Variabler Tarif Heizung Optimierung aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2721,6 +2943,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         ),
         BoschK40BinarySensorEntityDescription(
             key="variable_tariff_dhw_optimization",
+            translation_key="variable_tariff_dhw_optimization",
             resource_id="/system/variableTariff/dhw/optimization",
             name="Variabler Tarif Warmwasser Optimierung aktiv",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
@@ -2735,6 +2958,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         descriptions.append(
             BoschK40BinarySensorEntityDescription(
                 key=f"{dhw}_td_running_status",
+                translation_key="thermal_disinfection_running",
                 resource_id=f"/dhwCircuits/{dhw}/tdrunningStatus",
                 name=f"Thermische Desinfektion {dev_name}",
                 target_device_type=DEV_TYPE_DHW_CIRCUIT,
@@ -2752,6 +2976,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         descriptions.extend([
             BoschK40BinarySensorEntityDescription(
                 key=f"{hc}_pump_status",
+                translation_key="heating_circuit_pump",
                 resource_id=f"/heatingCircuits/{hc}/pumpStatus",
                 name=f"Heizkreispumpe {dev_name}",
                 target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -2762,6 +2987,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
             ),
             BoschK40BinarySensorEntityDescription(
                 key=f"{hc}_open_window_status",
+                translation_key="open_window_detection",
                 resource_id=f"/heatingCircuits/{hc}/openWindowDetection/status",
                 name=f"Fenster-Offen-Erkennung {dev_name}",
                 target_device_type=DEV_TYPE_HEATING_CIRCUIT,
@@ -2779,6 +3005,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         descriptions.append(
             BoschK40BinarySensorEntityDescription(
                 key=f"{zone}_child_lock",
+                translation_key="child_lock",
                 resource_id=f"/zones/{zone}/childLock",
                 name=f"Kindersicherung {dev_name}",
                 target_device_type=DEV_TYPE_ZONE,
@@ -2796,6 +3023,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
         descriptions.extend([
             BoschK40BinarySensorEntityDescription(
                 key=f"{dev}_rf_connection_status",
+                translation_key="rf_connection_status",
                 resource_id=f"/devices/{dev}/rfConnectionStatus",
                 name=f"Verbindung {dev_name}",
                 target_device_type=DEV_TYPE_DEVICE,
@@ -2806,6 +3034,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
             ),
             BoschK40BinarySensorEntityDescription(
                 key=f"{dev}_rf_paired_status",
+                translation_key="rf_paired_status",
                 resource_id=f"/devices/{dev}/rfPairedStatus",
                 name=f"Pairing {dev_name}",
                 target_device_type=DEV_TYPE_DEVICE,
@@ -2855,17 +3084,18 @@ def get_all_candidate_sensor_descriptions() -> list[BoschK40SensorEntityDescript
 # ---------------------------------------------------------------------------
 
 SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass | None, Any]] = {
+    # HybridManager (HM200) Außeneinheit ODU Monitor Temperaturen
+    "HYBMAN.ODUMONITOR.JR0Temp": ("Außeneinheit JR0 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.JR1Temp": ("Außeneinheit JR1 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TA4Temp": ("Außeneinheit TA4 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TC0Temp": ("Außeneinheit TC0 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.ODUMONITOR.TC3Temp": ("Außeneinheit TC3 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.ODUMONITOR.TL2Temp": ("Außeneinheit TL2 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TR6Temp": ("Außeneinheit TR6 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TC0Temp": ("Außeneinheit TC0 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TA4Temp": ("Außeneinheit TA4 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.ODUMONITOR.TR1Temp": ("Außeneinheit TR1 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.ODUMONITOR.TR3Temp": ("Außeneinheit TR3 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.JR1Temp": ("Außeneinheit JR1 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.ODUMONITOR.TR4Temp": ("Außeneinheit TR4 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.JR0Temp": ("Außeneinheit JR0 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.ODUMONITOR.TR5Temp": ("Außeneinheit TR5 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TR6Temp": ("Außeneinheit TR6 Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.TempFlowHeatPump": ("Wärmepumpe Vorlauftemperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.TempReturnHeatPump": ("Wärmepumpe Rücklauftemperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.TempSysReturn": ("System Rücklauftemperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
@@ -2900,13 +3130,6 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "SOLAR.HeatCount.Minus1MonthlySolarGain": ("Solarertrag Vormonat", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.Minus1YearlySolarGain": ("Solarertrag Vorjahr", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.TotalLastMinus1HourGain": ("Solarertrag Letzte Stunde", SensorDeviceClass.ENERGY, None, UnitOfEnergy.KILO_WATT_HOUR),
-    # HybridManager (HM200) Außeneinheit ODU Monitor
-    "HYBMAN.ODUMONITOR.JR0Temp": ("Temperatur Wärmetauscher Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TA4Temp": ("Temperatur Sauggas Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TC0Temp": ("Temperatur Verdichter-Kopf", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TC3Temp": ("Temperatur Heißgas Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TL2Temp": ("Temperatur Flüssigkeitsleitung", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.ODUMONITOR.TR1Temp": ("Temperatur Lufteintritt Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
 
     # Kessel (MC110) & Heizkreis & Solar
     "SRC.RelativeTime": ("Relative Betriebszeit Kessel", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
@@ -3175,9 +3398,11 @@ def create_dynamic_binary_sensor_description(
     icon: str | None = None
     full_name: str | None = None
 
+    trans_key: str | None = None
     if parts[0] == "signals" and len(parts) >= 2:
         sig_id = parts[1]
         if sig_id in SIGNAL_BINARY_MAP:
+            trans_key = sig_id.lower().replace(".", "_")
             full_name, device_class, icon = SIGNAL_BINARY_MAP[sig_id]
         else:
             clean_leaf = sig_id.split(".")[-1]
@@ -3247,6 +3472,7 @@ def create_dynamic_binary_sensor_description(
         key=f"dyn_{cleaned_path.replace('/', '_').replace('.', '_')}",
         resource_id=resource_id,
         name=full_name,
+        translation_key=trans_key,
         target_device_type=dev_type,
         device_sub_id=sub_id,
         device_name=dev_name,
@@ -3311,9 +3537,11 @@ def create_dynamic_sensor_description(
         unit = SIGNAL_STRENGTH_DECIBELS_MILLIWATT
 
     # 3. Create readable name
+    trans_key: str | None = None
     if parts[0] == "signals" and len(parts) >= 2:
         sig_id = parts[1]
         if sig_id in SIGNAL_NAME_MAP:
+            trans_key = sig_id.lower().replace(".", "_")
             friendly_name, mapped_class, mapped_state, mapped_unit = SIGNAL_NAME_MAP[sig_id]
             if mapped_class:
                 device_class = mapped_class
@@ -3380,6 +3608,7 @@ def create_dynamic_sensor_description(
         key=f"dyn_{cleaned_path.replace('/', '_').replace('.', '_')}",
         resource_id=resource_id,
         name=full_name,
+        translation_key=trans_key,
         target_device_type=dev_type,
         device_sub_id=sub_id,
         device_name=dev_name,
