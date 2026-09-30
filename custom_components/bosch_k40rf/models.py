@@ -108,6 +108,43 @@ def decode_bosch_name(raw_val: Any) -> str | None:
     return val_str
 
 
+def sanitize_serial_number(raw_val: Any) -> str | None:
+    """Validate and clean serial number string.
+
+    Strips trailing padding/replacement characters (e.g. 0xFF -> \ufffd) and
+    rejects corrupted binary memory dumps or strings containing control characters.
+    """
+    if raw_val is None:
+        return None
+    if isinstance(raw_val, float):
+        try:
+            val_str = str(int(raw_val))
+        except (ValueError, OverflowError):
+            val_str = str(raw_val).strip()
+    else:
+        val_str = str(raw_val).strip()
+
+    if not val_str or val_str.lower() in ("none", "null", "unknown", "unavailable", "0"):
+        return None
+
+    # Strip trailing nulls, unicode replacement characters (\ufffd), or 0xFF padding
+    val_clean = val_str.rstrip("\x00\ufffd \t\r\n\x1a\xff")
+
+    # If any control characters (0..31, 127) or replacement characters remain, reject corrupted data
+    if any(ord(c) < 32 or ord(c) == 127 or c == "\ufffd" for c in val_clean):
+        return None
+
+    # Bosch/Buderus serial numbers are 6..40 alphanumeric chars (plus optional hyphens or periods)
+    if not re.fullmatch(r"[A-Za-z0-9\-\.]{6,40}", val_clean):
+        return None
+
+    # Must contain at least 5 digits
+    if sum(1 for c in val_clean if c.isdigit()) < 5:
+        return None
+
+    return val_clean
+
+
 def parse_notifications(raw_val: Any) -> str | int:
     """Parse notifications list or count."""
     if not raw_val:

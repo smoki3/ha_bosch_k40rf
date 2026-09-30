@@ -35,7 +35,7 @@ from .const import (
     DOMAIN,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
-from .models import BoschK40BinarySensorEntityDescription
+from .models import BoschK40BinarySensorEntityDescription, sanitize_serial_number
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -171,11 +171,14 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 or self.coordinator.get_basic_info_module(hw_ident="K40RF")
             )
             gw_ver = (gw_mod.get("Ver") if gw_mod else None) or firmware
-            gw_sn = (
-                str(gw_mod.get("ModuleSerialNumber"))
-                if gw_mod and gw_mod.get("ModuleSerialNumber")
-                else None
-            ) or self.coordinator.gateway_info.get("serial_number")
+            gw_sn = sanitize_serial_number(
+                (
+                    gw_mod.get("ModuleSerialNumber")
+                    if gw_mod and gw_mod.get("ModuleSerialNumber")
+                    else None
+                )
+                or self.coordinator.gateway_info.get("serial_number")
+            )
             connections = set()
             if mac:
                 connections.add((CONNECTION_NETWORK_MAC, mac))
@@ -207,7 +210,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                     )
                     k_hw = (k_mod.get("ModuleHwIdentStr") if k_mod else None) or "MC110"
                     k_ver = k_mod.get("Ver") if k_mod else None
-                    k_sn = str(k_mod.get("ModuleSerialNumber")) if k_mod and k_mod.get("ModuleSerialNumber") else None
+                    k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
                     return DeviceInfo(
                         identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
                         name=f"{brand} Kessel ({k_hw})" if k_hw != "Kessel" else f"{brand} Kessel",
@@ -232,7 +235,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                     )
                     hm_hw = (hm_mod.get("ModuleHwIdentStr") if hm_mod else None) or "HM200.2"
                     hm_ver = hm_mod.get("Ver") if hm_mod else None
-                    hm_sn = str(hm_mod.get("ModuleSerialNumber")) if hm_mod and hm_mod.get("ModuleSerialNumber") else None
+                    hm_sn = sanitize_serial_number(hm_mod.get("ModuleSerialNumber")) if hm_mod else None
                     return DeviceInfo(
                         identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_hybman")},
                         name=f"{brand} HybridManager ({hm_hw})" if hm_hw else f"{brand} HybridManager",
@@ -250,7 +253,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 )
                 k_hw = (k_mod.get("ModuleHwIdentStr") if k_mod else None) or "MC110"
                 k_ver = k_mod.get("Ver") if k_mod else None
-                k_sn = str(k_mod.get("ModuleSerialNumber")) if k_mod and k_mod.get("ModuleSerialNumber") else None
+                k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
                     name=f"{brand} Kessel ({k_hw})" if k_hw != "Kessel" else f"{brand} Kessel",
@@ -272,14 +275,14 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 appliance = self.coordinator.get_basic_info_module(is_appliance=True)
                 prod_name = appliance.get("ProductName") if appliance else None
                 app_ver = appliance.get("Ver") if appliance else None
-                app_sn = (appliance.get("ProductSerialNumber") or appliance.get("ModuleSerialNumber")) if appliance else None
+                app_sn = sanitize_serial_number(appliance.get("ProductSerialNumber") or appliance.get("ModuleSerialNumber")) if appliance else None
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source")},
                     name=f"{brand} {prod_name}" if prod_name else f"{brand} Wärmeerzeuger",
                     manufacturer=brand,
                     model=prod_name or "Wärmeerzeuger / Wärmepumpe",
                     sw_version=app_ver,
-                    serial_number=str(app_sn) if app_sn else None,
+                    serial_number=app_sn,
                     **via_kwargs,
                 )
 
@@ -296,7 +299,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             mm_mod = self.coordinator.get_basic_info_module(hw_ident="MM")
             mm_hw = mm_mod.get("ModuleHwIdentStr") if mm_mod else None
             mm_ver = mm_mod.get("Ver") if mm_mod else None
-            mm_sn = str(mm_mod.get("ModuleSerialNumber")) if mm_mod and mm_mod.get("ModuleSerialNumber") else None
+            mm_sn = sanitize_serial_number(mm_mod.get("ModuleSerialNumber")) if mm_mod else None
             model_name = f"Heizkreis ({mm_hw})" if mm_hw else "Heizkreis"
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_heating_{sub_id}")},
@@ -338,7 +341,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 manufacturer=brand,
                 model=dev_label,
                 sw_version=str(rf_fw) if rf_fw else None,
-                serial_number=str(rf_sgtin) if rf_sgtin else None,
+                serial_number=sanitize_serial_number(rf_sgtin),
                 **via_kwargs,
             )
 

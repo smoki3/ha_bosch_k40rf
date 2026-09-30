@@ -1,0 +1,80 @@
+# Home Assistant local test environment & configuration
+config/
+home-assistant.log*
+*.db
+*.db-shm
+*.db-wal
+.ha_run.lock
+
+# HACS (nur für lokale Testumgebung)
+custom_components/hacs/
+**/hacs/
+hacs/
+
+# Docker test environment & data
+docker-compose*.yml
+docker/
+.docker/
+*.docker
+.env
+.env.*
+!*.example
+secrets.yaml
+start_homeassistant.sh
+setup_venv.sh
+
+# Python & Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+tests/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Editor & IDE settings
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# API
+api-docs/
+
+anweisung.md
+gitignore

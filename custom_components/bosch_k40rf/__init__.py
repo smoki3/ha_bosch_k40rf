@@ -16,6 +16,7 @@ from .const import (
     PLATFORMS,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
+from .models import sanitize_serial_number
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -41,6 +42,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
+
+    # Clean up any previously stored corrupted/binary serial numbers in Home Assistant device registry
+    from homeassistant.helpers import device_registry as dr
+    dev_reg = dr.async_get(hass)
+    devices = dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
+    for dev in devices:
+        if dev.serial_number:
+            clean_sn = sanitize_serial_number(dev.serial_number)
+            if clean_sn != dev.serial_number:
+                _LOGGER.info(
+                    "Sanitizing device serial number in registry for %s: %r -> %r",
+                    dev.name or dev.id,
+                    dev.serial_number,
+                    clean_sn,
+                )
+                dev_reg.async_update_device(dev.id, serial_number=clean_sn)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
