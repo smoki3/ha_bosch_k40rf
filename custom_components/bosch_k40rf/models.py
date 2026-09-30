@@ -227,6 +227,37 @@ def parse_smart_grid_mode(raw_val: Any) -> str | None:
         return val_str
 
 
+def parse_active_heat_source(raw_val: Any) -> str:
+    """Format active heat source to clean human-readable German description."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if not raw_val:
+        return "Keiner (Standby)"
+    val_str = str(raw_val).strip().lower()
+    mapping = {
+        "none": "Keiner (Standby)",
+        "heatpump_only": "Wärmepumpe",
+        "boiler_only": "Kessel",
+        "parallel": "Parallelbetrieb (WP + Kessel)",
+        "unknown": "Wird ermittelt",
+        "off": "Aus",
+    }
+    return mapping.get(val_str, str(raw_val).replace("_", " ").title())
+
+
+def parse_compressor_timer(raw_val: Any) -> int | float:
+    """Format compressor timer (minutes), defaulting to 0 when inactive."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if raw_val is None:
+        return 0
+    try:
+        f_val = float(raw_val)
+        return int(f_val) if f_val.is_integer() else f_val
+    except (ValueError, TypeError):
+        return 0
+
+
 @dataclass(frozen=True, kw_only=True)
 class BoschK40SensorEntityDescription(SensorEntityDescription):
     """Class describing Bosch K40 sensor entity."""
@@ -467,6 +498,30 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
             value_fn=parse_smart_grid_mode,
         ),
         BoschK40SensorEntityDescription(
+            key="hybman_time_till_next_compressor_start",
+            resource_id="/signals/HYBMAN.TimeTillNextCompressorStart",
+            name="Restzeit bis Verdichterstart",
+            target_device_type=DEV_TYPE_HEAT_SOURCE,
+            device_sub_id="hybman",
+            device_name="HybridManager",
+            device_class=SensorDeviceClass.DURATION,
+            native_unit_of_measurement=UnitOfTime.MINUTES,
+            icon="mdi:timer-sand",
+            value_fn=parse_compressor_timer,
+        ),
+        BoschK40SensorEntityDescription(
+            key="hybman_time_till_next_compressor_stop",
+            resource_id="/signals/HYBMAN.TimeTillNextCompressorStop",
+            name="Restzeit bis Verdichterstopp",
+            target_device_type=DEV_TYPE_HEAT_SOURCE,
+            device_sub_id="hybman",
+            device_name="HybridManager",
+            device_class=SensorDeviceClass.DURATION,
+            native_unit_of_measurement=UnitOfTime.MINUTES,
+            icon="mdi:timer-sand-complete",
+            value_fn=parse_compressor_timer,
+        ),
+        BoschK40SensorEntityDescription(
             key="outdoor_temperature",
             resource_id="/system/sensors/temperatures/outdoor_t1",
             name="Außentemperatur",
@@ -555,7 +610,10 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
             resource_id="/heatSources/hybrid/activeHeatSource",
             name="Aktiver Wärmeerzeuger",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
+            device_sub_id="hybman",
+            device_name="HybridManager",
             icon="mdi:swap-horizontal-bold",
+            value_fn=parse_active_heat_source,
         ),
         BoschK40SensorEntityDescription(
             key="evaporator_temp_tl1",
@@ -2708,6 +2766,7 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "HYBMAN.ODUMONITOR.CompressorSpeedCurr": ("Verdichterdrehzahl ER1 Ist", None, SensorStateClass.MEASUREMENT, PERCENTAGE),
     "HYBMAN.CAN.CompressorSetp": ("Verdichterdrehzahl ER1 Sollwert", None, SensorStateClass.MEASUREMENT, PERCENTAGE),
     "HYBMAN.CAN.PositionVR1": ("Mischer Position VR1", None, SensorStateClass.MEASUREMENT, "%"),
+    "HYBMAN.TimeTillNextCompressorStart": ("Restzeit bis Verdichterstart", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "HYBMAN.TimeTillNextCompressorStop": ("Restzeit bis Verdichterstopp", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "HYBMAN.OpTimeCompressorHeating": ("Verdichterlaufzeit Heizen", SensorDeviceClass.DURATION, SensorStateClass.TOTAL_INCREASING, UnitOfTime.HOURS),
     "HYBMAN.OpTimeCompressorDHW": ("Verdichterlaufzeit Warmwasser", SensorDeviceClass.DURATION, SensorStateClass.TOTAL_INCREASING, UnitOfTime.HOURS),

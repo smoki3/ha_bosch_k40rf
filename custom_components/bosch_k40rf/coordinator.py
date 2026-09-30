@@ -276,8 +276,19 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     or vals is not None
                     or item.get("status") is not None
                     or ep == "/notifications"
+                    or ep.startswith("/signals/HYBMAN.TimeTillNextCompressor")
                 ):
                     valid_endpoints.add(ep)
+
+        # For hybrid managers, always keep compressor start/stop timers active
+        if self.is_hybrid_system:
+            for ep in (
+                "/signals/HYBMAN.TimeTillNextCompressorStart",
+                "/signals/HYBMAN.TimeTillNextCompressorStop",
+            ):
+                valid_endpoints.add(ep)
+                if ep not in initial_data or not isinstance(initial_data.get(ep), dict):
+                    initial_data[ep] = {"id": ep, "value": 0}
 
         newly_found = valid_endpoints - self.active_endpoints
         if newly_found:

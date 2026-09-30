@@ -477,6 +477,13 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
 
         res_data = self.coordinator.data.get(self.entity_description.resource_id)
         if not isinstance(res_data, dict):
+            if self.entity_description.resource_id in (
+                "/signals/HYBMAN.TimeTillNextCompressorStart",
+                "/signals/HYBMAN.TimeTillNextCompressorStop",
+            ):
+                return 0
+            if self.entity_description.resource_id == "/heatSources/hybrid/activeHeatSource":
+                return "Keiner (Standby)"
             return None
 
         # Check for invalid states reported by gateway (e.g. state: [{"invalid": 255}])
@@ -510,6 +517,13 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                     raw_val = first.get("total", next(iter(first.values()), None))
 
         if raw_val is None:
+            if self.entity_description.resource_id in (
+                "/signals/HYBMAN.TimeTillNextCompressorStart",
+                "/signals/HYBMAN.TimeTillNextCompressorStop",
+            ):
+                return 0
+            if self.entity_description.resource_id == "/heatSources/hybrid/activeHeatSource":
+                return "Keiner (Standby)"
             return None
 
         # Check invalid sentinel values from device
@@ -522,7 +536,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
         # Check empty or sentinel strings
         if isinstance(raw_val, str):
             val_clean = raw_val.strip()
-            if not val_clean or val_clean.lower() in ("unknown", "unavailable", "null", "none"):
+            if not val_clean or val_clean.lower() in ("unknown", "unavailable", "null"):
                 return None
 
         # Check standard Bosch sensor fault sentinels (-32768, 65535)

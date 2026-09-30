@@ -376,11 +376,11 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
         on_values = self.entity_description.on_values
         if isinstance(val, str):
             val_clean = val.strip().lower()
-            if not val_clean or val_clean in ("unknown", "unavailable", "null", "none"):
+            if not val_clean or val_clean in ("unknown", "unavailable", "null"):
                 return None
             if val_clean in ("true", "1", "on", "yes", "active"):
                 return True
-            if val_clean in ("false", "0", "off", "no", "inactive"):
+            if val_clean in ("false", "0", "off", "no", "inactive", "none"):
                 return False
             return any(str(o).lower() == val_clean for o in on_values)
 
