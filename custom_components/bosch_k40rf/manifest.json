@@ -3,7 +3,7 @@
   "name": "Bosch K 40 RF",
   "codeowners": ["@smoki3"],
   "config_flow": true,
-  "documentation": "https://github.com/bosch-home-comfort/api-docs",
+  "documentation": "https://github.com/smoki3/ha_bosch_k40rf",
   "integration_type": "hub",
   "iot_class": "local_polling",
   "version": "0.1.0"
