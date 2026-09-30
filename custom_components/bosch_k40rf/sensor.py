@@ -490,16 +490,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
         state_list = res_data.get("state")
         raw_val = res_data.get("value")
 
-        # Custom transformation function if provided (e.g. basicInfo or notifications)
-        if self.entity_description.value_fn:
-            try:
-                # Pass either raw_val or full values dict to value_fn
-                arg = res_data.get("values") if "values" in res_data else raw_val
-                return self.entity_description.value_fn(arg)
-            except Exception as err:
-                _LOGGER.debug("Error transforming value for %s: %s", self.entity_id, err)
-
-        # Handle subkeys (e.g. value_key="outputProduced", "burner", "solar", etc.)
+        # Handle subkeys (e.g. value_key="outputProduced", "burner", "solar", "total", "ch", "dhw", etc.)
         if self.entity_description.value_key:
             target_key = self.entity_description.value_key
             values_list = res_data.get("values")
@@ -509,12 +500,27 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                     if isinstance(item, dict) and target_key in item:
                         raw_val = item[target_key]
                         break
-        elif res_data.get("type") == "emonValue" or "values" in res_data:
+        elif not self.entity_description.value_fn and (res_data.get("type") == "emonValue" or "values" in res_data):
             values_list = res_data.get("values")
             if isinstance(values_list, list) and values_list:
                 first = values_list[0]
                 if isinstance(first, dict):
                     raw_val = first.get("total", next(iter(first.values()), None))
+
+        # Custom transformation function if provided (e.g. basicInfo, notifications, working_time)
+        if self.entity_description.value_fn:
+            try:
+                # If value_key was used, pass the extracted subkey value;
+                # otherwise pass values list (if present) or raw_val
+                if self.entity_description.value_key:
+                    arg = raw_val
+                elif "values" in res_data:
+                    arg = res_data.get("values")
+                else:
+                    arg = raw_val
+                return self.entity_description.value_fn(arg)
+            except Exception as err:
+                _LOGGER.debug("Error transforming value for %s: %s", self.entity_id, err)
 
         if raw_val is None:
             if self.entity_description.resource_id in (

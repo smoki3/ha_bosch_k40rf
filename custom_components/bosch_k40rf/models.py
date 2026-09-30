@@ -258,6 +258,87 @@ def parse_compressor_timer(raw_val: Any) -> int | float:
         return 0
 
 
+def parse_dhw_overall_status(raw_val: Any) -> str:
+    """Format DHW overall status cleanly in German."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if not raw_val:
+        return "Unbekannt"
+    val_str = str(raw_val).strip().lower()
+    mapping = {
+        "dhw_enabled": "Warmwasser an",
+        "dhw_disabled": "Warmwasser aus",
+        "floor_drying": "Estrichtrocknung",
+        "td": "Thermische Desinfektion",
+        "extra": "Extra-Ladung (Boost)",
+        "away": "Abwesend",
+        "holiday": "Urlaubsmodus",
+        "manual_on_high": "Manuell (Hoch)",
+        "manual_on_low": "Manuell (Niedrig)",
+        "manual_on_eco": "Manuell (Eco)",
+        "manual_off": "Manuell aus",
+        "auto": "Automatik",
+    }
+    return mapping.get(val_str, str(raw_val).replace("_", " ").title())
+
+
+def parse_hc_overall_status(raw_val: Any) -> str:
+    """Format Heating Circuit overall status cleanly in German."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if not raw_val:
+        return "Unbekannt"
+    val_str = str(raw_val).strip().lower()
+    mapping = {
+        "ch_enabled": "Heizen an",
+        "ch_disabled": "Heizen aus",
+        "emergency_mode": "Notbetrieb",
+        "floor_drying": "Estrichtrocknung",
+        "summer_idle": "Sommerbetrieb (Inaktiv)",
+        "boost": "Schnellaufheizung (Boost)",
+        "away": "Abwesend",
+        "holiday": "Urlaubsmodus",
+        "cooling_manual_on": "Kühlen manuell an",
+        "cooling_manual_off": "Kühlen manuell aus",
+        "heating_manual_on": "Heizen manuell an",
+        "heating_manual_off": "Heizen manuell aus",
+        "heating_auto": "Heizen Automatik",
+    }
+    return mapping.get(val_str, str(raw_val).replace("_", " ").title())
+
+
+def parse_holiday_mode(raw_val: Any) -> str:
+    """Format Holiday Mode (0=Aus, 1=Urlaub zu Hause, 2=Urlaub abwesend) in German."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if raw_val is None:
+        return "Aus"
+    try:
+        val = int(raw_val)
+    except (ValueError, TypeError):
+        return str(raw_val)
+    mapping = {
+        0: "Aus",
+        1: "Urlaub zu Hause",
+        2: "Urlaub abwesend",
+    }
+    return mapping.get(val, f"Modus {val}")
+
+
+def parse_working_time(raw_val: Any) -> float | int | None:
+    """Convert working time in seconds from gateway to hours."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if raw_val is None:
+        return None
+    try:
+        val_sec = float(raw_val)
+        val_hours = val_sec / 3600.0
+        return int(val_hours) if val_hours.is_integer() else round(val_hours, 1)
+    except (ValueError, TypeError):
+        return None
+
+
 @dataclass(frozen=True, kw_only=True)
 class BoschK40SensorEntityDescription(SensorEntityDescription):
     """Class describing Bosch K40 sensor entity."""
@@ -703,6 +784,8 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
             device_class=SensorDeviceClass.DURATION,
             state_class=SensorStateClass.TOTAL_INCREASING,
             native_unit_of_measurement=UnitOfTime.SECONDS,
+            suggested_unit_of_measurement=UnitOfTime.HOURS,
+            suggested_display_precision=1,
             icon="mdi:clock-outline",
         ),
         # -------------------------------------------------------------------
@@ -1156,7 +1239,9 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             device_name=f"Wärmeerzeuger {sub_title}",
             value_key="total",
             device_class=SensorDeviceClass.DURATION,
-            native_unit_of_measurement=UnitOfTime.HOURS,
+            native_unit_of_measurement=UnitOfTime.SECONDS,
+            suggested_unit_of_measurement=UnitOfTime.HOURS,
+            suggested_display_precision=1,
             state_class=SensorStateClass.TOTAL_INCREASING,
             icon="mdi:clock-outline",
         ),
@@ -1169,7 +1254,9 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             device_name=f"Wärmeerzeuger {sub_title}",
             value_key="ch",
             device_class=SensorDeviceClass.DURATION,
-            native_unit_of_measurement=UnitOfTime.HOURS,
+            native_unit_of_measurement=UnitOfTime.SECONDS,
+            suggested_unit_of_measurement=UnitOfTime.HOURS,
+            suggested_display_precision=1,
             state_class=SensorStateClass.TOTAL_INCREASING,
             icon="mdi:radiator",
         ),
@@ -1182,7 +1269,9 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             device_name=f"Wärmeerzeuger {sub_title}",
             value_key="dhw",
             device_class=SensorDeviceClass.DURATION,
-            native_unit_of_measurement=UnitOfTime.HOURS,
+            native_unit_of_measurement=UnitOfTime.SECONDS,
+            suggested_unit_of_measurement=UnitOfTime.HOURS,
+            suggested_display_precision=1,
             state_class=SensorStateClass.TOTAL_INCREASING,
             icon="mdi:water-boiler",
         ),
@@ -1592,6 +1681,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             device_sub_id=hc_id,
             device_name=dev_name,
             icon="mdi:radiator",
+            value_fn=parse_hc_overall_status,
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_boost_remaining_time",
@@ -1603,6 +1693,16 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             device_class=SensorDeviceClass.DURATION,
             native_unit_of_measurement=UnitOfTime.MINUTES,
             icon="mdi:timer-sand",
+        ),
+        BoschK40SensorEntityDescription(
+            key=f"{hc_id}_holiday_mode",
+            resource_id=f"/signals/SC.{hc_id.upper()}.HolidayMode",
+            name=f"Urlaubsmodus {dev_name}",
+            target_device_type=DEV_TYPE_HEATING_CIRCUIT,
+            device_sub_id=hc_id,
+            device_name=dev_name,
+            icon="mdi:bag-suitcase",
+            value_fn=parse_holiday_mode,
         ),
     ]
 
@@ -1699,6 +1799,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             device_sub_id=dhw_id,
             device_name=dev_name,
             icon="mdi:water-boiler",
+            value_fn=parse_dhw_overall_status,
         ),
         BoschK40SensorEntityDescription(
             key=f"{dhw_id}_charge_remaining_time",
@@ -1710,6 +1811,16 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             device_class=SensorDeviceClass.DURATION,
             native_unit_of_measurement=UnitOfTime.MINUTES,
             icon="mdi:timer-outline",
+        ),
+        BoschK40SensorEntityDescription(
+            key=f"{dhw_id}_holiday_mode",
+            resource_id=f"/signals/SC.{dhw_id.upper()}.HolidayMode",
+            name=f"Urlaubsmodus {dev_name}",
+            target_device_type=DEV_TYPE_DHW_CIRCUIT,
+            device_sub_id=dhw_id,
+            device_name=dev_name,
+            icon="mdi:bag-suitcase",
+            value_fn=parse_holiday_mode,
         ),
     ]
 
@@ -2783,6 +2894,8 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "SC.HC1.MaxFlowTempSetp": ("Max. Vorlauf Sollwert", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.IntRoomTemp": ("Raumtemperatur Intern", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.DampOutdTemp": ("Gedämpfte Außentemperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "SC.HC1.HolidayMode": ("Urlaubsmodus", None, None, None),
+    "SC.DHW1.HolidayMode": ("Urlaubsmodus", None, None, None),
     "SOLAR.HeatCount.Minus1DailySolarGain": ("Solarertrag Vortag", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.Minus1MonthlySolarGain": ("Solarertrag Vormonat", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.Minus1YearlySolarGain": ("Solarertrag Vorjahr", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
@@ -3152,6 +3265,16 @@ def create_dynamic_sensor_description(
     if "smartgridmode" in res_lower:
         value_fn = parse_smart_grid_mode
         icon = "mdi:transmission-tower"
+    elif "overallstatus" in res_lower:
+        if "dhw" in res_lower:
+            value_fn = parse_dhw_overall_status
+            icon = "mdi:water-boiler"
+        else:
+            value_fn = parse_hc_overall_status
+            icon = "mdi:radiator"
+    elif "holidaymode" in res_lower:
+        value_fn = parse_holiday_mode
+        icon = "mdi:bag-suitcase"
     elif "compressorspeed" in res_lower or "verdichterdrehzahl" in name_lower:
         icon = "mdi:speedometer"
     elif "compressor" in res_lower or "verdichter" in name_lower:
@@ -3167,6 +3290,12 @@ def create_dynamic_sensor_description(
     elif device_class == SensorDeviceClass.ENERGY:
         icon = "mdi:lightning-bolt"
 
+    suggested_unit = None
+    suggested_precision = None
+    if device_class == SensorDeviceClass.DURATION and unit == UnitOfTime.SECONDS:
+        suggested_unit = UnitOfTime.HOURS
+        suggested_precision = 1
+
     return BoschK40SensorEntityDescription(
         key=f"dyn_{cleaned_path.replace('/', '_').replace('.', '_')}",
         resource_id=resource_id,
@@ -3177,6 +3306,8 @@ def create_dynamic_sensor_description(
         device_class=device_class,
         state_class=state_class,
         native_unit_of_measurement=unit,
+        suggested_unit_of_measurement=suggested_unit,
+        suggested_display_precision=suggested_precision,
         icon=icon,
         value_fn=value_fn,
     )
