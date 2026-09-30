@@ -2873,10 +2873,10 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "HYBMAN.HighestPermittedTemp": ("Höchste zulässige Temperatur", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.LowOutdoorTempStopHeating": ("Min. Außentemperatur Heizgrenze", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "HYBMAN.HighOutdoorTempStopHeating": ("Max. Außentemperatur Sommerabschaltung", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "HYBMAN.PumpSpeedSetp": ("Pumpendrehzahl Sollwert", None, SensorStateClass.MEASUREMENT, PERCENTAGE),
-    "HYBMAN.ODUMONITOR.CompressorSpeedCurr": ("Verdichterdrehzahl ER1 Ist", None, SensorStateClass.MEASUREMENT, PERCENTAGE),
-    "HYBMAN.CAN.CompressorSetp": ("Verdichterdrehzahl ER1 Sollwert", None, SensorStateClass.MEASUREMENT, PERCENTAGE),
-    "HYBMAN.CAN.PositionVR1": ("Mischer Position VR1", None, SensorStateClass.MEASUREMENT, "%"),
+    "HYBMAN.PumpSpeedSetp": ("Pumpendrehzahl Sollwert", None, SensorStateClass.MEASUREMENT, "%"),
+    "HYBMAN.ODUMONITOR.CompressorSpeedCurr": ("Verdichterdrehzahl Außeneinheit", None, SensorStateClass.MEASUREMENT, "%"),
+    "HYBMAN.CAN.CompressorSetp": ("Verdichter Solldrehzahl", None, SensorStateClass.MEASUREMENT, "%"),
+    "HYBMAN.CAN.PositionVR1": ("3-Wege-Ventil Position VR1", None, SensorStateClass.MEASUREMENT, "%"),
     "HYBMAN.TimeTillNextCompressorStart": ("Restzeit bis Verdichterstart", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "HYBMAN.TimeTillNextCompressorStop": ("Restzeit bis Verdichterstopp", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "HYBMAN.OpTimeCompressorHeating": ("Verdichterlaufzeit Heizen", SensorDeviceClass.DURATION, SensorStateClass.TOTAL_INCREASING, UnitOfTime.HOURS),
@@ -2900,6 +2900,24 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "SOLAR.HeatCount.Minus1MonthlySolarGain": ("Solarertrag Vormonat", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.Minus1YearlySolarGain": ("Solarertrag Vorjahr", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.TotalLastMinus1HourGain": ("Solarertrag Letzte Stunde", SensorDeviceClass.ENERGY, None, UnitOfEnergy.KILO_WATT_HOUR),
+    # HybridManager (HM200) Außeneinheit ODU Monitor
+    "HYBMAN.ODUMONITOR.JR0Temp": ("Temperatur Wärmetauscher Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TA4Temp": ("Temperatur Sauggas Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TC0Temp": ("Temperatur Verdichter-Kopf", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TC3Temp": ("Temperatur Heißgas Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TL2Temp": ("Temperatur Flüssigkeitsleitung", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HYBMAN.ODUMONITOR.TR1Temp": ("Temperatur Lufteintritt Außeneinheit", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+
+    # Kessel (MC110) & Heizkreis & Solar
+    "SRC.RelativeTime": ("Relative Betriebszeit Kessel", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
+    "SRC.SystemPowerSetp": ("Modulationsvorgabe Kessel", None, SensorStateClass.MEASUREMENT, "%"),
+    "SC.HC1.RTSD.CurrentRoomTempSetp": ("Raumsolltemperatur aktuell", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "SC.HC1.CurrentOpStatus": ("Betriebsstatus Heizkreis", None, None, None),
+    "SC.HC1.WDC.RoomInfluence": ("Raumeinfluss Heizkreis", None, SensorStateClass.MEASUREMENT, "%"),
+    "SC.HC1.WDC.SolarInfluence": ("Solareinfluss Heizkreis", None, SensorStateClass.MEASUREMENT, "%"),
+    "SC.RTC.RelativeTimer": ("Relative Betriebszeit Systemregler", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
+    "SOLAR.ActuatorStatistics.PumpRuntimeBasicFunction1": ("Pumpenlaufzeit Solar", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
+    "HC1MOD.FlowCtrl.MixerPosition": ("Mischerposition", None, SensorStateClass.MEASUREMENT, "%"),
     # EEBus (Gateway)
     "GWEEBUS.CEM.ID": ("EEBus CEM ID", None, None, None),
     "GWEEBUS.Status": ("EEBus Status", None, None, None),
@@ -2915,6 +2933,9 @@ SIGNAL_BINARY_MAP: dict[str, tuple[str, BinarySensorDeviceClass | None, str | No
     "HYBMAN.LowNoiseModeActive": ("Flüsterbetrieb aktiv", None, "mdi:volume-mute"),
     "HYBMAN.HeatUpSequence": ("Aufheizsequenz aktiv", BinarySensorDeviceClass.RUNNING, "mdi:fire"),
     "HYBMAN.CompSpeedLimitedDueToSilentMode": ("Verdichter im Flüsterbetrieb begrenzt", None, "mdi:speedometer-slow"),
+    "HYBMAN.LowOutdoorTempStopHeating": ("Heizstopp Niedrige Außentemperatur", None, "mdi:thermometer-chevron-down"),
+    "HYBMAN.HighestPermittedTemp": ("Höchste zulässige Temperatur überschritten", BinarySensorDeviceClass.PROBLEM, "mdi:thermometer-alert"),
+    "HYBMAN.HighOutdoorTempStopHeating": ("Heizstopp Hohe Außentemperatur (Sommer)", None, "mdi:thermometer-chevron-up"),
 
     # Kessel (MC110 / Brenner)
     "SRC.RelayStatus.3WayValve": ("3-Wege-Ventil Kessel", BinarySensorDeviceClass.OPENING, "mdi:valve"),
@@ -3083,6 +3104,63 @@ def is_boolean_endpoint(
     return False
 
 
+FALLBACK_TRANSLATIONS = {
+    "Mixer": "Mischer",
+    "Position": "Position",
+    "Speed": "Drehzahl",
+    "Temp": "Temperatur",
+    "Temperature": "Temperatur",
+    "Flow": "Vorlauf",
+    "Return": "Rücklauf",
+    "Room": "Raum",
+    "Outdoor": "Außen",
+    "Outd": "Außen",
+    "Pressure": "Druck",
+    "Power": "Leistung",
+    "Setp": "Sollwert",
+    "Setpoint": "Sollwert",
+    "Actual": "Aktuell",
+    "Demand": "Bedarf",
+    "Remaining": "Restzeit",
+    "Time": "Zeit",
+    "Runtime": "Laufzeit",
+    "Pump": "Pumpe",
+    "Valve": "Ventil",
+    "Heater": "Heizer",
+    "Heating": "Heizung",
+    "Cooling": "Kühlung",
+    "Burner": "Brenner",
+    "Boiler": "Kessel",
+    "Solar": "Solar",
+    "Gain": "Ertrag",
+    "Status": "Status",
+    "Request": "Anforderung",
+    "Error": "Fehler",
+    "Current": "Aktuell",
+    "Active": "Aktiv",
+    "Defrost": "Abtauung",
+    "Compressor": "Verdichter",
+    "Silent": "Flüsterbetrieb",
+    "Limit": "Begrenzung",
+    "Permitted": "Zulässig",
+    "High": "Hoch",
+    "Low": "Niedrig",
+    "Stop": "Stopp",
+    "Start": "Start",
+    "Switch": "Schalter",
+    "Fan": "Gebläse",
+    "Supply": "Zulauf",
+    "Statistics": "Statistik",
+}
+
+
+def translate_leaf_name(leaf: str) -> str:
+    """Translate individual English camelCase split words into German."""
+    words = leaf.split()
+    translated_words = [FALLBACK_TRANSLATIONS.get(w, w) for w in words]
+    return " ".join(translated_words)
+
+
 def create_dynamic_binary_sensor_description(
     resource_id: str,
     res_data: dict[str, Any],
@@ -3105,10 +3183,11 @@ def create_dynamic_binary_sensor_description(
             clean_leaf = sig_id.split(".")[-1]
             readable_leaf = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", clean_leaf)
             readable_leaf = re.sub(r"([a-z\d])([A-Z])", r"\1 \2", readable_leaf).strip().title()
-            full_name = readable_leaf
+            full_name = translate_leaf_name(readable_leaf)
     else:
         leaf_name = parts[-1]
         readable_leaf = re.sub(r"([A-Z])", r" \1", leaf_name).strip().title()
+        readable_leaf = translate_leaf_name(readable_leaf)
         full_name = f"{readable_leaf} {dev_name}" if dev_name else readable_leaf
 
     res_lower = resource_id.lower()
@@ -3252,10 +3331,11 @@ def create_dynamic_sensor_description(
                     device_class = SensorDeviceClass.TEMPERATURE
                     state_class = SensorStateClass.MEASUREMENT
                     unit = UnitOfTemperature.CELSIUS
-            full_name = readable_leaf
+            full_name = translate_leaf_name(readable_leaf)
     else:
         leaf_name = parts[-1]
         readable_leaf = re.sub(r"([A-Z])", r" \1", leaf_name).strip().title()
+        readable_leaf = translate_leaf_name(readable_leaf)
         full_name = f"{readable_leaf} {dev_name}" if dev_name else readable_leaf
 
     value_fn = None
