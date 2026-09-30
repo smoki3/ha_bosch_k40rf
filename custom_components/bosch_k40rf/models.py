@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 from dataclasses import dataclass
+from datetime import date
 import re
 from typing import Any, Callable
 
@@ -199,6 +200,25 @@ class BoschK40SensorEntityDescription(SensorEntityDescription):
     device_name: str | None = None
     value_key: str | None = None
     value_fn: Callable[[Any], Any] | None = None
+    coordinator_fn: Callable[[Any], Any] | None = None
+
+
+def parse_installation_date(coordinator: Any) -> date | None:
+    """Parse combined installation date from SC day, month, year signals."""
+    day_val = coordinator.get_value("/signals/SC.InstallationDate.Day")
+    month_val = coordinator.get_value("/signals/SC.InstallationDate.Month")
+    year_val = coordinator.get_value("/signals/SC.InstallationDate.Year")
+    if day_val is None or month_val is None or year_val is None:
+        return None
+    try:
+        day = int(day_val)
+        month = int(month_val)
+        year = int(year_val)
+        if year < 100:
+            year += 2000
+        return date(year, month, day)
+    except (ValueError, TypeError):
+        return None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -387,6 +407,18 @@ def build_gateway_sensors() -> list[BoschK40SensorEntityDescription]:
 def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
     """Build sensor descriptions for central heat source / Wärmepumpe."""
     return [
+        BoschK40SensorEntityDescription(
+            key="sc_installation_date",
+            resource_id="/signals/SC.InstallationDate",
+            name="Installationsdatum",
+            target_device_type=DEV_TYPE_HEAT_SOURCE,
+            device_sub_id="hybman",
+            device_name="HybridManager",
+            device_class=SensorDeviceClass.DATE,
+            entity_category=EntityCategory.DIAGNOSTIC,
+            icon="mdi:calendar-check",
+            coordinator_fn=parse_installation_date,
+        ),
         BoschK40SensorEntityDescription(
             key="smart_grid_mode",
             resource_id="/signals/HYBMAN.SmartGridMode",

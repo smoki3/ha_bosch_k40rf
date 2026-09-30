@@ -227,6 +227,8 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         candidate_endpoints: set[str] = set()
 
         for desc in all_sensor_descs + all_binary_descs:
+            if getattr(desc, "coordinator_fn", None) is not None:
+                continue
             ep = desc.resource_id
             if "/heatingCircuits/hc" in ep:
                 if any(f"/{hc}/" in ep for hc in confirmed_circuits["heatingCircuits"]):
@@ -292,6 +294,16 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         for desc in all_sensor_descs:
             if desc.resource_id in self.active_endpoints:
                 matched_sensors.append(desc)
+            elif desc.coordinator_fn is not None and desc.resource_id == "/signals/SC.InstallationDate":
+                if any(
+                    sig in self.active_endpoints
+                    for sig in (
+                        "/signals/SC.InstallationDate.Day",
+                        "/signals/SC.InstallationDate.Month",
+                        "/signals/SC.InstallationDate.Year",
+                    )
+                ):
+                    matched_sensors.append(desc)
 
         # Known static binary sensors
         for desc in all_binary_descs:
@@ -305,6 +317,9 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "/system/update/report",
             "/system/iSRC/installationStatus",
             "/system/iSRC/supportStatus",
+            "/signals/SC.InstallationDate.Day",
+            "/signals/SC.InstallationDate.Month",
+            "/signals/SC.InstallationDate.Year",
         }
         covered_resources = {d.resource_id for d in matched_sensors + matched_binary} | ignored_endpoints
         for ep in self.active_endpoints:

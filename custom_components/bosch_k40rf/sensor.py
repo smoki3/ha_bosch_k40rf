@@ -465,6 +465,13 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
     @property
     def native_value(self) -> Any:
         """Extract and safely convert the native value from coordinator data."""
+        if self.entity_description.coordinator_fn:
+            try:
+                return self.entity_description.coordinator_fn(self.coordinator)
+            except Exception as err:
+                _LOGGER.debug("Error computing coordinator_fn for %s: %s", self.entity_id, err)
+                return None
+
         res_data = self.coordinator.data.get(self.entity_description.resource_id)
         if not isinstance(res_data, dict):
             return None
@@ -557,6 +564,18 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return extra state attributes for diagnostic context."""
         attrs: dict[str, Any] = {}
+        if self.entity_description.resource_id == "/signals/SC.InstallationDate":
+            day = self.coordinator.get_value("/signals/SC.InstallationDate.Day")
+            month = self.coordinator.get_value("/signals/SC.InstallationDate.Month")
+            year = self.coordinator.get_value("/signals/SC.InstallationDate.Year")
+            if day is not None:
+                attrs["day"] = day
+            if month is not None:
+                attrs["month"] = month
+            if year is not None:
+                attrs["year"] = year
+            return attrs
+
         res_data = self.coordinator.data.get(self.entity_description.resource_id)
         if isinstance(res_data, dict):
             if "type" in res_data:
