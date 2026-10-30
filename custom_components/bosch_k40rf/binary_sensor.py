@@ -35,7 +35,12 @@ from .const import (
     DOMAIN,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
-from .models import BoschK40BinarySensorEntityDescription, get_translated_name, sanitize_serial_number
+from .models import (
+    BoschK40BinarySensorEntityDescription,
+    get_translated_name,
+    sanitize_serial_number,
+    translate_device_term,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -117,42 +122,31 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
 
     @property
     def name(self) -> str | None:
-        """Return friendly name with smart hybrid naming."""
-        lang = getattr(self.coordinator.hass.config, "language", "de") or "de"
-        if lang.startswith("en") and self.entity_description.translation_key:
-            en_name = get_translated_name(
-                "binary_sensor",
-                self.entity_description.translation_key,
-                lang,
-                self.entity_description.device_name,
-            )
-            if en_name:
-                if self.coordinator.is_hybrid_system:
-                    if self.entity_description.resource_id == "/heatSources/flameStatus":
-                        return "Boiler flame status"
-                    if self.entity_description.device_sub_id == "hs1":
-                        return en_name.replace(" HS1", " Boiler").replace(" hs1", " Boiler")
-                    if self.entity_description.device_sub_id == "hs2":
-                        return en_name.replace(" HS2", " Heat pump").replace(" hs2", " Heat pump")
-                elif self.entity_description.device_sub_id == "hs1":
-                    return en_name.replace(" HS1", "").replace(" hs1", "")
-                return en_name
+        """Return friendly name in the Home Assistant language with smart hybrid naming."""
+        lang = getattr(self.coordinator.hass.config, "language", "en") or "en"
+        desc = self.entity_description
 
-        base_name = self.entity_description.name
-        if not base_name:
-            return None
-        if base_name.startswith("HybridManager "):
-            base_name = base_name.replace("HybridManager ", "", 1)
+        if self.coordinator.is_hybrid_system and desc.resource_id == "/heatSources/flameStatus":
+            return get_translated_name("binary_sensor", "boiler_flame_status", lang)
+
+        name = get_translated_name("binary_sensor", desc.translation_key, lang, desc.device_name)
+        if not name:
+            name = desc.name
+            if not name:
+                return None
+            if name.startswith("HybridManager "):
+                name = name.replace("HybridManager ", "", 1)
+
         if self.coordinator.is_hybrid_system:
-            if self.entity_description.resource_id == "/heatSources/flameStatus":
-                return "Flammenstatus Kessel"
-            if self.entity_description.device_sub_id == "hs1":
-                return base_name.replace(" HS1", " Kessel").replace(" hs1", " Kessel")
-            if self.entity_description.device_sub_id == "hs2":
-                return base_name.replace(" HS2", " Wärmepumpe").replace(" hs2", " Wärmepumpe")
-        elif self.entity_description.device_sub_id == "hs1":
-            return base_name.replace(" HS1", "").replace(" hs1", "")
-        return base_name
+            if desc.device_sub_id == "hs1":
+                boiler = translate_device_term("Boiler", lang)
+                return name.replace(" HS1", f" {boiler}").replace(" hs1", f" {boiler}")
+            if desc.device_sub_id == "hs2":
+                heat_pump = translate_device_term("Heat pump", lang)
+                return name.replace(" HS2", f" {heat_pump}").replace(" hs2", f" {heat_pump}")
+        elif desc.device_sub_id == "hs1":
+            return name.replace(" HS1", "").replace(" hs1", "")
+        return name
 
     @property
     def device_info(self) -> DeviceInfo:
@@ -217,7 +211,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
         via_kwargs: dict[str, Any] = {"via_device": (DOMAIN, gateway_unique_id)}
 
         if dev_type == DEV_TYPE_HEAT_SOURCE:
-            # In hybrid systems: route Kessel / burner binary sensors to Buderus Kessel
+            # In hybrid systems: route boiler / burner binary sensors to the Buderus boiler
             if self.coordinator.is_hybrid_system:
                 if (
                     sub_id == "kessel"
@@ -233,9 +227,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                     k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
                     return DeviceInfo(
                         identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
-                        name=f"{brand} Kessel ({k_hw})" if k_hw != "Kessel" else f"{brand} Kessel",
+                        name=f"{brand} Boiler ({k_hw})",
                         manufacturer=brand,
-                        model=f"Kessel / Brenner ({k_hw})",
+                        model=f"Boiler / Burner ({k_hw})",
                         sw_version=k_ver,
                         serial_number=k_sn,
                         **via_kwargs,
@@ -265,7 +259,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                         **via_kwargs,
                     )
 
-            # In non-hybrid systems or if sub_id is kessel
+            # In non-hybrid systems or if sub_id is the boiler (kessel)
             if sub_id == "kessel":
                 k_mod = (
                     self.coordinator.get_basic_info_module(hw_ident="MC")
@@ -276,15 +270,15 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
-                    name=f"{brand} Kessel ({k_hw})" if k_hw != "Kessel" else f"{brand} Kessel",
+                    name=f"{brand} Boiler ({k_hw})",
                     manufacturer=brand,
-                    model=f"Kessel / Brenner ({k_hw})",
+                    model=f"Boiler / Burner ({k_hw})",
                     sw_version=k_ver,
                     serial_number=k_sn,
                     **via_kwargs,
                 )
 
-            # Primary Heat Pump / Wärmepumpe
+            # Primary heat pump
             # In hybrid systems: hs2 or heat pump specific endpoints
             # In non-hybrid systems: hs1 (or None) is the heat pump
             if (
@@ -298,9 +292,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 app_sn = sanitize_serial_number(appliance.get("ProductSerialNumber") or appliance.get("ModuleSerialNumber")) if appliance else None
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source")},
-                    name=f"{brand} {prod_name}" if prod_name else f"{brand} Wärmeerzeuger",
+                    name=f"{brand} {prod_name}" if prod_name else f"{brand} Heat source",
                     manufacturer=brand,
-                    model=prod_name or "Wärmeerzeuger / Wärmepumpe",
+                    model=prod_name or "Heat source / heat pump",
                     sw_version=app_ver,
                     serial_number=app_sn,
                     **via_kwargs,
@@ -309,9 +303,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             # Any other heat source unit (e.g. hs3, hs4 in larger cascades)
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or f'Wärmeerzeuger {sub_id.upper()}'}",
+                name=f"{brand} {self.entity_description.device_name or f'Heat source {sub_id.upper()}'}",
                 manufacturer=brand,
-                model=f"Wärmeerzeuger {sub_id.upper()}",
+                model=f"Heat source {sub_id.upper()}",
                 **via_kwargs,
             )
 
@@ -320,10 +314,10 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             mm_hw = mm_mod.get("ModuleHwIdentStr") if mm_mod else None
             mm_ver = mm_mod.get("Ver") if mm_mod else None
             mm_sn = sanitize_serial_number(mm_mod.get("ModuleSerialNumber")) if mm_mod else None
-            model_name = f"Heizkreis ({mm_hw})" if mm_hw else "Heizkreis"
+            model_name = f"Heating circuit ({mm_hw})" if mm_hw else "Heating circuit"
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_heating_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'Heizkreis'}",
+                name=f"{brand} {self.entity_description.device_name or 'Heating circuit'}",
                 manufacturer=brand,
                 model=model_name,
                 sw_version=mm_ver,
@@ -334,9 +328,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
         if dev_type == DEV_TYPE_DHW_CIRCUIT:
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_dhw_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'Warmwasser'}",
+                name=f"{brand} {self.entity_description.device_name or 'DHW'}",
                 manufacturer=brand,
-                model="Warmwasserkreis",
+                model="DHW circuit",
                 **via_kwargs,
             )
 
@@ -345,7 +339,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 identifiers={(DOMAIN, f"{gateway_unique_id}_zone_{sub_id}")},
                 name=f"{brand} {self.entity_description.device_name or 'Zone'}",
                 manufacturer=brand,
-                model="Heizzone",
+                model="Heating zone",
                 **via_kwargs,
             )
 
@@ -354,10 +348,10 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             rf_type = self.coordinator.get_value(f"/devices/{sub_id}/type")
             rf_fw = self.coordinator.get_value(f"/devices/{sub_id}/versionFirmware")
             rf_sgtin = self.coordinator.get_value(f"/devices/{sub_id}/sgtin")
-            dev_label = str(rf_name or rf_type or "Funk-Gerät")
+            dev_label = str(rf_name or rf_type or "RF device")
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'Gerät'} ({dev_label})" if rf_name else f"{brand} {self.entity_description.device_name or 'Gerät'}",
+                name=f"{brand} {self.entity_description.device_name or 'Device'} ({dev_label})" if rf_name else f"{brand} {self.entity_description.device_name or 'Device'}",
                 manufacturer=brand,
                 model=dev_label,
                 sw_version=str(rf_fw) if rf_fw else None,

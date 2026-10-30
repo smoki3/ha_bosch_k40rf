@@ -3,52 +3,52 @@
     "step": {
       "user": {
         "title": "Bosch Connect-Key K 40 RF / Buderus MX400",
-        "description": "Bitte vor dem Absenden die WLAN- und Wireless-Taste am Gateway gleichzeitig für 1 Sekunde drücken (die LEDs blinken kurz blau).\n\nHinweis: Bindestriche im Passwort werden automatisch entfernt.",
+        "description": "Before submitting, press the WLAN and Wireless buttons simultaneously on your gateway for 1 second (LEDs will briefly flash blue).\n\nNote: Hyphens in the password are automatically stripped.",
         "data": {
-          "host": "Host / IP-Adresse",
-          "login": "Login-Name (vom Typenschild)",
-          "password": "Passwort (vom Typenschild)"
+          "host": "Host / IP Address",
+          "login": "Login Name (from device label)",
+          "password": "Password (from device label)"
         }
       },
       "reauth_confirm": {
-        "title": "Erneute Authentifizierung K 40 RF",
-        "description": "Bitte drücken Sie erneut für 1 Sekunde die WLAN- und Wireless-Taste am Gateway ({host}) und geben Sie das Passwort ein.",
+        "title": "Reauthenticate K 40 RF",
+        "description": "Please press the WLAN and Wireless buttons on the gateway ({host}) for 1 second again, then enter your password.",
         "data": {
-          "password": "Passwort"
+          "password": "Password"
         }
       },
       "reconfigure": {
-        "title": "K 40 RF neu konfigurieren / scannen",
-        "description": "Hier können Sie die Host / IP-Adresse anpassen oder die automatische Suche nach neu hinzugekommenen Geräten und Messwerten manuell anstoßen ({host}).",
+        "title": "Reconfigure / Rescan K 40 RF",
+        "description": "Update the host/IP address or trigger a manual search for newly added devices and metrics on the gateway ({host}).",
         "data": {
-          "host": "Host / IP-Adresse",
-          "rescan_devices": "Nach neuen Geräten & Entitäten suchen",
-          "prune_orphaned": "Nicht mehr vorhandene Entitäten ohne Daten manuell löschen"
+          "host": "Host / IP Address",
+          "rescan_devices": "Search for new devices & entities",
+          "prune_orphaned": "Manually delete orphaned entities without data"
         }
       }
     },
     "error": {
-      "cannot_connect": "Verbindung zum Gateway fehlgeschlagen. Bitte Host / IP-Adresse und Netzwerk prüfen.",
-      "different_device": "Die angegebene IP-Adresse gehört zu einem anderen Gateway.",
-      "invalid_auth": "Ungültige Anmeldedaten. Bitte Login und Passwort vom Typenschild prüfen.",
-      "proximity_unproven": "Tasten wurden nicht gedrückt oder das 5-Minuten-Zeitfenster ist abgelaufen. Bitte die WLAN- und Wireless-Taste am Gateway erneut für 1 Sekunde drücken.",
-      "token_database_full": "Die Token-Datenbank auf dem Gateway ist voll (max. 10 Tokens). Bitte ungenutzte Tokens widerrufen.",
-      "unknown": "Unerwarteter Fehler aufgetreten."
+      "cannot_connect": "Failed to connect to gateway. Please check host / IP address and network.",
+      "different_device": "The specified IP address belongs to a different gateway.",
+      "invalid_auth": "Invalid credentials. Please verify login and password from device label.",
+      "proximity_unproven": "Buttons were not pressed or the 5-minute pairing window expired. Press WLAN and Wireless buttons for 1 second.",
+      "token_database_full": "Gateway token database is full (max 10 tokens). Please revoke unused tokens.",
+      "unknown": "Unexpected error occurred."
     },
     "abort": {
-      "already_configured": "Dieses Gateway ist bereits eingerichtet.",
-      "reauth_successful": "Die erneute Authentifizierung war erfolgreich.",
-      "reconfigure_successful": "Die Neukonfiguration und Suche nach neuen Entitäten wurde erfolgreich abgeschlossen."
+      "already_configured": "This gateway is already configured.",
+      "reauth_successful": "Reauthentication was successful.",
+      "reconfigure_successful": "Reconfiguration and search for new entities completed successfully."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Bosch K 40 RF Optionen",
-        "description": "Verwalten Sie die Einstellungen für das Gateway.",
+        "title": "Bosch K 40 RF Options",
+        "description": "Manage settings for the gateway.",
         "data": {
-          "rescan_devices": "Jetzt nach neuen Geräten & Entitäten suchen",
-          "prune_orphaned": "Nicht mehr vorhandene Entitäten ohne Daten löschen"
+          "rescan_devices": "Search for new devices & entities now",
+          "prune_orphaned": "Delete orphaned entities without data"
         }
       }
     }
@@ -169,6 +169,18 @@
       },
       "boiler_number_of_starts": {
         "name": "Total burner starts"
+      },
+      "boiler_working_time_total_system": {
+        "name": "Total boiler operating time"
+      },
+      "boiler_emon_total_output": {
+        "name": "Boiler total heat energy produced"
+      },
+      "boiler_emon_ch_output": {
+        "name": "Boiler heating heat energy produced"
+      },
+      "boiler_emon_dhw_output": {
+        "name": "Boiler DHW heat energy produced"
       },
       "number_of_starts": {
         "name": "Total starts"
@@ -790,96 +802,99 @@
         "name": "Outdoor unit TR6 temperature"
       },
       "hybman_highestpermittedtemp": {
-        "name": "Höchste zulässige Temperatur"
+        "name": "Highest permitted temperature"
       },
       "hybman_lowoutdoortempstopheating": {
-        "name": "Min. Außentemperatur Heizgrenze"
+        "name": "Min outdoor temperature heating limit"
       },
       "hybman_highoutdoortempstopheating": {
-        "name": "Max. Außentemperatur Sommerabschaltung"
+        "name": "Max outdoor temperature summer shut-off"
       },
       "hybman_timetillnextcompressorstart": {
-        "name": "Restzeit bis Verdichterstart"
+        "name": "Time until next compressor start"
       },
       "hybman_timetillnextcompressorstop": {
-        "name": "Restzeit bis Verdichterstopp"
+        "name": "Time until next compressor stop"
       },
       "hybman_optimecompressorheating": {
-        "name": "Verdichterlaufzeit Heizen"
+        "name": "Compressor runtime heating"
       },
       "hybman_optimecompressordhw": {
-        "name": "Verdichterlaufzeit Warmwasser"
+        "name": "Compressor runtime DHW"
       },
       "hybman_smartgridmode": {
-        "name": "Smart Grid Modus"
+        "name": "Smart grid mode"
       },
       "hybman_emergencymodestatus": {
-        "name": "Notbetrieb Status"
+        "name": "Emergency mode status"
       },
       "src_outdoortemp": {
-        "name": "Außentemperatur"
+        "name": "Outdoor temperature"
       },
       "src_intflowtemp": {
-        "name": "Vorlauftemperatur"
+        "name": "Supply temperature"
       },
       "src_intdhw_cyltemp": {
-        "name": "Warmwassertemperatur"
+        "name": "DHW cylinder temperature"
       },
       "src_fan_actualspeed": {
-        "name": "Gebläsedrehzahl"
+        "name": "Fan speed"
       },
       "src_flamecurrent": {
-        "name": "Flammenstrom"
+        "name": "Flame current"
       },
       "src_displaycode": {
-        "name": "Display-Code"
+        "name": "Display code"
       },
       "hc1mod_flowtemp": {
-        "name": "Vorlauftemperatur"
+        "name": "Supply temperature"
       },
       "sc_hc1_flowtempsetp": {
-        "name": "Vorlauf Sollwert"
+        "name": "Supply temperature setpoint"
       },
       "sc_hc1_maxflowtempsetp": {
-        "name": "Max. Vorlauf Sollwert"
+        "name": "Max supply temperature setpoint"
       },
       "sc_introomtemp": {
-        "name": "Raumtemperatur Intern"
+        "name": "Internal room temperature"
       },
       "sc_dampoutdtemp": {
-        "name": "Gedämpfte Außentemperatur"
+        "name": "Damped outdoor temperature"
       },
       "sc_hc1_holidaymode": {
-        "name": "Urlaubsmodus"
+        "name": "Holiday mode"
       },
       "sc_dhw1_holidaymode": {
-        "name": "Urlaubsmodus"
+        "name": "Holiday mode"
       },
       "solar_heatcount_minus1dailysolargain": {
-        "name": "Solarertrag Vortag"
+        "name": "Solar gain previous day"
       },
       "solar_heatcount_minus1monthlysolargain": {
-        "name": "Solarertrag Vormonat"
+        "name": "Solar gain previous month"
       },
       "solar_heatcount_minus1yearlysolargain": {
-        "name": "Solarertrag Vorjahr"
+        "name": "Solar gain previous year"
       },
       "solar_heatcount_totallastminus1hourgain": {
-        "name": "Solarertrag Letzte Stunde"
+        "name": "Solar gain last hour"
       },
       "gweebus_cem_id": {
         "name": "EEBus CEM ID"
       },
       "gweebus_status": {
-        "name": "EEBus Status"
+        "name": "EEBus status"
       },
       "gweebus_commissioningstatus": {
-        "name": "EEBus Inbetriebnahme Status"
+        "name": "EEBus commissioning status"
       }
     },
     "binary_sensor": {
       "flame_status": {
         "name": "Flame status"
+      },
+      "boiler_flame_status": {
+        "name": "Boiler flame status"
       },
       "smart_function_active": {
         "name": "Smart function active"
@@ -1089,91 +1104,91 @@
         "name": "Pump active"
       },
       "hybman_pumpon": {
-        "name": "Pumpe aktiv"
+        "name": "Pump active"
       },
       "hybman_can_defrostactive": {
-        "name": "Abtauung aktiv"
+        "name": "Defrost active"
       },
       "hybman_can_fourwayvalveactive": {
-        "name": "4-Wege-Ventil aktiv"
+        "name": "4-way valve active"
       },
       "hybman_can_drippanheateractive": {
-        "name": "Kondensatwannenheizung aktiv"
+        "name": "Drip pan heater active"
       },
       "hybman_lownoisemodeactive": {
-        "name": "Flüsterbetrieb aktiv"
+        "name": "Low noise mode active"
       },
       "hybman_heatupsequence": {
-        "name": "Aufheizsequenz aktiv"
+        "name": "Heat-up sequence active"
       },
       "hybman_compspeedlimitedduetosilentmode": {
-        "name": "Verdichter im Flüsterbetrieb begrenzt"
+        "name": "Compressor limited due to silent mode"
       },
       "hybman_lowoutdoortempstopheating": {
-        "name": "Heizstopp Niedrige Außentemperatur"
+        "name": "Heating stopped low outdoor temperature"
       },
       "hybman_highestpermittedtemp": {
-        "name": "Höchste zulässige Temperatur überschritten"
+        "name": "Highest permitted temperature exceeded"
       },
       "hybman_highoutdoortempstopheating": {
-        "name": "Heizstopp Hohe Außentemperatur (Sommer)"
+        "name": "Heating stopped high outdoor temperature (summer)"
       },
       "src_relaystatus_3wayvalve": {
-        "name": "3-Wege-Ventil Kessel"
+        "name": "Boiler 3-way valve"
       },
       "src_diginput_airpressureswitch": {
-        "name": "Differenzdruckwächter Kessel"
+        "name": "Boiler air pressure switch"
       },
       "src_autofillingactive": {
-        "name": "Automatische Befüllung aktiv"
+        "name": "Automatic filling active"
       },
       "src_relaystatus_chpump": {
-        "name": "Heizkreispumpe Kessel"
+        "name": "Boiler heating circuit pump"
       },
       "src_opstatus_chimneysweeper": {
-        "name": "Schornsteinfegerbetrieb"
+        "name": "Chimney sweeper mode"
       },
       "src_intdhw_circpumpstatus": {
-        "name": "Zirkulationspumpe Warmwasser"
+        "name": "DHW circulation pump"
       },
       "src_intdhw_dhurunning": {
-        "name": "Warmwasserbereitung aktiv"
+        "name": "DHW heating active"
       },
       "src_diginput_extcutoff": {
-        "name": "Externe Abschaltung Kessel"
+        "name": "Boiler external cutoff"
       },
       "src_intdhw_extraactive": {
-        "name": "Warmwasser Extra-Ladung aktiv"
+        "name": "DHW extra charge active"
       },
       "src_relaystatus_fan": {
-        "name": "Gebläse Kessel"
+        "name": "Boiler fan"
       },
       "src_relaystatus_gasvalve1": {
-        "name": "Gasventil 1 Kessel"
+        "name": "Boiler gas valve 1"
       },
       "src_relaystatus_gasvalve2": {
-        "name": "Gasventil 2 Kessel"
+        "name": "Boiler gas valve 2"
       },
       "src_diginput_oiltemperaturehigh": {
-        "name": "Öltemperatur zu hoch"
+        "name": "Oil temperature high"
       },
       "src_intdhw_heatupactive": {
-        "name": "Warmwasser Aufheizung aktiv"
+        "name": "DHW heat-up active"
       },
       "sc_hc1_rtsd_preventionecomodeactive": {
-        "name": "Frostschutz Eco-Modus aktiv"
+        "name": "Frost protection eco mode active"
       },
       "sc_hc1_fpd_active": {
-        "name": "Frostschutz aktiv"
+        "name": "Frost protection active"
       },
       "sc_dhw1_sd_extraactive": {
-        "name": "Warmwasser Extra-Ladung aktiv"
+        "name": "DHW extra charge active"
       },
       "sc_hc1_rotempsetpopt_heatupstatus": {
-        "name": "Schnellaufheizung aktiv"
+        "name": "Fast heat-up active"
       },
       "hc1mod_flowctrl_pumprequest": {
-        "name": "Pumpenanforderung Heizkreis 1"
+        "name": "Heating circuit 1 pump request"
       }
     }
   }

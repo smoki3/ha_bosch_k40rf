@@ -170,6 +170,18 @@
       "boiler_number_of_starts": {
         "name": "Total burner starts"
       },
+      "boiler_working_time_total_system": {
+        "name": "Total boiler operating time"
+      },
+      "boiler_emon_total_output": {
+        "name": "Boiler total heat energy produced"
+      },
+      "boiler_emon_ch_output": {
+        "name": "Boiler heating heat energy produced"
+      },
+      "boiler_emon_dhw_output": {
+        "name": "Boiler DHW heat energy produced"
+      },
       "number_of_starts": {
         "name": "Total starts"
       },
@@ -880,6 +892,9 @@
     "binary_sensor": {
       "flame_status": {
         "name": "Flame status"
+      },
+      "boiler_flame_status": {
+        "name": "Boiler flame status"
       },
       "smart_function_active": {
         "name": "Smart function active"

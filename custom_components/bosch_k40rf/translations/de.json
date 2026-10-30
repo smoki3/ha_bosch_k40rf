@@ -170,6 +170,18 @@
       "boiler_number_of_starts": {
         "name": "Brennerstarts Gesamt"
       },
+      "boiler_working_time_total_system": {
+        "name": "Betriebszeit Kessel Gesamt"
+      },
+      "boiler_emon_total_output": {
+        "name": "Erzeugte Wärmeenergie Kessel Gesamt"
+      },
+      "boiler_emon_ch_output": {
+        "name": "Erzeugte Wärmeenergie Kessel Heizung"
+      },
+      "boiler_emon_dhw_output": {
+        "name": "Erzeugte Wärmeenergie Kessel Warmwasser"
+      },
       "number_of_starts": {
         "name": "Brenner- / Verdichterstarts Gesamt"
       },
@@ -880,6 +892,9 @@
     "binary_sensor": {
       "flame_status": {
         "name": "Flammenstatus"
+      },
+      "boiler_flame_status": {
+        "name": "Flammenstatus Kessel"
       },
       "smart_function_active": {
         "name": "Smart-Funktion aktiv"
