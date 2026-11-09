@@ -248,10 +248,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 if not is_hp_specific:
                     # HybridManager (HM200) receives all general system / hybrid binary sensors:
                     # fallbackOperation, powerLimitation, silentMode, powerConstraints, etc.
-                    hm_mod = (
-                        self.coordinator.get_basic_info_module(hw_ident="HM200")
-                        or self.coordinator.get_basic_info_module(hw_ident="HM")
-                    )
+                    hm_mod = self.coordinator.get_basic_info_module(hw_ident="HM200")
                     hm_hw = (hm_mod.get("ModuleHwIdentStr") if hm_mod else None) or "HM200.2"
                     hm_ver = hm_mod.get("Ver") if hm_mod else None
                     hm_sn = sanitize_serial_number(hm_mod.get("ModuleSerialNumber")) if hm_mod else None

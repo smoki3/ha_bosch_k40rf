@@ -319,10 +319,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                 )
                 if not is_hp_specific:
                     # All general heat source & system level resources route to HybridManager (HM200)
-                    hm_mod = (
-                        self.coordinator.get_basic_info_module(hw_ident="HM200")
-                        or self.coordinator.get_basic_info_module(hw_ident="HM")
-                    )
+                    hm_mod = self.coordinator.get_basic_info_module(hw_ident="HM200")
                     hm_hw = (hm_mod.get("ModuleHwIdentStr") if hm_mod else None) or "HM200.2"
                     hm_ver = hm_mod.get("Ver") if hm_mod else None
                     hm_sn = sanitize_serial_number(hm_mod.get("ModuleSerialNumber")) if hm_mod else None

@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 from datetime import timedelta
 import logging
+import re
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -422,8 +423,13 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 continue
             if is_appliance and m.get("ProductName"):
                 return m
-            if hw_ident and hw_ident.lower() in str(m.get("ModuleHwIdentStr", "")).lower():
-                return m
+            if hw_ident:
+                ident_str = str(m.get("ModuleHwIdentStr", ""))
+                # Match hw_ident only when not preceded or followed by another letter
+                # (e.g. "HM" matches "HM200.2", but NEVER "HMI_module_...").
+                pattern = rf"(?:^|[^A-Za-z]){re.escape(hw_ident)}(?![A-Za-z])"
+                if re.search(pattern, ident_str, re.IGNORECASE):
+                    return m
         return None
 
     @property
@@ -432,7 +438,7 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         sys_type = str(self.get_value("/system/type") or "").lower()
         if "hybrid" in sys_type or sys_type in ("ehybrid", "hybman", "hybridboiler"):
             return True
-        if self.get_basic_info_module(hw_ident="HM"):
+        if self.get_basic_info_module(hw_ident="HM200"):
             return True
         if self.get_basic_info_module(hw_ident="MC") and (
             self.get_basic_info_module(is_appliance=True)

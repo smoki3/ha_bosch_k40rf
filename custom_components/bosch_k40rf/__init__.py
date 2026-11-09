@@ -113,8 +113,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator.gateway_device_id = gateway_device.id
 
     lang = getattr(hass.config, "language", "en") or "en"
+    hybman_ident = (DOMAIN, f"{gateway_unique_id}_heat_source_hybman")
     devices = dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
     for dev in devices:
+        if not coordinator.is_hybrid_system and hybman_ident in dev.identifiers:
+            _LOGGER.info(
+                "Removing falsely detected HybridManager device %s (%s) on non-hybrid system",
+                dev.name,
+                dev.id,
+            )
+            dev_reg.async_remove_device(dev.id)
+            continue
         update_kwargs: dict[str, Any] = {}
         if dev.serial_number:
             clean_sn = sanitize_serial_number(dev.serial_number)
