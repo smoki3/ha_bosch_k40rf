@@ -3355,9 +3355,15 @@ def is_boolean_endpoint(
     return False
 
 
-# Device terms appended to translated entity names, per Home Assistant language.
+# Device terms appended to translated entity names and used for DeviceInfo, per Home Assistant language.
 DEVICE_TERM_TRANSLATIONS: dict[str, dict[str, str]] = {
     "de": {
+        "Boiler / Burner": "Kessel / Brenner",
+        "Heat source / heat pump": "Wärmeerzeuger / Wärmepumpe",
+        "DHW circuit": "Warmwasserkreis",
+        "Ventilation unit": "Lüftungsgerät",
+        "Heating zone": "Heizzone",
+        "RF device": "Funk-Gerät",
         "Heating circuit": "Heizkreis",
         "Solar circuit": "Solarkreis",
         "Heat source": "Wärmeerzeuger",
@@ -3368,6 +3374,12 @@ DEVICE_TERM_TRANSLATIONS: dict[str, dict[str, str]] = {
         "DHW": "Warmwasser",
     },
     "nl": {
+        "Boiler / Burner": "Ketel / Brander",
+        "Heat source / heat pump": "Warmtebron / Warmtepomp",
+        "DHW circuit": "Warmtapwatercircuit",
+        "Ventilation unit": "Ventilatie-unit",
+        "Heating zone": "Verwarmingszone",
+        "RF device": "RF-apparaat",
         "Heating circuit": "Verwarmingscircuit",
         "Solar circuit": "Zonnecircuit",
         "Heat source": "Warmtebron",

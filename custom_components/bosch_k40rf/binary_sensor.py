@@ -209,6 +209,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             )
 
         # 2. Child Devices
+        lang = getattr(self.coordinator.hass.config, "language", "en") or "en"
         via_kwargs = get_via_device_kwargs(
             gateway_unique_id,
             self.coordinator.gateway_device_id,
@@ -231,9 +232,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                     k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
                     return DeviceInfo(
                         identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
-                        name=f"{brand} Boiler ({k_hw})",
+                        name=translate_device_term(f"{brand} Boiler ({k_hw})", lang),
                         manufacturer=brand,
-                        model=f"Boiler / Burner ({k_hw})",
+                        model=translate_device_term(f"Boiler / Burner ({k_hw})", lang),
                         sw_version=k_ver,
                         serial_number=k_sn,
                         **via_kwargs,
@@ -274,9 +275,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
-                    name=f"{brand} Boiler ({k_hw})",
+                    name=translate_device_term(f"{brand} Boiler ({k_hw})", lang),
                     manufacturer=brand,
-                    model=f"Boiler / Burner ({k_hw})",
+                    model=translate_device_term(f"Boiler / Burner ({k_hw})", lang),
                     sw_version=k_ver,
                     serial_number=k_sn,
                     **via_kwargs,
@@ -296,9 +297,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 app_sn = sanitize_serial_number(appliance.get("ProductSerialNumber") or appliance.get("ModuleSerialNumber")) if appliance else None
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source")},
-                    name=f"{brand} {prod_name}" if prod_name else f"{brand} Heat source",
+                    name=f"{brand} {prod_name}" if prod_name else translate_device_term(f"{brand} Heat source", lang),
                     manufacturer=brand,
-                    model=prod_name or "Heat source / heat pump",
+                    model=prod_name or translate_device_term("Heat source / heat pump", lang),
                     sw_version=app_ver,
                     serial_number=app_sn,
                     **via_kwargs,
@@ -307,9 +308,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             # Any other heat source unit (e.g. hs3, hs4 in larger cascades)
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or f'Heat source {sub_id.upper()}'}",
+                name=translate_device_term(f"{brand} {self.entity_description.device_name or f'Heat source {sub_id.upper()}'}", lang),
                 manufacturer=brand,
-                model=f"Heat source {sub_id.upper()}",
+                model=translate_device_term(f"Heat source {sub_id.upper()}", lang),
                 **via_kwargs,
             )
 
@@ -321,9 +322,9 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             model_name = f"Heating circuit ({mm_hw})" if mm_hw else "Heating circuit"
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_heating_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'Heating circuit'}",
+                name=translate_device_term(f"{brand} {self.entity_description.device_name or 'Heating circuit'}", lang),
                 manufacturer=brand,
-                model=model_name,
+                model=translate_device_term(model_name, lang),
                 sw_version=mm_ver,
                 serial_number=mm_sn,
                 **via_kwargs,
@@ -332,18 +333,43 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
         if dev_type == DEV_TYPE_DHW_CIRCUIT:
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_dhw_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'DHW'}",
+                name=translate_device_term(f"{brand} {self.entity_description.device_name or 'DHW'}", lang),
                 manufacturer=brand,
-                model="DHW circuit",
+                model=translate_device_term("DHW circuit", lang),
+                **via_kwargs,
+            )
+
+        if dev_type == DEV_TYPE_SOLAR_CIRCUIT:
+            sm_mod = self.coordinator.get_basic_info_module(hw_ident="SM")
+            sm_hw = sm_mod.get("ModuleHwIdentStr") if sm_mod else None
+            sm_ver = sm_mod.get("Ver") if sm_mod else None
+            sm_sn = sanitize_serial_number(sm_mod.get("ModuleSerialNumber")) if sm_mod else None
+            model_name = f"Solar circuit ({sm_hw})" if sm_hw else "Solar circuit"
+            return DeviceInfo(
+                identifiers={(DOMAIN, f"{gateway_unique_id}_solar_{sub_id}")},
+                name=translate_device_term(f"{brand} {self.entity_description.device_name or 'Solar circuit'}", lang),
+                manufacturer=brand,
+                model=translate_device_term(model_name, lang),
+                sw_version=sm_ver,
+                serial_number=sm_sn,
+                **via_kwargs,
+            )
+
+        if dev_type == DEV_TYPE_VENTILATION:
+            return DeviceInfo(
+                identifiers={(DOMAIN, f"{gateway_unique_id}_ventilation_{sub_id}")},
+                name=translate_device_term(f"{brand} {self.entity_description.device_name or 'Ventilation'}", lang),
+                manufacturer=brand,
+                model=translate_device_term("Ventilation unit", lang),
                 **via_kwargs,
             )
 
         if dev_type == DEV_TYPE_ZONE:
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_zone_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'Zone'}",
+                name=translate_device_term(f"{brand} {self.entity_description.device_name or 'Zone'}", lang),
                 manufacturer=brand,
-                model="Heating zone",
+                model=translate_device_term("Heating zone", lang),
                 **via_kwargs,
             )
 
@@ -352,14 +378,24 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             rf_type = self.coordinator.get_value(f"/devices/{sub_id}/type")
             rf_fw = self.coordinator.get_value(f"/devices/{sub_id}/versionFirmware")
             rf_sgtin = self.coordinator.get_value(f"/devices/{sub_id}/sgtin")
-            dev_label = str(rf_name or rf_type or "RF device")
+            dev_label = str(rf_name or rf_type or translate_device_term("RF device", lang))
+            dev_base = translate_device_term(self.entity_description.device_name or "Device", lang)
             return DeviceInfo(
                 identifiers={(DOMAIN, f"{gateway_unique_id}_{sub_id}")},
-                name=f"{brand} {self.entity_description.device_name or 'Device'} ({dev_label})" if rf_name else f"{brand} {self.entity_description.device_name or 'Device'}",
+                name=f"{brand} {dev_base} ({dev_label})" if rf_name else f"{brand} {dev_base}",
                 manufacturer=brand,
                 model=dev_label,
                 sw_version=str(rf_fw) if rf_fw else None,
                 serial_number=sanitize_serial_number(rf_sgtin),
+                **via_kwargs,
+            )
+
+        if dev_type == DEV_TYPE_POOL:
+            return DeviceInfo(
+                identifiers={(DOMAIN, f"{gateway_unique_id}_pool")},
+                name=f"{brand} Pool",
+                manufacturer=brand,
+                model="Pool",
                 **via_kwargs,
             )
 

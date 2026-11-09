@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import logging
 
+from typing import Any
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
@@ -20,7 +22,11 @@ from .const import (
     PLATFORMS,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
-from .models import async_preload_translations, sanitize_serial_number
+from .models import (
+    async_preload_translations,
+    sanitize_serial_number,
+    translate_device_term,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -106,8 +112,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
     coordinator.gateway_device_id = gateway_device.id
 
+    lang = getattr(hass.config, "language", "en") or "en"
     devices = dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
     for dev in devices:
+        update_kwargs: dict[str, Any] = {}
         if dev.serial_number:
             clean_sn = sanitize_serial_number(dev.serial_number)
             if clean_sn != dev.serial_number:
@@ -117,7 +125,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                     dev.serial_number,
                     clean_sn,
                 )
-                dev_reg.async_update_device(dev.id, serial_number=clean_sn)
+                update_kwargs["serial_number"] = clean_sn
+        if dev.name:
+            translated_name = translate_device_term(dev.name, lang)
+            if translated_name != dev.name:
+                update_kwargs["name"] = translated_name
+        if dev.model:
+            translated_model = translate_device_term(dev.model, lang)
+            if translated_model != dev.model:
+                update_kwargs["model"] = translated_model
+        if update_kwargs:
+            dev_reg.async_update_device(dev.id, **update_kwargs)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
