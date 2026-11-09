@@ -574,9 +574,17 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
         ):
             try:
                 float_val = float(raw_val)
+                # In hybrid systems (HM200), heat source volume flow is reported in 10 L/h steps
+                if (
+                    self.coordinator.is_hybrid_system
+                    and self.entity_description.translation_key
+                    in ("pump_volume_flow", "brine_volume_flow")
+                ):
+                    float_val *= 10
                 if float_val.is_integer() and self.entity_description.device_class in (
                     SensorDeviceClass.DURATION,
                     SensorDeviceClass.AQI,
+                    SensorDeviceClass.VOLUME_FLOW_RATE,
                 ):
                     return int(float_val)
                 return round(float_val, 2)

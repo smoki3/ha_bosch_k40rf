@@ -846,6 +846,12 @@
       "src_displaycode": {
         "name": "Display code"
       },
+      "src_systempumppressuredifference": {
+        "name": "System pump pressure difference"
+      },
+      "src_systempumpvolumeflow": {
+        "name": "System pump flow rate"
+      },
       "hc1mod_flowtemp": {
         "name": "Supply temperature"
       },

@@ -846,6 +846,12 @@
       "src_displaycode": {
         "name": "Displaycode"
       },
+      "src_systempumppressuredifference": {
+        "name": "Verschildruk systeempomp"
+      },
+      "src_systempumpvolumeflow": {
+        "name": "Debiet systeempomp"
+      },
       "hc1mod_flowtemp": {
         "name": "Aanvoertemperatuur"
       },

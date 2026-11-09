@@ -846,6 +846,12 @@
       "src_displaycode": {
         "name": "Display-Code"
       },
+      "src_systempumppressuredifference": {
+        "name": "Systempumpe Differenzdruck"
+      },
+      "src_systempumpvolumeflow": {
+        "name": "Systempumpe Durchfluss"
+      },
       "hc1mod_flowtemp": {
         "name": "Vorlauftemperatur"
       },
