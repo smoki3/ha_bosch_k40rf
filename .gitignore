@@ -6,7 +6,7 @@ home-assistant.log*
 *.db-wal
 .ha_run.lock
 
-# HACS (nur für lokale Testumgebung)
+# HACS (only for local test environment)
 custom_components/hacs/
 **/hacs/
 hacs/

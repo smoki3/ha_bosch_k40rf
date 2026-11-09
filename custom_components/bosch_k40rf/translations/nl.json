@@ -1,0 +1,1195 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bosch Connect-Key K 40 RF / Buderus MX400",
+        "description": "Druk vóór het verzenden de WLAN- en Wireless-knop op de gateway tegelijk 1 seconde in (de leds knipperen kort blauw).\n\nLet op: koppeltekens in het wachtwoord worden automatisch verwijderd.",
+        "data": {
+          "host": "Host / IP-adres",
+          "login": "Loginnaam (van typeplaatje)",
+          "password": "Wachtwoord (van typeplaatje)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "K 40 RF opnieuw authenticeren",
+        "description": "Druk opnieuw 1 seconde op de WLAN- en Wireless-knop van de gateway ({host}) en voer daarna je wachtwoord in.",
+        "data": {
+          "password": "Wachtwoord"
+        }
+      },
+      "reconfigure": {
+        "title": "K 40 RF opnieuw configureren / scannen",
+        "description": "Pas het host/IP-adres aan of start handmatig een zoekactie naar nieuw toegevoegde apparaten en meetwaarden op de gateway ({host}).",
+        "data": {
+          "host": "Host / IP-adres",
+          "rescan_devices": "Zoeken naar nieuwe apparaten & entiteiten",
+          "prune_orphaned": "Verweesde entiteiten zonder data handmatig verwijderen"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbinden met de gateway mislukt. Controleer het host/IP-adres en het netwerk.",
+      "different_device": "Het opgegeven IP-adres hoort bij een andere gateway.",
+      "invalid_auth": "Ongeldige inloggegevens. Controleer login en wachtwoord op het typeplaatje.",
+      "proximity_unproven": "De knoppen zijn niet ingedrukt of het koppelvenster van 5 minuten is verlopen. Druk 1 seconde op de WLAN- en Wireless-knop.",
+      "token_database_full": "De tokendatabase van de gateway is vol (max. 10 tokens). Trek ongebruikte tokens in.",
+      "unknown": "Er is een onverwachte fout opgetreden."
+    },
+    "abort": {
+      "already_configured": "Deze gateway is al geconfigureerd.",
+      "reauth_successful": "Opnieuw authenticeren is gelukt.",
+      "reconfigure_successful": "Herconfiguratie en zoeken naar nieuwe entiteiten zijn gelukt."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Bosch K 40 RF-opties",
+        "description": "Instellingen voor de gateway beheren.",
+        "data": {
+          "rescan_devices": "Nu zoeken naar nieuwe apparaten & entiteiten",
+          "prune_orphaned": "Verweesde entiteiten zonder data verwijderen"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "gateway_uuid": {
+        "name": "UUID"
+      },
+      "gateway_brand": {
+        "name": "Merk"
+      },
+      "gateway_firmware": {
+        "name": "Firmwareversie"
+      },
+      "gateway_hardware": {
+        "name": "Hardwareversie"
+      },
+      "gateway_eth_mac": {
+        "name": "Ethernet-MAC-adres"
+      },
+      "gateway_wifi_mac": {
+        "name": "Wifi-MAC-adres"
+      },
+      "gateway_eth_ip": {
+        "name": "Ethernet-IP-adres"
+      },
+      "gateway_wifi_ip": {
+        "name": "Wifi-IP-adres"
+      },
+      "gateway_wifi_ssid": {
+        "name": "Wifi-SSID"
+      },
+      "gateway_wifi_rssi": {
+        "name": "Wifi-signaalsterkte"
+      },
+      "gateway_data_processing": {
+        "name": "Status gegevensverwerking"
+      },
+      "gateway_timezone": {
+        "name": "Tijdzone"
+      },
+      "gateway_hotspot_remaining": {
+        "name": "Resterende hotspottijd"
+      },
+      "system_bus": {
+        "name": "Bussysteem"
+      },
+      "system_type": {
+        "name": "Systeemtype"
+      },
+      "system_notifications": {
+        "name": "Systeemmeldingen"
+      },
+      "gateway_update_status": {
+        "name": "Updatestatus gateway"
+      },
+      "system_update_status": {
+        "name": "Updatestatus systeem"
+      },
+      "gateway_update_report": {
+        "name": "Updaterapport gateway"
+      },
+      "gateway_wifi_pairing_status": {
+        "name": "Wifi-koppelstatus"
+      },
+      "sc_installation_date": {
+        "name": "Installatiedatum"
+      },
+      "smart_grid_mode": {
+        "name": "Smart grid-modus",
+        "state": {
+          "0": "Standaard",
+          "1": "Geblokkeerd (modus 1)",
+          "2": "Normaal bedrijf (modus 2)",
+          "3": "Aanbevolen bedrijf (modus 3)",
+          "4": "Geforceerde start (modus 4)"
+        }
+      },
+      "time_till_next_compressor_start": {
+        "name": "Tijd tot compressorstart"
+      },
+      "time_till_next_compressor_stop": {
+        "name": "Tijd tot compressorstop"
+      },
+      "outdoor_temperature": {
+        "name": "Buitentemperatuur"
+      },
+      "supply_temperature": {
+        "name": "Aanvoertemperatuur"
+      },
+      "actual_supply_temperature": {
+        "name": "Aanvoertemperatuur"
+      },
+      "target_supply_temperature": {
+        "name": "Gewenste aanvoertemperatuur"
+      },
+      "current_supply_setpoint": {
+        "name": "Gewenste aanvoertemperatuur"
+      },
+      "return_temperature": {
+        "name": "Retourtemperatuur"
+      },
+      "system_pressure": {
+        "name": "Systeemdruk"
+      },
+      "boiler_actual_modulation": {
+        "name": "Ketelmodulatie"
+      },
+      "actual_modulation": {
+        "name": "Modulatie"
+      },
+      "boiler_actual_heat_demand": {
+        "name": "Warmtevraag ketel"
+      },
+      "actual_heat_demand": {
+        "name": "Warmtevraag"
+      },
+      "boiler_number_of_starts": {
+        "name": "Totaal aantal branderstarts"
+      },
+      "boiler_working_time_total_system": {
+        "name": "Totale bedrijfstijd ketel"
+      },
+      "boiler_emon_total_output": {
+        "name": "Totaal geproduceerde warmte ketel"
+      },
+      "boiler_emon_ch_output": {
+        "name": "Geproduceerde warmte ketel verwarming"
+      },
+      "boiler_emon_dhw_output": {
+        "name": "Geproduceerde warmte ketel warm tapwater"
+      },
+      "number_of_starts": {
+        "name": "Totaal aantal starts"
+      },
+      "working_time_total_system": {
+        "name": "Totale bedrijfstijd systeem"
+      },
+      "refrigerant_circuits_online": {
+        "name": "Koudemiddelcircuits online"
+      },
+      "active_heat_source": {
+        "name": "Actieve warmtebron",
+        "state": {
+          "none": "Geen (stand-by)",
+          "heat_pump": "Warmtepomp",
+          "boiler": "Ketel",
+          "parallel": "Parallel bedrijf",
+          "unknown": "Wordt bepaald",
+          "off": "Uit"
+        }
+      },
+      "evaporator_temp_tl1": {
+        "name": "Verdampertemperatuur TL1"
+      },
+      "evaporator_temp_tl2": {
+        "name": "Verdampertemperatuur TL2"
+      },
+      "cylinder_temperature": {
+        "name": "Temperatuur tapwaterboiler"
+      },
+      "cylinder_upper_temp": {
+        "name": "Temperatuur tapwaterboiler boven"
+      },
+      "collector_temperature": {
+        "name": "Collectortemperatuur"
+      },
+      "compressor_power_actual": {
+        "name": "Elektrisch vermogen compressor"
+      },
+      "compressor_frequency": {
+        "name": "Compressorfrequentie"
+      },
+      "compressor_speed": {
+        "name": "Compressortoerental"
+      },
+      "eheater_power_actual": {
+        "name": "Vermogen elektrische bijverwarming"
+      },
+      "working_time_total": {
+        "name": "Totale bedrijfstijd"
+      },
+      "working_time_ch": {
+        "name": "Bedrijfstijd verwarming"
+      },
+      "working_time_dhw": {
+        "name": "Bedrijfstijd warm tapwater"
+      },
+      "starts_total": {
+        "name": "Totaal aantal starts"
+      },
+      "starts_ch": {
+        "name": "Starts verwarming"
+      },
+      "starts_dhw": {
+        "name": "Starts warm tapwater"
+      },
+      "pump_flow_rate": {
+        "name": "Pompdebiet"
+      },
+      "return_flow_temperature": {
+        "name": "Retourtemperatuur"
+      },
+      "fan_speed": {
+        "name": "Ventilatortoerental"
+      },
+      "flame_current": {
+        "name": "Vlamstroom"
+      },
+      "nominal_power": {
+        "name": "Nominaal vermogen"
+      },
+      "max_nominal_power": {
+        "name": "Max. nominaal vermogen"
+      },
+      "min_nominal_power": {
+        "name": "Min. nominaal vermogen"
+      },
+      "chimney_temperature": {
+        "name": "Rookgastemperatuur"
+      },
+      "oil_preheater_temperature": {
+        "name": "Temperatuur olievoorverwarmer"
+      },
+      "oil_pressure": {
+        "name": "Oliedruk"
+      },
+      "condensate_level": {
+        "name": "Condensniveau"
+      },
+      "burner_run_time_stage1": {
+        "name": "Branderlooptijd trap 1"
+      },
+      "burner_run_time_stage2": {
+        "name": "Branderlooptijd trap 2"
+      },
+      "burner_starts_stage1": {
+        "name": "Branderstarts trap 1"
+      },
+      "burner_starts_stage2": {
+        "name": "Branderstarts trap 2"
+      },
+      "emon_total_output": {
+        "name": "Totaal geproduceerde warmte"
+      },
+      "emon_total_electricity": {
+        "name": "Totaal stroomverbruik"
+      },
+      "emon_total_gas": {
+        "name": "Totaal gasverbruik"
+      },
+      "emon_total_oil": {
+        "name": "Totaal olieverbruik"
+      },
+      "emon_total_solar": {
+        "name": "Totale zonne-opbrengst"
+      },
+      "emon_total_compressor": {
+        "name": "Energie compressor totaal"
+      },
+      "emon_ch_output": {
+        "name": "Geproduceerde warmte verwarming"
+      },
+      "emon_ch_electricity": {
+        "name": "Stroomverbruik verwarming"
+      },
+      "emon_ch_compressor": {
+        "name": "Energie compressor verwarming"
+      },
+      "emon_dhw_output": {
+        "name": "Geproduceerde warmte warm tapwater"
+      },
+      "emon_dhw_electricity": {
+        "name": "Stroomverbruik warm tapwater"
+      },
+      "emon_dhw_compressor": {
+        "name": "Energie compressor warm tapwater"
+      },
+      "room_temperature": {
+        "name": "Kamertemperatuur"
+      },
+      "room_temperature_setpoint": {
+        "name": "Gewenste kamertemperatuur"
+      },
+      "actual_humidity": {
+        "name": "Luchtvochtigheid"
+      },
+      "max_flow_temp": {
+        "name": "Max. aanvoertemperatuur"
+      },
+      "mixer_position": {
+        "name": "Mengklepstand"
+      },
+      "current_su_wi_mode": {
+        "name": "Zomer-/wintermodus"
+      },
+      "overall_status": {
+        "name": "Algemene status",
+        "state": {
+          "dhw_enabled": "Warm tapwater ingeschakeld",
+          "dhw_disabled": "Warm tapwater uitgeschakeld",
+          "floor_drying": "Dekvloer drogen",
+          "td": "Thermische desinfectie",
+          "extra": "Extra lading (boost)",
+          "away": "Afwezig",
+          "holiday": "Vakantie",
+          "manual_on_high": "Handmatig (hoog)",
+          "manual_on_low": "Handmatig (laag)",
+          "manual_on_eco": "Handmatig (eco)",
+          "manual_off": "Handmatig uit",
+          "auto": "Automatisch",
+          "ch_enabled": "Verwarming ingeschakeld",
+          "ch_disabled": "Verwarming uitgeschakeld",
+          "emergency_mode": "Noodbedrijf",
+          "summer_idle": "Zomermodus (inactief)",
+          "boost": "Boostverwarming",
+          "cooling_manual_on": "Koeling handmatig aan",
+          "cooling_manual_off": "Koeling handmatig uit",
+          "heating_manual_on": "Verwarming handmatig aan",
+          "heating_manual_off": "Verwarming handmatig uit",
+          "heating_auto": "Verwarming automatisch"
+        }
+      },
+      "boost_remaining_time": {
+        "name": "Resterende boosttijd"
+      },
+      "holiday_mode": {
+        "name": "Vakantiemodus",
+        "state": {
+          "0": "Uit",
+          "1": "Vakantie thuis",
+          "2": "Vakantie weg"
+        }
+      },
+      "dhw_temperature": {
+        "name": "Temperatuur warm tapwater"
+      },
+      "target_dhw_temperature": {
+        "name": "Gewenste temperatuur warm tapwater"
+      },
+      "out_temperature": {
+        "name": "Uitlaattemperatuur"
+      },
+      "friwa_supply_temp": {
+        "name": "Aanvoertemperatuur verswaterstation"
+      },
+      "friwa_primary_pump_modulation": {
+        "name": "Modulatie primaire pomp verswaterstation"
+      },
+      "volume_flow": {
+        "name": "Debiet"
+      },
+      "temperature_level": {
+        "name": "Temperatuurniveau"
+      },
+      "charge_remaining_time": {
+        "name": "Resterende laadtijd"
+      },
+      "thermal_disinfection_status": {
+        "name": "Status thermische desinfectie"
+      },
+      "solar_collector_temperature": {
+        "name": "Temperatuur zonnecollector"
+      },
+      "solar_storage_temperature": {
+        "name": "Temperatuur zonneboiler"
+      },
+      "solar_pump_modulation": {
+        "name": "Modulatie zonnepomp"
+      },
+      "solar_yield": {
+        "name": "Zonne-opbrengst"
+      },
+      "supply_air_temp": {
+        "name": "Toevoerluchttemperatuur"
+      },
+      "extract_air_temp": {
+        "name": "Afvoerluchttemperatuur"
+      },
+      "exhaust_air_temp": {
+        "name": "Uitblaasluchttemperatuur"
+      },
+      "internal_humidity": {
+        "name": "Luchtvochtigheid binnen"
+      },
+      "external_humidity": {
+        "name": "Luchtvochtigheid buiten"
+      },
+      "internal_air_quality": {
+        "name": "Luchtkwaliteit binnen"
+      },
+      "external_air_quality": {
+        "name": "Luchtkwaliteit buiten"
+      },
+      "supply_fan_speed": {
+        "name": "Toerental toevoerventilator"
+      },
+      "exhaust_fan_speed": {
+        "name": "Toerental afvoerventilator"
+      },
+      "supply_fan_power": {
+        "name": "Vermogen toevoerventilator"
+      },
+      "exhaust_fan_power": {
+        "name": "Vermogen afvoerventilator"
+      },
+      "exhaust_fan_level": {
+        "name": "Ventilatiestand"
+      },
+      "filter_remaining_time": {
+        "name": "Resterende filtertijd"
+      },
+      "appliance_run_time": {
+        "name": "Bedrijfstijd"
+      },
+      "el_aux_heater_power": {
+        "name": "Vermogen bijverwarming"
+      },
+      "electrical_aux_heater_power": {
+        "name": "Vermogen elektrische bijverwarming"
+      },
+      "summer_bypass_flap_power": {
+        "name": "Stand zomerbypassklep"
+      },
+      "pool_temperature": {
+        "name": "Zwembadtemperatuur"
+      },
+      "heating_mode": {
+        "name": "Verwarmingsmodus"
+      },
+      "cooling_mode": {
+        "name": "Koelmodus"
+      },
+      "manual_heating_setpoint": {
+        "name": "Handmatige verwarmingsinstelwaarde"
+      },
+      "temporary_heating_setpoint": {
+        "name": "Tijdelijke verwarmingsinstelwaarde"
+      },
+      "manual_cooling_setpoint": {
+        "name": "Handmatige koelinstelwaarde"
+      },
+      "temporary_cooling_setpoint": {
+        "name": "Tijdelijke koelinstelwaarde"
+      },
+      "battery": {
+        "name": "Batterij"
+      },
+      "signal_strength": {
+        "name": "Signaalsterkte"
+      },
+      "signal_rating": {
+        "name": "Signaalkwaliteit"
+      },
+      "actuator_modulation": {
+        "name": "Modulatie stelaandrijving"
+      },
+      "actuator_power": {
+        "name": "Vermogen stelaandrijving"
+      },
+      "operation_mode": {
+        "name": "Bedrijfsmodus"
+      },
+      "rf_error_cause": {
+        "name": "Oorzaak RF-fout"
+      },
+      "rf_connection_lost_time": {
+        "name": "Tijdstip verbinding verbroken"
+      },
+      "sgtin": {
+        "name": "Serienummer (SGTIN)"
+      },
+      "device_errors": {
+        "name": "Apparaatfouten"
+      },
+      "hybman_can_positionvr1": {
+        "name": "Stand driewegklep VR1"
+      },
+      "hybman_can_compressorsetp": {
+        "name": "Gewenst compressortoerental"
+      },
+      "hybman_pumpspeedsetp": {
+        "name": "Gewenst pomptoerental"
+      },
+      "hybman_tempflowheatpump": {
+        "name": "Aanvoertemperatuur warmtepomp"
+      },
+      "hybman_tempreturnheatpump": {
+        "name": "Retourtemperatuur warmtepomp"
+      },
+      "hybman_tempsysreturn": {
+        "name": "Retourtemperatuur systeem"
+      },
+      "hybman_tempmaxhp": {
+        "name": "Maximumtemperatuur warmtepomp"
+      },
+      "hybman_odumonitor_compressorspeedcurr": {
+        "name": "Compressortoerental buitenunit"
+      },
+      "hybman_odumonitor_jr0temp": {
+        "name": "Buitenunit temperatuur JR0"
+      },
+      "hybman_odumonitor_ta4temp": {
+        "name": "Buitenunit temperatuur TA4"
+      },
+      "hybman_odumonitor_tc0temp": {
+        "name": "Buitenunit temperatuur TC0"
+      },
+      "hybman_odumonitor_tc3temp": {
+        "name": "Buitenunit temperatuur TC3"
+      },
+      "hybman_odumonitor_tl2temp": {
+        "name": "Buitenunit temperatuur TL2"
+      },
+      "hybman_odumonitor_tr1temp": {
+        "name": "Buitenunit temperatuur TR1"
+      },
+      "src_relativetime": {
+        "name": "Relatieve bedrijfstijd ketel"
+      },
+      "src_systempowersetp": {
+        "name": "Gewenste ketelmodulatie"
+      },
+      "sc_hc1_rtsd_currentroomtempsetp": {
+        "name": "Huidige gewenste kamertemperatuur"
+      },
+      "sc_hc1_currentopstatus": {
+        "name": "Bedrijfsstatus verwarmingscircuit"
+      },
+      "sc_hc1_wdc_roominfluence": {
+        "name": "Ruimte-invloed verwarmingscircuit"
+      },
+      "sc_hc1_wdc_solarinfluence": {
+        "name": "Zoninvloed verwarmingscircuit"
+      },
+      "sc_rtc_relativetimer": {
+        "name": "Relatieve bedrijfstijd systeemregelaar"
+      },
+      "solar_actuatorstatistics_pumpruntimebasicfunction1": {
+        "name": "Looptijd zonnepomp"
+      },
+      "hc1mod_flowctrl_mixerposition": {
+        "name": "Mengklepstand"
+      },
+      "additional_heater_flow_temp": {
+        "name": "Aanvoertemperatuur bijverwarming"
+      },
+      "eheater_power_actual_low_res": {
+        "name": "Elektrisch vermogen bijverwarming"
+      },
+      "emon_total_burner": {
+        "name": "Energie brander totaal"
+      },
+      "emon_total_eheater": {
+        "name": "Energie bijverwarming totaal"
+      },
+      "emon_ch_burner": {
+        "name": "Energie brander verwarming"
+      },
+      "emon_ch_eheater": {
+        "name": "Energie bijverwarming verwarming"
+      },
+      "emon_dhw_burner": {
+        "name": "Energie brander warm tapwater"
+      },
+      "emon_dhw_eheater": {
+        "name": "Energie bijverwarming warm tapwater"
+      },
+      "emon_cooling_output": {
+        "name": "Geproduceerde koude"
+      },
+      "emon_cooling_electricity": {
+        "name": "Stroomverbruik koeling"
+      },
+      "emon_pool_output": {
+        "name": "Geproduceerde warmte zwembad"
+      },
+      "tariff_ch_setpoint": {
+        "name": "Verwarmingsinstelwaarde tarief"
+      },
+      "tariff_price_categorization": {
+        "name": "Stroomprijsniveau"
+      },
+      "tariff_id": {
+        "name": "Actief stroomtarief"
+      },
+      "heat_sources_em_status": {
+        "name": "Status energiebeheer"
+      },
+      "variable_tariff_support_status": {
+        "name": "Ondersteuning variabel stroomtarief"
+      },
+      "variable_tariff_ch_status": {
+        "name": "Status variabel tarief verwarming"
+      },
+      "variable_tariff_dhw_status": {
+        "name": "Status variabel tarief warm tapwater"
+      },
+      "variable_tariff_dhw_current_opmode": {
+        "name": "Bedrijfsmodus variabel tarief warm tapwater"
+      },
+      "variable_tariff_ch_high_price_delta": {
+        "name": "Variabel tarief delta hoge prijs"
+      },
+      "variable_tariff_ch_low_price_delta": {
+        "name": "Variabel tarief delta lage prijs"
+      },
+      "variable_tariff_ch_mid_price_setpoint": {
+        "name": "Variabel tarief instelwaarde normale prijs"
+      },
+      "devices_inclusion_time": {
+        "name": "Resterende koppeltijd apparaten"
+      },
+      "devices_rhc_assigned": {
+        "name": "Circuittoewijzing kamerthermostaat"
+      },
+      "devices_uhc_assigned": {
+        "name": "Circuittoewijzing vloerverwarming"
+      },
+      "zones_configuration_max": {
+        "name": "Maximaal ondersteunde zones"
+      },
+      "pc_aff_additional_heater_ch": {
+        "name": "Vermogenslimiet bijverwarming verwarming"
+      },
+      "pc_aff_additional_heater_dhw_tank": {
+        "name": "Vermogenslimiet bijverwarming warm tapwater"
+      },
+      "pc_aff_additional_heater_pri": {
+        "name": "Vermogenslimiet bijverwarming primair"
+      },
+      "pc_aff_ch": {
+        "name": "Vermogenslimiet verwarming"
+      },
+      "pc_aff_cooling": {
+        "name": "Vermogenslimiet koeling"
+      },
+      "pc_aff_dhw": {
+        "name": "Vermogenslimiet warm tapwater"
+      },
+      "pc_aff_pool": {
+        "name": "Vermogenslimiet zwembad"
+      },
+      "pc_aff_refrigerant_circuit": {
+        "name": "Vermogenslimiet koudemiddelcircuit"
+      },
+      "heat_pump_type": {
+        "name": "Type warmtepomp"
+      },
+      "odu_fan_speed": {
+        "name": "Ventilatortoerental buitenunit"
+      },
+      "pump_volume_flow": {
+        "name": "Pompdebiet"
+      },
+      "return_flow_temp": {
+        "name": "Retourtemperatuur"
+      },
+      "supply_flow_condenser_temp": {
+        "name": "Aanvoertemperatuur condensor"
+      },
+      "compressor_actual_speed": {
+        "name": "Compressortoerental"
+      },
+      "compressor_temp": {
+        "name": "Compressortemperatuur"
+      },
+      "heat_carrier_pump_speed": {
+        "name": "Toerental CV-pomp"
+      },
+      "high_pressure_temp": {
+        "name": "Hogedruktemperatuur"
+      },
+      "hot_gas_temp": {
+        "name": "Heetgastemperatuur"
+      },
+      "liquid_pipe_cooling_temp": {
+        "name": "Vloeistofleidingtemperatuur koelen"
+      },
+      "liquid_pipe_heating_temp": {
+        "name": "Vloeistofleidingtemperatuur verwarmen"
+      },
+      "low_pressure_temp": {
+        "name": "Lagedruktemperatuur"
+      },
+      "refrigerant_status": {
+        "name": "Status koudemiddelcircuit"
+      },
+      "suction_gas_temp": {
+        "name": "Zuiggastemperatuur"
+      },
+      "safety_board_status": {
+        "name": "Status veiligheidsprint"
+      },
+      "brine_collector_inflow": {
+        "name": "Inlaattemperatuur brinecircuit"
+      },
+      "brine_collector_outflow": {
+        "name": "Uitlaattemperatuur brinecircuit"
+      },
+      "brine_pressure": {
+        "name": "Brinedruk"
+      },
+      "brine_pump_speed": {
+        "name": "Toerental brinepomp"
+      },
+      "brine_volume_flow": {
+        "name": "Brinedebiet"
+      },
+      "max_indoor_air_quality": {
+        "name": "Max. grens luchtkwaliteit binnen"
+      },
+      "max_relative_humidity": {
+        "name": "Max. grens relatieve luchtvochtigheid"
+      },
+      "zone_name": {
+        "name": "Zonenaam"
+      },
+      "zone_icon": {
+        "name": "Zonepictogram"
+      },
+      "device_model": {
+        "name": "Model"
+      },
+      "device_type": {
+        "name": "Apparaattype"
+      },
+      "device_firmware": {
+        "name": "Firmwareversie"
+      },
+      "assigned_heating_circuit": {
+        "name": "Toegewezen verwarmingscircuit"
+      },
+      "assigned_zone": {
+        "name": "Toegewezen zone"
+      },
+      "hybman_odumonitor_jr1temp": {
+        "name": "Buitenunit temperatuur JR1"
+      },
+      "hybman_odumonitor_tr3temp": {
+        "name": "Buitenunit temperatuur TR3"
+      },
+      "hybman_odumonitor_tr4temp": {
+        "name": "Buitenunit temperatuur TR4"
+      },
+      "hybman_odumonitor_tr5temp": {
+        "name": "Buitenunit temperatuur TR5"
+      },
+      "hybman_odumonitor_tr6temp": {
+        "name": "Buitenunit temperatuur TR6"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Hoogst toegestane temperatuur"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Min. buitentemperatuur verwarmingsgrens"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Max. buitentemperatuur zomeruitschakeling"
+      },
+      "hybman_timetillnextcompressorstart": {
+        "name": "Tijd tot volgende compressorstart"
+      },
+      "hybman_timetillnextcompressorstop": {
+        "name": "Tijd tot volgende compressorstop"
+      },
+      "hybman_optimecompressorheating": {
+        "name": "Looptijd compressor verwarming"
+      },
+      "hybman_optimecompressordhw": {
+        "name": "Looptijd compressor warm tapwater"
+      },
+      "hybman_smartgridmode": {
+        "name": "Smart grid-modus"
+      },
+      "hybman_emergencymodestatus": {
+        "name": "Status noodbedrijf"
+      },
+      "src_outdoortemp": {
+        "name": "Buitentemperatuur"
+      },
+      "src_intflowtemp": {
+        "name": "Aanvoertemperatuur"
+      },
+      "src_intdhw_cyltemp": {
+        "name": "Temperatuur tapwaterboiler"
+      },
+      "src_fan_actualspeed": {
+        "name": "Ventilatortoerental"
+      },
+      "src_flamecurrent": {
+        "name": "Vlamstroom"
+      },
+      "src_displaycode": {
+        "name": "Displaycode"
+      },
+      "hc1mod_flowtemp": {
+        "name": "Aanvoertemperatuur"
+      },
+      "sc_hc1_flowtempsetp": {
+        "name": "Gewenste aanvoertemperatuur"
+      },
+      "sc_hc1_maxflowtempsetp": {
+        "name": "Max. gewenste aanvoertemperatuur"
+      },
+      "sc_introomtemp": {
+        "name": "Interne kamertemperatuur"
+      },
+      "sc_dampoutdtemp": {
+        "name": "Gedempte buitentemperatuur"
+      },
+      "sc_hc1_holidaymode": {
+        "name": "Vakantiemodus"
+      },
+      "sc_dhw1_holidaymode": {
+        "name": "Vakantiemodus"
+      },
+      "solar_heatcount_minus1dailysolargain": {
+        "name": "Zonne-opbrengst vorige dag"
+      },
+      "solar_heatcount_minus1monthlysolargain": {
+        "name": "Zonne-opbrengst vorige maand"
+      },
+      "solar_heatcount_minus1yearlysolargain": {
+        "name": "Zonne-opbrengst vorig jaar"
+      },
+      "solar_heatcount_totallastminus1hourgain": {
+        "name": "Zonne-opbrengst afgelopen uur"
+      },
+      "gweebus_cem_id": {
+        "name": "EEBus CEM-ID"
+      },
+      "gweebus_status": {
+        "name": "EEBus-status"
+      },
+      "gweebus_commissioningstatus": {
+        "name": "EEBus-inbedrijfstellingsstatus"
+      }
+    },
+    "binary_sensor": {
+      "flame_status": {
+        "name": "Vlamstatus"
+      },
+      "boiler_flame_status": {
+        "name": "Vlamstatus ketel"
+      },
+      "smart_function_active": {
+        "name": "Slimme functie actief"
+      },
+      "pv_contact_state": {
+        "name": "PV-contact"
+      },
+      "fallback_operation_status": {
+        "name": "Noodbedrijf actief"
+      },
+      "power_guard_active": {
+        "name": "Power Guard actief"
+      },
+      "power_limitation_active": {
+        "name": "Vermogensbegrenzing actief"
+      },
+      "silent_mode_status": {
+        "name": "Stille modus actief"
+      },
+      "maintenance_mode_status": {
+        "name": "Onderhoudsmodus"
+      },
+      "pc_heating_block": {
+        "name": "Verwarming geblokkeerd"
+      },
+      "pc_cooling_block": {
+        "name": "Koeling geblokkeerd"
+      },
+      "pc_dhw_block": {
+        "name": "Warm tapwater geblokkeerd"
+      },
+      "pc_pv_status": {
+        "name": "PV-overschot actief"
+      },
+      "pc_additional_heater_block": {
+        "name": "Bijverwarming geblokkeerd"
+      },
+      "pc_appliance_power_block": {
+        "name": "Toestelvermogen geblokkeerd"
+      },
+      "pc_high_source_temp_stop_cooling": {
+        "name": "Koelstop door hoge brontemperatuur actief"
+      },
+      "pc_high_source_temp_stop_heating": {
+        "name": "Verwarmingsstop door hoge brontemperatuur actief"
+      },
+      "pc_low_source_temp_stop_cooling": {
+        "name": "Koelstop door lage brontemperatuur actief"
+      },
+      "pc_low_source_temp_stop_heating": {
+        "name": "Verwarmingsstop door lage brontemperatuur actief"
+      },
+      "pc_power_elec_desired": {
+        "name": "Gewenst elektrisch vermogen actief"
+      },
+      "pc_user_additional_heater_block": {
+        "name": "Bijverwarming door gebruiker geblokkeerd"
+      },
+      "vt_dhw_high_price_enable": {
+        "name": "Variabel tarief warm tapwater hoge prijs actief"
+      },
+      "vt_dhw_low_price_enable": {
+        "name": "Variabel tarief warm tapwater lage prijs actief"
+      },
+      "additional_heater_primary_status": {
+        "name": "Status primaire bijverwarming"
+      },
+      "eheater_status": {
+        "name": "Status elektrische bijverwarming"
+      },
+      "external_input_1_state": {
+        "name": "Externe ingang 1"
+      },
+      "external_input_2_state": {
+        "name": "Externe ingang 2"
+      },
+      "external_input_3_state": {
+        "name": "Externe ingang 3"
+      },
+      "external_input_4_state": {
+        "name": "Externe ingang 4"
+      },
+      "external_inputs_cooling_block": {
+        "name": "Koeling extern geblokkeerd"
+      },
+      "power_constraints_power_guard_status": {
+        "name": "PowerGuard-status"
+      },
+      "power_constraints_power_elec_limitation_status": {
+        "name": "Elektrische vermogensbegrenzing actief"
+      },
+      "power_constraints_dhw_reduce_alarm": {
+        "name": "Warmtapwaterreductie bij alarm actief"
+      },
+      "power_constraints_appliance_power_limit": {
+        "name": "Toestelvermogenslimiet actief"
+      },
+      "variable_tariff_ch_optimization": {
+        "name": "Optimalisatie variabel tarief verwarming actief"
+      },
+      "variable_tariff_dhw_optimization": {
+        "name": "Optimalisatie variabel tarief warm tapwater actief"
+      },
+      "thermal_disinfection_running": {
+        "name": "Thermische desinfectie actief"
+      },
+      "child_lock": {
+        "name": "Kinderslot"
+      },
+      "heating_circuit_pump": {
+        "name": "Pomp verwarmingscircuit"
+      },
+      "open_window_detection": {
+        "name": "Open-raamdetectie"
+      },
+      "rf_connection_status": {
+        "name": "Verbindingsstatus"
+      },
+      "rf_paired_status": {
+        "name": "Koppelstatus"
+      },
+      "burner_active": {
+        "name": "Brander actief"
+      },
+      "defrost_active": {
+        "name": "Ontdooien actief"
+      },
+      "four_way_valve": {
+        "name": "Vierwegklep actief"
+      },
+      "drip_pan_heater": {
+        "name": "Verwarming condensbak actief"
+      },
+      "silent_mode": {
+        "name": "Stille modus actief"
+      },
+      "compressor_silent_limited": {
+        "name": "Compressor begrensd door stille modus"
+      },
+      "heat_up_sequence": {
+        "name": "Opwarmprocedure actief"
+      },
+      "low_outdoor_temp_stop": {
+        "name": "Verwarmingsstop bij lage buitentemperatuur"
+      },
+      "high_outdoor_temp_stop": {
+        "name": "Verwarmingsstop bij hoge buitentemperatuur (zomer)"
+      },
+      "highest_permitted_temp": {
+        "name": "Hoogst toegestane temperatuur overschreden"
+      },
+      "three_way_valve_boiler": {
+        "name": "Driewegklep ketel"
+      },
+      "air_pressure_switch": {
+        "name": "Luchtdrukschakelaar ketel"
+      },
+      "auto_filling_active": {
+        "name": "Automatisch bijvullen actief"
+      },
+      "ch_pump_boiler": {
+        "name": "Pomp verwarmingscircuit ketel"
+      },
+      "chimney_sweeper": {
+        "name": "Schoorsteenvegermodus"
+      },
+      "circ_pump_dhw": {
+        "name": "Circulatiepomp warm tapwater"
+      },
+      "dhw_running": {
+        "name": "Warm tapwater bereiden actief"
+      },
+      "ext_cut_off": {
+        "name": "Externe uitschakeling ketel"
+      },
+      "extra_dhw_active": {
+        "name": "Extra lading warm tapwater actief"
+      },
+      "fan_boiler": {
+        "name": "Ventilator ketel"
+      },
+      "gas_valve_1": {
+        "name": "Gasklep 1 ketel"
+      },
+      "gas_valve_2": {
+        "name": "Gasklep 2 ketel"
+      },
+      "oil_temperature_high": {
+        "name": "Olietemperatuur hoog"
+      },
+      "dhw_heat_up_active": {
+        "name": "Opwarmen warm tapwater actief"
+      },
+      "frost_protection_eco": {
+        "name": "Vorstbeveiliging ecomodus actief"
+      },
+      "frost_protection_active": {
+        "name": "Vorstbeveiliging actief"
+      },
+      "quick_heat_up_active": {
+        "name": "Snel opwarmen actief"
+      },
+      "pump_request_hc": {
+        "name": "Pompaanvraag verwarmingscircuit 1"
+      },
+      "pump_on_hm200": {
+        "name": "Pomp actief"
+      },
+      "hybman_pumpon": {
+        "name": "Pomp actief"
+      },
+      "hybman_can_defrostactive": {
+        "name": "Ontdooien actief"
+      },
+      "hybman_can_fourwayvalveactive": {
+        "name": "Vierwegklep actief"
+      },
+      "hybman_can_drippanheateractive": {
+        "name": "Verwarming condensbak actief"
+      },
+      "hybman_lownoisemodeactive": {
+        "name": "Geluidsarme modus actief"
+      },
+      "hybman_heatupsequence": {
+        "name": "Opwarmprocedure actief"
+      },
+      "hybman_compspeedlimitedduetosilentmode": {
+        "name": "Compressor begrensd door stille modus"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Verwarming gestopt door lage buitentemperatuur"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Hoogst toegestane temperatuur overschreden"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Verwarming gestopt door hoge buitentemperatuur (zomer)"
+      },
+      "src_relaystatus_3wayvalve": {
+        "name": "Driewegklep ketel"
+      },
+      "src_diginput_airpressureswitch": {
+        "name": "Luchtdrukschakelaar ketel"
+      },
+      "src_autofillingactive": {
+        "name": "Automatisch bijvullen actief"
+      },
+      "src_relaystatus_chpump": {
+        "name": "Pomp verwarmingscircuit ketel"
+      },
+      "src_opstatus_chimneysweeper": {
+        "name": "Schoorsteenvegermodus"
+      },
+      "src_intdhw_circpumpstatus": {
+        "name": "Circulatiepomp warm tapwater"
+      },
+      "src_intdhw_dhurunning": {
+        "name": "Warm tapwater bereiden actief"
+      },
+      "src_diginput_extcutoff": {
+        "name": "Externe uitschakeling ketel"
+      },
+      "src_intdhw_extraactive": {
+        "name": "Extra lading warm tapwater actief"
+      },
+      "src_relaystatus_fan": {
+        "name": "Ventilator ketel"
+      },
+      "src_relaystatus_gasvalve1": {
+        "name": "Gasklep 1 ketel"
+      },
+      "src_relaystatus_gasvalve2": {
+        "name": "Gasklep 2 ketel"
+      },
+      "src_diginput_oiltemperaturehigh": {
+        "name": "Olietemperatuur hoog"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "Opwarmen warm tapwater actief"
+      },
+      "sc_hc1_rtsd_preventionecomodeactive": {
+        "name": "Vorstbeveiliging ecomodus actief"
+      },
+      "sc_hc1_fpd_active": {
+        "name": "Vorstbeveiliging actief"
+      },
+      "sc_dhw1_sd_extraactive": {
+        "name": "Extra lading warm tapwater actief"
+      },
+      "sc_hc1_rotempsetpopt_heatupstatus": {
+        "name": "Snel opwarmen actief"
+      },
+      "hc1mod_flowctrl_pumprequest": {
+        "name": "Pompaanvraag verwarmingscircuit 1"
+      }
+    }
+  }
+}
