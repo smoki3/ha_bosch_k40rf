@@ -44,6 +44,8 @@ from .models import (
     get_via_device_kwargs,
     sanitize_serial_number,
     translate_device_term,
+    translate_fallback_name,
+    translate_state_value,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -160,6 +162,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                 return None
             if name.startswith("HybridManager "):
                 name = name.replace("HybridManager ", "", 1)
+            name = translate_fallback_name(name, lang)
 
         if self.coordinator.is_hybrid_system:
             if desc.device_sub_id == "hs1":
@@ -477,6 +480,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
     @property
     def native_value(self) -> Any:
         """Extract and safely convert the native value from coordinator data."""
+        lang = getattr(self.coordinator.hass.config, "language", "en") or "en"
         if self.entity_description.coordinator_fn:
             try:
                 return self.entity_description.coordinator_fn(self.coordinator)
@@ -492,7 +496,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             ):
                 return 0
             if self.entity_description.resource_id == "/heatSources/hybrid/activeHeatSource":
-                return "None (Standby)"
+                return translate_state_value("None (Standby)", lang)
             return None
 
         # Check for invalid states reported by gateway (e.g. state: [{"invalid": 255}])
@@ -527,7 +531,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                     arg = res_data.get("values")
                 else:
                     arg = raw_val
-                return self.entity_description.value_fn(arg)
+                return translate_state_value(self.entity_description.value_fn(arg), lang)
             except Exception as err:
                 _LOGGER.debug("Error transforming value for %s: %s", self.entity_id, err)
 
@@ -538,7 +542,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             ):
                 return 0
             if self.entity_description.resource_id == "/heatSources/hybrid/activeHeatSource":
-                return "None (Standby)"
+                return translate_state_value("None (Standby)", lang)
             return None
 
         # Check invalid sentinel values from device

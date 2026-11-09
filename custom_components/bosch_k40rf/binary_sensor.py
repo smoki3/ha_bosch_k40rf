@@ -41,6 +41,7 @@ from .models import (
     get_via_device_kwargs,
     sanitize_serial_number,
     translate_device_term,
+    translate_fallback_name,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -137,6 +138,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 return None
             if name.startswith("HybridManager "):
                 name = name.replace("HybridManager ", "", 1)
+            name = translate_fallback_name(name, lang)
 
         if self.coordinator.is_hybrid_system:
             if desc.device_sub_id == "hs1":

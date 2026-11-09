@@ -3355,53 +3355,9 @@ def is_boolean_endpoint(
     return False
 
 
-# Device terms appended to translated entity names and used for DeviceInfo, per Home Assistant language.
-DEVICE_TERM_TRANSLATIONS: dict[str, dict[str, str]] = {
-    "de": {
-        "Boiler / Burner": "Kessel / Brenner",
-        "Heat source / heat pump": "Wärmeerzeuger / Wärmepumpe",
-        "DHW circuit": "Warmwasserkreis",
-        "Ventilation unit": "Lüftungsgerät",
-        "Heating zone": "Heizzone",
-        "RF device": "Funk-Gerät",
-        "Heating circuit": "Heizkreis",
-        "Solar circuit": "Solarkreis",
-        "Heat source": "Wärmeerzeuger",
-        "Heat pump": "Wärmepumpe",
-        "Ventilation": "Lüftung",
-        "Boiler": "Kessel",
-        "Device": "Gerät",
-        "DHW": "Warmwasser",
-    },
-    "nl": {
-        "Boiler / Burner": "Ketel / Brander",
-        "Heat source / heat pump": "Warmtebron / Warmtepomp",
-        "DHW circuit": "Warmtapwatercircuit",
-        "Ventilation unit": "Ventilatie-unit",
-        "Heating zone": "Verwarmingszone",
-        "RF device": "RF-apparaat",
-        "Heating circuit": "Verwarmingscircuit",
-        "Solar circuit": "Zonnecircuit",
-        "Heat source": "Warmtebron",
-        "Heat pump": "Warmtepomp",
-        "Ventilation": "Ventilatie",
-        "Boiler": "Ketel",
-        "Device": "Apparaat",
-        "DHW": "Warm tapwater",
-    },
-}
-
-
 def _lang_code(lang: str | None) -> str:
     """Return the base language code (e.g. "nl" for "nl-BE")."""
     return (lang or "en").split("-")[0].lower()
-
-
-def translate_device_term(text: str, lang: str | None) -> str:
-    """Translate English device terms (e.g. "Heating circuit 1") into the given language."""
-    for en_term, local_term in DEVICE_TERM_TRANSLATIONS.get(_lang_code(lang), {}).items():
-        text = text.replace(en_term, local_term)
-    return text
 
 
 _TRANSLATION_CACHE: dict[str, dict[str, Any]] = {}
@@ -3431,6 +3387,44 @@ async def async_preload_translations(hass: Any) -> None:
             _load_translations(code)
 
     await hass.async_add_executor_job(_read_all)
+
+
+def translate_device_term(text: str, lang: str | None) -> str:
+    """Translate English device terms (e.g. "Heating circuit 1") using translations/<lang>.json."""
+    device_terms = _load_translations(_lang_code(lang)).get("device_terms", {})
+    if isinstance(device_terms, dict):
+        for en_term, local_term in device_terms.items():
+            if isinstance(local_term, str):
+                text = text.replace(en_term, local_term)
+    return text
+
+
+def translate_state_value(val: Any, lang: str | None) -> Any:
+    """Translate formatted English sensor state values using translations/<lang>.json."""
+    if not isinstance(val, str):
+        return val
+    state_map = _load_translations(_lang_code(lang)).get("state_values", {})
+    if not isinstance(state_map, dict) or not state_map:
+        return val
+    if val in state_map and isinstance(state_map[val], str):
+        return state_map[val]
+    if val.endswith(" active") and isinstance(state_map.get("_active_suffix"), str):
+        return f"{val[:-7]}{state_map['_active_suffix']}"
+    if val.endswith(" errors") and isinstance(state_map.get("_errors_suffix"), str):
+        return f"{val[:-7]}{state_map['_errors_suffix']}"
+    if val.startswith("Mode ") and "(" not in val and isinstance(state_map.get("_mode_prefix"), str):
+        return f"{state_map['_mode_prefix']}{val[5:]}"
+    return val
+
+
+def translate_fallback_name(name: str, lang: str | None) -> str:
+    """Translate dynamic fallback entity names using translations/<lang>.json."""
+    code = _lang_code(lang)
+    text = translate_device_term(name, code)
+    word_map = _load_translations(code).get("fallback_words", {})
+    if not isinstance(word_map, dict) or not word_map:
+        return text
+    return " ".join(word_map.get(w, w) for w in text.split())
 
 
 def get_translated_name(
