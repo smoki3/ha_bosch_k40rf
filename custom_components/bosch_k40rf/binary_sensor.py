@@ -38,6 +38,7 @@ from .coordinator import BoschK40DataUpdateCoordinator
 from .models import (
     BoschK40BinarySensorEntityDescription,
     get_translated_name,
+    get_via_device_kwargs,
     sanitize_serial_number,
     translate_device_term,
 )
@@ -208,7 +209,10 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             )
 
         # 2. Child Devices
-        via_kwargs: dict[str, Any] = {"via_device": (DOMAIN, gateway_unique_id)}
+        via_kwargs = get_via_device_kwargs(
+            gateway_unique_id,
+            self.coordinator.gateway_device_id,
+        )
 
         if dev_type == DEV_TYPE_HEAT_SOURCE:
             # In hybrid systems: route boiler / burner binary sensors to the Buderus boiler

@@ -28,6 +28,7 @@ from homeassistant.const import (
     UnitOfTemperature,
     UnitOfTime,
 )
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import EntityCategory
 
 from .const import (
@@ -47,7 +48,28 @@ from .const import (
     DEV_TYPE_SOLAR_CIRCUIT,
     DEV_TYPE_VENTILATION,
     DEV_TYPE_ZONE,
+    DOMAIN,
 )
+
+
+def get_via_device_kwargs(
+    gateway_unique_id: str,
+    gateway_device_id: str | None = None,
+) -> dict[str, Any]:
+    """Build parent device reference kwargs compatible with modern and older Home Assistant."""
+    # Support via_device_id (HA 2026.8+); fall back to via_device on older versions
+    annotations = getattr(DeviceInfo, "__annotations__", {})
+    optional_keys = getattr(DeviceInfo, "__optional_keys__", frozenset())
+    dataclass_fields = getattr(DeviceInfo, "__dataclass_fields__", {})
+    if (
+        "via_device_id" in annotations
+        or "via_device_id" in optional_keys
+        or "via_device_id" in dataclass_fields
+        or hasattr(DeviceInfo, "via_device_id")
+    ):
+        if gateway_device_id:
+            return {"via_device_id": gateway_device_id}
+    return {"via_device": (DOMAIN, gateway_unique_id)}
 
 
 def clean_entity_name(name: str | None) -> str | None:
@@ -1388,7 +1410,6 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             state_class=SensorStateClass.MEASUREMENT,
             native_unit_of_measurement="L/h",
             icon="mdi:water-pump",
-            value_fn=lambda val: (val * 10) if isinstance(val, (int, float)) else val,
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_return_flow_temp",
@@ -1627,7 +1648,6 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             state_class=SensorStateClass.MEASUREMENT,
             native_unit_of_measurement="L/h",
             icon="mdi:water-pump",
-            value_fn=lambda val: (val * 10) if isinstance(val, (int, float)) else val,
         ),
         # Unit-specific emon sensors
         BoschK40SensorEntityDescription(

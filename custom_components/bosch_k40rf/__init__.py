@@ -11,6 +11,9 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .api import BoschK40Client
 from .const import (
     CONF_ACCESS_TOKEN,
+    CONF_GATEWAY_BRAND,
+    CONF_GATEWAY_MAC,
+    CONF_GATEWAY_MODEL,
     CONF_HOST,
     DOMAIN,
     PLATFORMS,
@@ -46,6 +49,62 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Clean up any previously stored corrupted/binary serial numbers in Home Assistant device registry
     from homeassistant.helpers import device_registry as dr
     dev_reg = dr.async_get(hass)
+
+    # Register the parent Gateway device upfront so its registry ID is available for via_device_id
+    gateway_unique_id = (
+        entry.unique_id
+        or coordinator.gateway_info.get("unique_id")
+        or coordinator.client.host
+    )
+    brand = (
+        coordinator.gateway_info.get("brand")
+        or entry.data.get(CONF_GATEWAY_BRAND)
+        or "Bosch"
+    )
+    model = (
+        coordinator.gateway_info.get("model")
+        or entry.data.get(CONF_GATEWAY_MODEL)
+        or "Connect-Key K 40 RF"
+    )
+    firmware = (
+        coordinator.gateway_info.get("firmware")
+        or entry.data.get("firmware")
+    )
+    hardware = coordinator.gateway_info.get("hardware")
+    mac = (
+        coordinator.gateway_info.get("mac")
+        or entry.data.get(CONF_GATEWAY_MAC)
+    )
+    gw_mod = (
+        coordinator.get_basic_info_module(hw_ident="MX400")
+        or coordinator.get_basic_info_module(hw_ident="K40RF")
+    )
+    gw_ver = (gw_mod.get("Ver") if gw_mod else None) or firmware
+    gw_sn = sanitize_serial_number(
+        (
+            gw_mod.get("ModuleSerialNumber")
+            if gw_mod and gw_mod.get("ModuleSerialNumber")
+            else None
+        )
+        or coordinator.gateway_info.get("serial_number")
+    )
+    connections = set()
+    if mac:
+        connections.add((dr.CONNECTION_NETWORK_MAC, mac))
+
+    gateway_device = dev_reg.async_get_or_create(
+        config_entry_id=entry.entry_id,
+        identifiers={(DOMAIN, gateway_unique_id)},
+        name=f"{brand} Connect-Key K 40 RF Gateway",
+        manufacturer=brand,
+        model=model,
+        sw_version=gw_ver,
+        hw_version=hardware,
+        serial_number=gw_sn,
+        connections=connections,
+    )
+    coordinator.gateway_device_id = gateway_device.id
+
     devices = dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
     for dev in devices:
         if dev.serial_number:

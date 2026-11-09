@@ -66,6 +66,7 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.entry = entry
         self.active_endpoints: set[str] = set()
         self.gateway_info: dict[str, Any] = {}
+        self.gateway_device_id: str | None = None
         self._data: dict[str, Any] = {}
         self._poll_count: int = 0
         self.active_sensor_descriptions: list[BoschK40SensorEntityDescription] = []
