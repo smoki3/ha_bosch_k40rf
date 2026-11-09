@@ -364,6 +364,27 @@ def parse_working_time(raw_val: Any) -> float | int | None:
         return None
 
 
+def parse_volume_flow_lh(raw_val: Any) -> float | int | None:
+    """Normalize heat source / brine volume flow to L/h across firmware and system variants.
+
+    Some modules (e.g. HybridManager HM200 / WLW MB-7 AR) report volume flow in 10 L/h steps
+    (e.g. 81 for 810 L/h) despite advertising unitOfMeasure='l/h', whereas standalone XCU
+    controllers report direct L/h (e.g. 734 for 734 L/h). Active heat pump circulation pumps
+     always run above 250 L/h when non-zero, so values in (0, 200) are scaled by 10.
+    """
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if raw_val is None:
+        return None
+    try:
+        val = float(raw_val)
+    except (ValueError, TypeError):
+        return None
+    if 0 < val < 200:
+        val *= 10
+    return int(val) if val.is_integer() else round(val, 2)
+
+
 @dataclass(frozen=True, kw_only=True)
 class BoschK40SensorEntityDescription(SensorEntityDescription):
     """Class describing Bosch K40 sensor entity."""
@@ -1412,6 +1433,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             state_class=SensorStateClass.MEASUREMENT,
             native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_HOUR,
             icon="mdi:water-pump",
+            value_fn=parse_volume_flow_lh,
         ),
         BoschK40SensorEntityDescription(
             key=f"{hs_id}_return_flow_temp",
@@ -1651,6 +1673,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             state_class=SensorStateClass.MEASUREMENT,
             native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_HOUR,
             icon="mdi:water-pump",
+            value_fn=parse_volume_flow_lh,
         ),
         # Unit-specific emon sensors
         BoschK40SensorEntityDescription(
