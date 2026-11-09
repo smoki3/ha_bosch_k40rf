@@ -27,6 +27,7 @@ from homeassistant.const import (
     UnitOfPressure,
     UnitOfTemperature,
     UnitOfTime,
+    UnitOfVolumeFlowRate,
 )
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import EntityCategory
@@ -1407,8 +1408,9 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             target_device_type=DEV_TYPE_HEAT_SOURCE,
             device_sub_id=hs_id,
             device_name=f"Heat source {sub_title}",
+            device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
             state_class=SensorStateClass.MEASUREMENT,
-            native_unit_of_measurement="L/h",
+            native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_HOUR,
             icon="mdi:water-pump",
         ),
         BoschK40SensorEntityDescription(
@@ -1645,8 +1647,9 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             target_device_type=DEV_TYPE_HEAT_SOURCE,
             device_sub_id=hs_id,
             device_name=f"Heat source {sub_title}",
+            device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
             state_class=SensorStateClass.MEASUREMENT,
-            native_unit_of_measurement="L/h",
+            native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_HOUR,
             icon="mdi:water-pump",
         ),
         # Unit-specific emon sensors
@@ -1930,8 +1933,9 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
+            device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
             state_class=SensorStateClass.MEASUREMENT,
-            native_unit_of_measurement="L/min",
+            native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_MINUTE,
             icon="mdi:waves",
         ),
         BoschK40SensorEntityDescription(
@@ -3583,6 +3587,18 @@ def create_dynamic_sensor_description(
         device_class = SensorDeviceClass.SIGNAL_STRENGTH
         state_class = SensorStateClass.MEASUREMENT
         unit = SIGNAL_STRENGTH_DECIBELS_MILLIWATT
+    elif unit in ("l/h", "L/h"):
+        device_class = SensorDeviceClass.VOLUME_FLOW_RATE
+        state_class = SensorStateClass.MEASUREMENT
+        unit = UnitOfVolumeFlowRate.LITERS_PER_HOUR
+    elif unit in ("l/min", "L/min"):
+        device_class = SensorDeviceClass.VOLUME_FLOW_RATE
+        state_class = SensorStateClass.MEASUREMENT
+        unit = UnitOfVolumeFlowRate.LITERS_PER_MINUTE
+    elif unit in ("m3/h", "m³/h"):
+        device_class = SensorDeviceClass.VOLUME_FLOW_RATE
+        state_class = SensorStateClass.MEASUREMENT
+        unit = UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR
 
     # 3. Create readable name
     trans_key: str | None = None

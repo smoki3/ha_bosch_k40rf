@@ -570,6 +570,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             SensorDeviceClass.AQI,
             SensorDeviceClass.SIGNAL_STRENGTH,
             SensorDeviceClass.DURATION,
+            SensorDeviceClass.VOLUME_FLOW_RATE,
         ):
             try:
                 float_val = float(raw_val)
