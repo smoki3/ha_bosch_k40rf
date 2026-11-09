@@ -6,6 +6,7 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import BoschK40Client
@@ -19,7 +20,7 @@ from .const import (
     PLATFORMS,
 )
 from .coordinator import BoschK40DataUpdateCoordinator
-from .models import sanitize_serial_number
+from .models import async_preload_translations, sanitize_serial_number
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,12 +43,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     # Initial discovery and data refresh
+    await async_preload_translations(hass)
     await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
     # Clean up any previously stored corrupted/binary serial numbers in Home Assistant device registry
-    from homeassistant.helpers import device_registry as dr
     dev_reg = dr.async_get(hass)
 
     # Register the parent Gateway device upfront so its registry ID is available for via_device_id

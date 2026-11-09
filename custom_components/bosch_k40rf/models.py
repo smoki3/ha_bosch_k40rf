@@ -3160,7 +3160,7 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     # Boiler (MC110), heating circuit and solar
     "SRC.RelativeTime": ("Relative operating time boiler", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "SRC.SystemPowerSetp": ("Boiler modulation setpoint", None, SensorStateClass.MEASUREMENT, "%"),
-    "SRC.SystemPumpPressureDifference": ("System pump pressure difference", SensorDeviceClass.PRESSURE, SensorStateClass.MEASUREMENT, UnitOfPressure.MILLIBAR),
+    "SRC.SystemPumpPressureDifference": ("System pump pressure difference", SensorDeviceClass.PRESSURE, SensorStateClass.MEASUREMENT, UnitOfPressure.MBAR),
     "SRC.SystemPumpVolumeFlow": ("System pump flow rate", SensorDeviceClass.VOLUME_FLOW_RATE, SensorStateClass.MEASUREMENT, UnitOfVolumeFlowRate.LITERS_PER_HOUR),
     "SC.HC1.RTSD.CurrentRoomTempSetp": ("Current room temperature setpoint", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.HC1.CurrentOpStatus": ("Heating circuit operation status", None, None, None),
@@ -3396,7 +3396,7 @@ _TRANSLATION_CACHE: dict[str, dict[str, Any]] = {}
 
 
 def _load_translations(lang_code: str) -> dict[str, Any]:
-    """Load and cache a translation file, returning an empty dict if it does not exist."""
+    """Return cached translation dict, loading synchronously only if not yet preloaded."""
     if lang_code not in _TRANSLATION_CACHE:
         try:
             translations_path = Path(__file__).parent / "translations" / f"{lang_code}.json"
@@ -3405,6 +3405,20 @@ def _load_translations(lang_code: str) -> dict[str, Any]:
         except Exception:
             _TRANSLATION_CACHE[lang_code] = {}
     return _TRANSLATION_CACHE[lang_code]
+
+
+async def async_preload_translations(hass: Any) -> None:
+    """Preload translation files in an executor thread to avoid blocking the event loop."""
+    lang = _lang_code(getattr(hass.config, "language", "en"))
+    codes_to_load = [c for c in dict.fromkeys((lang, "en", "de", "nl")) if c not in _TRANSLATION_CACHE]
+    if not codes_to_load:
+        return
+
+    def _read_all() -> None:
+        for code in codes_to_load:
+            _load_translations(code)
+
+    await hass.async_add_executor_job(_read_all)
 
 
 def get_translated_name(
@@ -3565,7 +3579,7 @@ def create_dynamic_sensor_description(
     elif unit in ("bar", "mbar"):
         device_class = SensorDeviceClass.PRESSURE
         state_class = SensorStateClass.MEASUREMENT
-        unit = UnitOfPressure.MILLIBAR if unit == "mbar" else UnitOfPressure.BAR
+        unit = UnitOfPressure.MBAR if unit == "mbar" else UnitOfPressure.BAR
     elif unit in ("W", "kW"):
         device_class = SensorDeviceClass.POWER
         state_class = SensorStateClass.MEASUREMENT
