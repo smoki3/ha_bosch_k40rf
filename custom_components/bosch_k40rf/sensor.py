@@ -182,11 +182,16 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             or self.entry.data.get(CONF_GATEWAY_BRAND)
             or "Bosch"
         )
+        is_buderus = str(brand).strip().lower() == "buderus" or bool(
+            self.coordinator.get_basic_info_module(hw_ident="MX400")
+        )
         model = (
             self.coordinator.gateway_info.get("model")
             or self.entry.data.get(CONF_GATEWAY_MODEL)
-            or "Connect-Key K 40 RF"
+            or ("MX400" if is_buderus else "Connect-Key K 40 RF")
         )
+        if is_buderus and ("connect" in str(model).lower() or "k 40" in str(model).lower()):
+            model = "MX400"
         firmware = (
             self.coordinator.gateway_info.get("firmware")
             or self.entry.data.get("firmware")
@@ -220,7 +225,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                 connections.add((CONNECTION_NETWORK_MAC, mac))
             return DeviceInfo(
                 identifiers={(DOMAIN, gateway_unique_id)},
-                name="Connect-Key K 40 RF Gateway",
+                name=f"{model} Gateway",
                 manufacturer=brand,
                 model=model,
                 sw_version=gw_ver,
@@ -469,8 +474,9 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
 
         return DeviceInfo(
             identifiers={(DOMAIN, gateway_unique_id)},
-            name="Connect-Key K 40 RF Gateway",
+            name=f"{model} Gateway",
             manufacturer=brand,
+            model=model,
         )
 
     @property

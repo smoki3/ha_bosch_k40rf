@@ -86,6 +86,7 @@ _DEVICE_SUFFIX_RE = re.compile(
     r"|Lüftung\s+\w+"
     r"|Zone \d+"
     r"|Device \d+|Gerät \d+"
+    r"|Connect-Key(?:\s*K\s*40(?:\s*RF)?)?|MX\s*400|Gateway"
     r")$",
     re.IGNORECASE,
 )
@@ -103,6 +104,7 @@ _DEVICE_PREFIX_RE = re.compile(
     r"|Lüftung\s+\w+"
     r"|Zone \d+"
     r"|Device \d+|Gerät \d+"
+    r"|Connect-Key(?:\s*K\s*40(?:\s*RF)?)?|MX\s*400|Gateway"
     r")\s+",
     re.IGNORECASE,
 )

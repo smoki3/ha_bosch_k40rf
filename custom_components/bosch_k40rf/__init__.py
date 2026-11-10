@@ -68,11 +68,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         or entry.data.get(CONF_GATEWAY_BRAND)
         or "Bosch"
     )
+    is_buderus = str(brand).strip().lower() == "buderus" or bool(
+        coordinator.get_basic_info_module(hw_ident="MX400")
+    )
     model = (
         coordinator.gateway_info.get("model")
         or entry.data.get(CONF_GATEWAY_MODEL)
-        or "Connect-Key K 40 RF"
+        or ("MX400" if is_buderus else "Connect-Key K 40 RF")
     )
+    if is_buderus and ("connect" in str(model).lower() or "k 40" in str(model).lower()):
+        model = "MX400"
     firmware = (
         coordinator.gateway_info.get("firmware")
         or entry.data.get("firmware")
@@ -102,7 +107,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     gateway_device = dev_reg.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, gateway_unique_id)},
-        name="Connect-Key K 40 RF Gateway",
+        name=f"{model} Gateway",
         manufacturer=brand,
         model=model,
         sw_version=gw_ver,
