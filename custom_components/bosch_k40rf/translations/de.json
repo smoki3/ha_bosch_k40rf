@@ -344,7 +344,13 @@
         "name": "Mischerposition"
       },
       "current_su_wi_mode": {
-        "name": "Sommer-/Winterbetrieb"
+        "name": "Sommer-/Winterbetrieb",
+        "state": {
+          "forced": "Winter",
+          "off": "Sommer",
+          "auto": "Automatik",
+          "cooling": "Kühlen"
+        }
       },
       "overall_status": {
         "name": "Status",
@@ -1287,6 +1293,7 @@
     "Comfort": "Komfort",
     "Eco": "Eco",
     "Summer": "Sommer",
+    "Winter": "Winter",
     "Manual": "Manuell",
     "Ok": "OK",
     "Internal Error": "Interner Fehler",

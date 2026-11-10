@@ -344,7 +344,13 @@
         "name": "Mixer position"
       },
       "current_su_wi_mode": {
-        "name": "Summer/winter mode"
+        "name": "Summer/winter mode",
+        "state": {
+          "forced": "Winter",
+          "off": "Summer",
+          "auto": "Auto",
+          "cooling": "Cooling"
+        }
       },
       "overall_status": {
         "name": "Overall status",

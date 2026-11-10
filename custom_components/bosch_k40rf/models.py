@@ -406,6 +406,23 @@ def parse_hc_overall_status(raw_val: Any) -> str:
     return mapping.get(val_str, str(raw_val).replace("_", " ").title())
 
 
+def parse_su_wi_mode(raw_val: Any) -> str:
+    """Format summer/winter mode to a clean description."""
+    if isinstance(raw_val, dict):
+        raw_val = raw_val.get("value", raw_val)
+    if not raw_val:
+        return "Unknown"
+    val_str = str(raw_val).strip().lower()
+    mapping = {
+        "forced": "Winter",
+        "off": "Summer",
+        "auto": "Auto",
+        "automatic": "Auto",
+        "cooling": "Cooling",
+    }
+    return mapping.get(val_str, str(raw_val).title())
+
+
 def parse_holiday_mode(raw_val: Any) -> str:
     """Format holiday mode (0=off, 1=holiday at home, 2=holiday away)."""
     if isinstance(raw_val, dict):
@@ -1958,6 +1975,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             device_sub_id=hc_id,
             device_name=dev_name,
             icon="mdi:weather-sunny-alert",
+            value_fn=parse_su_wi_mode,
         ),
         BoschK40SensorEntityDescription(
             key=f"{hc_id}_overall_status",
@@ -3814,6 +3832,9 @@ def create_dynamic_sensor_description(
     elif "holidaymode" in res_lower:
         value_fn = parse_holiday_mode
         icon = "mdi:bag-suitcase"
+    elif "suwimode" in res_lower:
+        value_fn = parse_su_wi_mode
+        icon = "mdi:weather-sunny-alert"
     elif "compressorspeed" in res_lower:
         icon = "mdi:speedometer"
     elif "compressor" in res_lower:
