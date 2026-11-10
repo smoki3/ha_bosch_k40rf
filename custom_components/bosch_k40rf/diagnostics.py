@@ -31,7 +31,10 @@ TO_REDACT: set[str] = {
     "unique_id",
     "uuid",
     "serial",
+    "serial_number",
     "SerialNumber",
+    "ModuleSerialNumber",
+    "ProductSerialNumber",
     "sgtin",
     "ssid",
     "mac",
@@ -39,6 +42,9 @@ TO_REDACT: set[str] = {
     "wifi_mac",
     "eth_ip",
     "wifi_ip",
+    "gatewayId",
+    "moduleId",
+    "recipeId",
 }
 
 SENSITIVE_ENDPOINT_SUFFIXES: tuple[str, ...] = (
@@ -49,8 +55,15 @@ SENSITIVE_ENDPOINT_SUFFIXES: tuple[str, ...] = (
     "/gateway/Network/Wifi/ip",
     "/gateway/Network/Wifi/ssid",
     "/gateway/WiFi/Hotspot/password",
+    "/gateway/eth/mac",
+    "/gateway/eth/ip/ipv4",
+    "/gateway/wifi/mac",
+    "/gateway/wifi/ip/ipv4",
+    "/gateway/wifi/ssid",
+    "/gateway/update/report",
     "/sgtin",
     "/GWEEBUS.CEM.ID",
+    "/GWEEBUS.CEM.SKI",
 )
 
 
@@ -58,9 +71,26 @@ def _redact_api_payload(data: dict[str, Any]) -> dict[str, Any]:
     """Deep-copy and redact sensitive API endpoint values and keys."""
     copied: dict[str, Any] = deepcopy(data)
     for ep, payload in copied.items():
-        if isinstance(payload, dict) and ep.endswith(SENSITIVE_ENDPOINT_SUFFIXES):
-            if "value" in payload and payload["value"] not in (None, ""):
-                payload["value"] = "**REDACTED**"
+        if isinstance(payload, dict):
+            if ep.endswith(SENSITIVE_ENDPOINT_SUFFIXES):
+                if "value" in payload and payload["value"] not in (None, ""):
+                    payload["value"] = "**REDACTED**"
+                if "gatewayId" in payload:
+                    payload["gatewayId"] = "**REDACTED**"
+                if "moduleId" in payload:
+                    payload["moduleId"] = "**REDACTED**"
+                if isinstance(payload.get("values"), list):
+                    for item in payload["values"]:
+                        if isinstance(item, dict):
+                            for k in ("gatewayId", "moduleId", "ModuleSerialNumber", "ProductSerialNumber"):
+                                if k in item and item[k]:
+                                    item[k] = "**REDACTED**"
+            elif ep == "/system/basicInfo" and isinstance(payload.get("values"), list):
+                for item in payload["values"]:
+                    if isinstance(item, dict):
+                        for k in ("ModuleSerialNumber", "ProductSerialNumber"):
+                            if k in item and item[k]:
+                                item[k] = "**REDACTED**"
     return async_redact_data(copied, TO_REDACT)
 
 
