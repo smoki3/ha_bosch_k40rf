@@ -336,7 +336,7 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         }
         covered_resources = {d.resource_id for d in matched_sensors + matched_binary} | ignored_endpoints
         for ep in self.active_endpoints:
-            if ep not in covered_resources and ep in self._data:
+            if ep not in covered_resources and not ep.startswith("/signals/SC.HolidayNew.") and ep in self._data:
                 item = self._data[ep]
                 if isinstance(item, dict) and item.get("value") is not None:
                     if is_boolean_endpoint(ep, item):

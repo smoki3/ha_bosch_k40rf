@@ -155,13 +155,20 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                 if desc.resource_id == resource_id and (value_key is None or desc.value_key == value_key):
                     return get_translated_name("sensor", translation_key, lang)
 
-        name = get_translated_name("sensor", desc.translation_key, lang, desc.device_name)
+        dev_name = desc.device_name
+        if not self.coordinator.is_hybrid_system and desc.device_sub_id in ("hybman", "kessel", "hs1"):
+            dev_name = None
+        name = get_translated_name("sensor", desc.translation_key, lang, dev_name)
         if not name:
             name = desc.name
             if not name:
                 return None
             if name.startswith("HybridManager "):
                 name = name.replace("HybridManager ", "", 1)
+            if not self.coordinator.is_hybrid_system:
+                for suffix in (" HybridManager", " Boiler", " HS1", " hs1"):
+                    if name.endswith(suffix):
+                        name = name[: -len(suffix)]
             name = translate_fallback_name(name, lang)
 
         if self.coordinator.is_hybrid_system:
@@ -336,37 +343,36 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                         **via_kwargs,
                     )
 
-            # In non-hybrid systems or if sub_id is the boiler (kessel)
-            if sub_id == "kessel":
-                k_mod = (
-                    self.coordinator.get_basic_info_module(hw_ident="MC")
-                    or self.coordinator.get_basic_info_module(hw_ident="BC")
-                )
-                k_hw = (k_mod.get("ModuleHwIdentStr") if k_mod else None) or "MC110"
-                k_ver = k_mod.get("Ver") if k_mod else None
-                k_sn = sanitize_serial_number(k_mod.get("ModuleSerialNumber")) if k_mod else None
-                return DeviceInfo(
-                    identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source_kessel")},
-                    name=translate_device_term(f"{brand} Boiler ({k_hw})", lang),
-                    manufacturer=brand,
-                    model=translate_device_term(f"Boiler / Burner ({k_hw})", lang),
-                    sw_version=k_ver,
-                    serial_number=k_sn,
-                    **via_kwargs,
-                )
-
-            # Primary heat pump
+            # Primary heat source
             # In hybrid systems: hs2 or heat pump specific endpoints
-            # In non-hybrid systems: hs1 (or None) is the heat pump
+            # In non-hybrid systems: hs1, hybman, kessel or None all belong to the single primary heat source
             if (
                 sub_id is None
                 or sub_id == "hs2"
-                or (not self.coordinator.is_hybrid_system and sub_id == "hs1")
+                or (not self.coordinator.is_hybrid_system and sub_id in ("hs1", "hybman", "kessel"))
             ):
                 appliance = self.coordinator.get_basic_info_module(is_appliance=True)
                 prod_name = appliance.get("ProductName") if appliance else None
                 app_ver = appliance.get("Ver") if appliance else None
                 app_sn = sanitize_serial_number(appliance.get("ProductSerialNumber") or appliance.get("ModuleSerialNumber")) if appliance else None
+                if not prod_name and not self.coordinator.is_hybrid_system:
+                    k_mod = (
+                        self.coordinator.get_basic_info_module(hw_ident="MC")
+                        or self.coordinator.get_basic_info_module(hw_ident="BC")
+                    )
+                    if k_mod:
+                        k_hw = k_mod.get("ModuleHwIdentStr") or "MC110"
+                        app_ver = app_ver or k_mod.get("Ver")
+                        app_sn = app_sn or sanitize_serial_number(k_mod.get("ModuleSerialNumber"))
+                        return DeviceInfo(
+                            identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source")},
+                            name=translate_device_term(f"{brand} Boiler ({k_hw})", lang),
+                            manufacturer=brand,
+                            model=translate_device_term(f"Boiler / Burner ({k_hw})", lang),
+                            sw_version=app_ver,
+                            serial_number=app_sn,
+                            **via_kwargs,
+                        )
                 return DeviceInfo(
                     identifiers={(DOMAIN, f"{gateway_unique_id}_heat_source")},
                     name=f"{brand} {prod_name}" if prod_name else translate_device_term(f"{brand} Heat source", lang),

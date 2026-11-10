@@ -113,12 +113,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator.gateway_device_id = gateway_device.id
 
     lang = getattr(hass.config, "language", "en") or "en"
-    hybman_ident = (DOMAIN, f"{gateway_unique_id}_heat_source_hybman")
+    phantom_non_hybrid_idents = {
+        (DOMAIN, f"{gateway_unique_id}_heat_source_hybman"),
+        (DOMAIN, f"{gateway_unique_id}_heat_source_kessel"),
+    }
     devices = dr.async_entries_for_config_entry(dev_reg, entry.entry_id)
     for dev in devices:
-        if not coordinator.is_hybrid_system and hybman_ident in dev.identifiers:
+        if not coordinator.is_hybrid_system and (dev.identifiers & phantom_non_hybrid_idents):
             _LOGGER.info(
-                "Removing falsely detected HybridManager device %s (%s) on non-hybrid system",
+                "Removing falsely detected hybrid/boiler sub-device %s (%s) on non-hybrid system",
                 dev.name,
                 dev.id,
             )
