@@ -513,6 +513,38 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                     if isinstance(item, dict) and target_key in item:
                         raw_val = item[target_key]
                         break
+                # Standalone heat pumps (e.g. Compress CS6800iAW) and some hybrid setups
+                # do not report a combined "electricity" key in /heatSources/emon/*Consumption,
+                # but instead report "compressor" and "eheater" separately.
+                if raw_val is None and target_key == "electricity":
+                    comp_val = None
+                    eheater_val = None
+                    for item in values_list:
+                        if isinstance(item, dict):
+                            if "compressor" in item:
+                                comp_val = item["compressor"]
+                            if "eheater" in item:
+                                eheater_val = item["eheater"]
+                    if comp_val is None and self.coordinator.is_hybrid_system:
+                        hs2_ep = self.entity_description.resource_id.replace(
+                            "/heatSources/emon/", "/heatSources/hs2/emon/"
+                        )
+                        hs2_data = self.coordinator.data.get(hs2_ep)
+                        if isinstance(hs2_data, dict) and isinstance(hs2_data.get("values"), list):
+                            for item in hs2_data["values"]:
+                                if isinstance(item, dict):
+                                    if "compressor" in item and comp_val is None:
+                                        comp_val = item["compressor"]
+                                    if "eheater" in item and eheater_val is None:
+                                        eheater_val = item["eheater"]
+                    if comp_val is not None:
+                        try:
+                            raw_val = round(
+                                float(comp_val) + (float(eheater_val) if eheater_val is not None else 0.0),
+                                2,
+                            )
+                        except (ValueError, TypeError):
+                            pass
         elif not self.entity_description.value_fn and (res_data.get("type") == "emonValue" or "values" in res_data):
             values_list = res_data.get("values")
             if isinstance(values_list, list) and values_list:
