@@ -8,7 +8,7 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import device_registry as dr, entity_registry as er
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import BoschK40Client
@@ -148,6 +148,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 update_kwargs["model"] = translated_model
         if update_kwargs:
             dev_reg.async_update_device(dev.id, **update_kwargs)
+
+    # Clean up orphan gas valve entities on non-hybrid systems
+    if not coordinator.is_hybrid_system:
+        entity_reg = er.async_get(hass)
+        for entity_entry in er.async_entries_for_config_entry(entity_reg, entry.entry_id):
+            unique_id_lower = entity_entry.unique_id.lower()
+            if (
+                "gasvalve1" in unique_id_lower
+                or "gasvalve2" in unique_id_lower
+                or "gas_valve_1" in unique_id_lower
+                or "gas_valve_2" in unique_id_lower
+            ):
+                _LOGGER.info(
+                    "Removing gas valve entity %s (%s) on non-hybrid heat pump system",
+                    entity_entry.entity_id,
+                    entity_entry.unique_id,
+                )
+                entity_reg.async_remove(entity_entry.entity_id)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 

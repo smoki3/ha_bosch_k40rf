@@ -116,6 +116,65 @@ def clean_entity_name(name: str | None) -> str | None:
     return name.strip()
 
 
+def clean_non_hybrid_entity_name(name: str | None) -> str | None:
+    """Strip boiler and hybrid manager references from entity names on non-hybrid systems."""
+    if not name:
+        return name
+
+    prefixes = (
+        "Boiler ",
+        "boiler ",
+        "Kessel ",
+        "kessel ",
+        "HybridManager ",
+        "hybridmanager ",
+        "HS1 ",
+        "hs1 ",
+    )
+    suffixes = (
+        " Boiler",
+        " boiler",
+        " Kessel",
+        " kessel",
+        " HybridManager",
+        " hybridmanager",
+        " HS1",
+        " hs1",
+    )
+    infixes = (
+        " Boiler ",
+        " boiler ",
+        " Kessel ",
+        " kessel ",
+        " HybridManager ",
+        " hybridmanager ",
+        " HS1 ",
+        " hs1 ",
+    )
+
+    result = name
+    changed = True
+    while changed:
+        changed = False
+        for p in prefixes:
+            if result.startswith(p):
+                result = result[len(p):].lstrip()
+                changed = True
+        for s in suffixes:
+            if result.endswith(s):
+                result = result[:-len(s)].rstrip()
+                changed = True
+
+    for inf in infixes:
+        while inf in result:
+            result = result.replace(inf, " ")
+
+    cleaned = result.strip()
+    if not cleaned:
+        return name
+    return cleaned[0].upper() + cleaned[1:]
+
+
 def decode_bosch_name(raw_val: Any) -> str | None:
     """Decode Bosch base64 utf-16be encoded string or return clean string."""
     if raw_val is None:

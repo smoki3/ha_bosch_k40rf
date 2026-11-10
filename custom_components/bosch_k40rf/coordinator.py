@@ -299,12 +299,22 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.active_endpoints.update(valid_endpoints)
         self._data.update(initial_data)
 
+        # On non-hybrid systems (pure heat pump), gas valves are inactive / false
+        gas_valve_endpoints = {
+            "/signals/SRC.RelayStatus.GasValve1",
+            "/signals/SRC.RelayStatus.GasValve2",
+        }
+        if not self.is_hybrid_system:
+            self.active_endpoints.difference_update(gas_valve_endpoints)
+
         # 6. Map active endpoints to entity descriptions (including dynamic descriptions for unknown endpoints)
         matched_sensors: list[BoschK40SensorEntityDescription] = []
         matched_binary: list[BoschK40BinarySensorEntityDescription] = []
 
         # Known static sensors
         for desc in all_sensor_descs:
+            if not self.is_hybrid_system and desc.resource_id in gas_valve_endpoints:
+                continue
             if desc.resource_id in self.active_endpoints:
                 matched_sensors.append(desc)
             elif desc.coordinator_fn is not None and desc.resource_id == "/signals/SC.InstallationDate":
@@ -320,6 +330,8 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         # Known static binary sensors
         for desc in all_binary_descs:
+            if not self.is_hybrid_system and desc.resource_id in gas_valve_endpoints:
+                continue
             if desc.resource_id in self.active_endpoints:
                 matched_binary.append(desc)
 
@@ -334,6 +346,8 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "/signals/SC.InstallationDate.Month",
             "/signals/SC.InstallationDate.Year",
         }
+        if not self.is_hybrid_system:
+            ignored_endpoints.update(gas_valve_endpoints)
         covered_resources = {d.resource_id for d in matched_sensors + matched_binary} | ignored_endpoints
         for ep in self.active_endpoints:
             if ep not in covered_resources and not ep.startswith("/signals/SC.HolidayNew.") and ep in self._data:

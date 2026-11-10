@@ -37,6 +37,7 @@ from .const import (
 from .coordinator import BoschK40DataUpdateCoordinator
 from .models import (
     BoschK40BinarySensorEntityDescription,
+    clean_non_hybrid_entity_name,
     get_translated_name,
     get_via_device_kwargs,
     sanitize_serial_number,
@@ -139,23 +140,17 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             name = desc.name
             if not name:
                 return None
-            if name.startswith("HybridManager "):
-                name = name.replace("HybridManager ", "", 1)
-            if not self.coordinator.is_hybrid_system:
-                for suffix in (" HybridManager", " Boiler", " HS1", " hs1"):
-                    if name.endswith(suffix):
-                        name = name[: -len(suffix)]
             name = translate_fallback_name(name, lang)
 
-        if self.coordinator.is_hybrid_system:
-            if desc.device_sub_id == "hs1":
-                boiler = translate_device_term("Boiler", lang)
-                return name.replace(" HS1", f" {boiler}").replace(" hs1", f" {boiler}")
-            if desc.device_sub_id == "hs2":
-                heat_pump = translate_device_term("Heat pump", lang)
-                return name.replace(" HS2", f" {heat_pump}").replace(" hs2", f" {heat_pump}")
-        elif desc.device_sub_id == "hs1":
-            return name.replace(" HS1", "").replace(" hs1", "")
+        if not self.coordinator.is_hybrid_system:
+            return clean_non_hybrid_entity_name(name)
+
+        if desc.device_sub_id == "hs1":
+            boiler = translate_device_term("Boiler", lang)
+            return name.replace(" HS1", f" {boiler}").replace(" hs1", f" {boiler}")
+        if desc.device_sub_id == "hs2":
+            heat_pump = translate_device_term("Heat pump", lang)
+            return name.replace(" HS2", f" {heat_pump}").replace(" hs2", f" {heat_pump}")
         return name
 
     @property
