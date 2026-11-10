@@ -149,8 +149,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if update_kwargs:
             dev_reg.async_update_device(dev.id, **update_kwargs)
 
-    # Clean up orphan gas valve entities on non-hybrid systems
-    if not coordinator.is_hybrid_system:
+    # Clean up orphan gas valve entities on standalone heat pump systems (where gas valves do not exist)
+    if coordinator.is_standalone_heat_pump:
         entity_reg = er.async_get(hass)
         for entity_entry in er.async_entries_for_config_entry(entity_reg, entry.entry_id):
             unique_id_lower = entity_entry.unique_id.lower()

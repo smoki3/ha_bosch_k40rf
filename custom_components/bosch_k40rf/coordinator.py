@@ -299,12 +299,12 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.active_endpoints.update(valid_endpoints)
         self._data.update(initial_data)
 
-        # On non-hybrid systems (pure heat pump), gas valves are inactive / false
+        # On standalone heat pump systems (pure heat pump, no boiler), gas valves are inactive / false
         gas_valve_endpoints = {
             "/signals/SRC.RelayStatus.GasValve1",
             "/signals/SRC.RelayStatus.GasValve2",
         }
-        if not self.is_hybrid_system:
+        if self.is_standalone_heat_pump:
             self.active_endpoints.difference_update(gas_valve_endpoints)
 
         # 6. Map active endpoints to entity descriptions (including dynamic descriptions for unknown endpoints)
@@ -313,7 +313,7 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         # Known static sensors
         for desc in all_sensor_descs:
-            if not self.is_hybrid_system and desc.resource_id in gas_valve_endpoints:
+            if self.is_standalone_heat_pump and desc.resource_id in gas_valve_endpoints:
                 continue
             if desc.resource_id in self.active_endpoints:
                 matched_sensors.append(desc)
@@ -330,7 +330,7 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         # Known static binary sensors
         for desc in all_binary_descs:
-            if not self.is_hybrid_system and desc.resource_id in gas_valve_endpoints:
+            if self.is_standalone_heat_pump and desc.resource_id in gas_valve_endpoints:
                 continue
             if desc.resource_id in self.active_endpoints:
                 matched_binary.append(desc)
@@ -346,7 +346,7 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "/signals/SC.InstallationDate.Month",
             "/signals/SC.InstallationDate.Year",
         }
-        if not self.is_hybrid_system:
+        if self.is_standalone_heat_pump:
             ignored_endpoints.update(gas_valve_endpoints)
         covered_resources = {d.resource_id for d in matched_sensors + matched_binary} | ignored_endpoints
         for ep in self.active_endpoints:
@@ -447,9 +447,17 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return None
 
     @property
+    def system_type(self) -> str:
+        """Return system type from /system/type."""
+        val = self.get_value("/system/type")
+        if isinstance(val, dict):
+            val = val.get("value")
+        return str(val or "").strip().lower()
+
+    @property
     def is_hybrid_system(self) -> bool:
         """Return True if system is a hybrid heating system."""
-        sys_type = str(self.get_value("/system/type") or "").lower()
+        sys_type = self.system_type
         if "hybrid" in sys_type or sys_type in ("ehybrid", "hybman", "hybridboiler"):
             return True
         if self.get_basic_info_module(hw_ident="HM200"):
@@ -466,4 +474,37 @@ class BoschK40DataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if len(hs_active) >= 2:
             return True
         return False
+
+    @property
+    def is_heat_pump_system(self) -> bool:
+        """Return True if system is or contains a heat pump."""
+        sys_type = self.system_type
+        if "heatpump" in sys_type or sys_type in ("heatpump_single", "heatpump_cascade"):
+            return True
+        if self.is_hybrid_system:
+            return True
+        if self.get_basic_info_module(hw_ident="AW") or self.get_basic_info_module(hw_ident="XCU"):
+            return True
+        model = str(self.gateway_info.get("model") or "").lower()
+        if "compress" in model or "heat pump" in model or "wärmepumpe" in model:
+            return True
+        if any(
+            ep.startswith("/heatSources/hs1/heatPump")
+            or ep.startswith("/heatSources/hs2/heatPump")
+            or "cuhp" in ep.lower()
+            or "compressor" in ep.lower()
+            for ep in self.active_endpoints
+        ):
+            return True
+        return False
+
+    @property
+    def is_standalone_heat_pump(self) -> bool:
+        """Return True if system is a pure standalone heat pump without boiler."""
+        return not self.is_hybrid_system and self.is_heat_pump_system
+
+    @property
+    def is_standalone_boiler(self) -> bool:
+        """Return True if system is a pure standalone boiler without heat pump."""
+        return not self.is_hybrid_system and not self.is_heat_pump_system
 

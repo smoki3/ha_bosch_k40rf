@@ -107,7 +107,11 @@ async def async_get_config_entry_diagnostics(
         "config_entry": async_redact_data(entry.as_dict(), TO_REDACT),
         "gateway_info": async_redact_data(coordinator.gateway_info, TO_REDACT),
         "system_summary": {
+            "system_type": coordinator.system_type,
             "is_hybrid_system": coordinator.is_hybrid_system,
+            "is_heat_pump_system": coordinator.is_heat_pump_system,
+            "is_standalone_heat_pump": coordinator.is_standalone_heat_pump,
+            "is_standalone_boiler": coordinator.is_standalone_boiler,
             "active_endpoints_count": len(coordinator.active_endpoints),
             "active_sensors_count": len(coordinator.active_sensor_descriptions),
             "active_binary_sensors_count": len(coordinator.active_binary_descriptions),
@@ -166,7 +170,11 @@ async def async_get_device_diagnostics(
             "identifier": "**REDACTED**" if device_ident else None,
         },
         "system_summary": {
+            "system_type": coordinator.system_type,
             "is_hybrid_system": coordinator.is_hybrid_system,
+            "is_heat_pump_system": coordinator.is_heat_pump_system,
+            "is_standalone_heat_pump": coordinator.is_standalone_heat_pump,
+            "is_standalone_boiler": coordinator.is_standalone_boiler,
             "active_endpoints_count": len(coordinator.active_endpoints),
         },
         "api_data": _redact_api_payload(sorted_data),
