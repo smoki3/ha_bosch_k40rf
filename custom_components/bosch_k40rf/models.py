@@ -73,47 +73,62 @@ def get_via_device_kwargs(
     return {"via_device": (DOMAIN, gateway_unique_id)}
 
 
+_DEVICE_SUFFIX_RE = re.compile(
+    r"\s+(?:"
+    r"Heating circuit \d+|Heizkreis \d+"
+    r"|DHW \d+|Warmwasser \d+"
+    r"|Solar circuit \d+|Solarkreis \d+"
+    r"|Hybrid\s*Manager"
+    r"|Boiler|Kessel"
+    r"|Heat\s*pump|Wärmepumpe"
+    r"|HS[12]|hs[12]"
+    r"|Ventilation\s+\w+"
+    r"|Lüftung\s+\w+"
+    r"|Zone \d+"
+    r"|Device \d+|Gerät \d+"
+    r")$",
+    re.IGNORECASE,
+)
+
+_DEVICE_PREFIX_RE = re.compile(
+    r"^(?:"
+    r"Heating circuit \d+|Heizkreis \d+"
+    r"|DHW \d+|Warmwasser \d+"
+    r"|Solar circuit \d+|Solarkreis \d+"
+    r"|Hybrid\s*Manager"
+    r"|Boiler|Kessel"
+    r"|Heat\s*pump|Wärmepumpe"
+    r"|HS[12]|hs[12]"
+    r"|Ventilation\s+\w+"
+    r"|Lüftung\s+\w+"
+    r"|Zone \d+"
+    r"|Device \d+|Gerät \d+"
+    r")\s+",
+    re.IGNORECASE,
+)
+
+
 def clean_entity_name(name: str | None) -> str | None:
     """Strip redundant device names from entity names so Home Assistant does not duplicate them."""
     if not name:
         return name
-    # Prefixes to strip
-    prefixes = (
-        "HybridManager ",
-        "Boiler ",
-        "Heating circuit 1 ",
-        "Heating circuit 2 ",
-        "DHW 1 ",
-        "DHW 2 ",
-        "Solar circuit 1 ",
-        "Solar circuit 2 ",
-        "Heat pump ",
-    )
-    for p in prefixes:
-        if name.startswith(p):
-            name = name[len(p):]
 
-    # Suffixes to strip
-    suffixes = (
-        " HybridManager",
-        " Boiler",
-        " Heat pump",
-        " Heating circuit 1",
-        " Heating circuit 2",
-        " DHW 1",
-        " DHW 2",
-        " Solar circuit 1",
-        " Solar circuit 2",
-        " HS1",
-        " hs1",
-        " HS2",
-        " hs2",
-    )
-    for s in suffixes:
-        if name.endswith(s):
-            name = name[:-len(s)]
+    result = name
+    changed = True
+    while changed:
+        changed = False
+        new_result = _DEVICE_SUFFIX_RE.sub("", result)
+        if new_result != result and new_result.strip():
+            result = new_result.strip()
+            changed = True
+        new_result = _DEVICE_PREFIX_RE.sub("", result)
+        if new_result != result and new_result.strip():
+            result = new_result.strip()
+            changed = True
 
-    return name.strip()
+    if not result:
+        return name
+    return result[0].upper() + result[1:]
 
 
 def clean_non_hybrid_entity_name(name: str | None) -> str | None:
@@ -1874,7 +1889,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_room_temperature",
             translation_key="room_temperature",
             resource_id=f"/heatingCircuits/{hc_id}/roomtemperature",
-            name=f"Room temperature {dev_name}",
+            name="Room temperature",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1887,7 +1902,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_current_room_setpoint",
             translation_key="room_temperature_setpoint",
             resource_id=f"/heatingCircuits/{hc_id}/currentRoomSetpoint",
-            name=f"Room temperature setpoint {dev_name}",
+            name="Room temperature setpoint",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1900,7 +1915,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_actual_humidity",
             translation_key="actual_humidity",
             resource_id=f"/heatingCircuits/{hc_id}/actualHumidity",
-            name=f"Humidity {dev_name}",
+            name="Humidity",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1913,7 +1928,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_max_flow_temp",
             translation_key="max_flow_temp",
             resource_id=f"/heatingCircuits/{hc_id}/maxFlowTemp",
-            name=f"Max flow temperature {dev_name}",
+            name="Max flow temperature",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1926,7 +1941,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_mixer_position",
             translation_key="mixer_position",
             resource_id=f"/heatingCircuits/{hc_id}/mixerPosition",
-            name=f"Mixer position {dev_name}",
+            name="Mixer position",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1938,7 +1953,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_current_su_wi_mode",
             translation_key="current_su_wi_mode",
             resource_id=f"/heatingCircuits/{hc_id}/currentSuWiMode",
-            name=f"Summer/winter mode {dev_name}",
+            name="Summer/winter mode",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1948,7 +1963,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_overall_status",
             translation_key="overall_status",
             resource_id=f"/heatingCircuits/{hc_id}/overallStatus",
-            name=f"Status {dev_name}",
+            name="Status",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1959,7 +1974,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_boost_remaining_time",
             translation_key="boost_remaining_time",
             resource_id=f"/heatingCircuits/{hc_id}/boostRemainingTime",
-            name=f"Boost remaining time {dev_name}",
+            name="Boost remaining time",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1971,7 +1986,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_holiday_mode",
             translation_key="holiday_mode",
             resource_id=f"/signals/SC.{hc_id.upper()}.HolidayMode",
-            name=f"Holiday mode {dev_name}",
+            name="Holiday mode",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -1990,7 +2005,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_actual_temp",
             translation_key="dhw_temperature",
             resource_id=f"/dhwCircuits/{dhw_id}/actualTemp",
-            name=f"DHW temperature {dev_name}",
+            name="DHW temperature",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2003,7 +2018,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_current_setpoint",
             translation_key="target_dhw_temperature",
             resource_id=f"/dhwCircuits/{dhw_id}/currentSetpoint",
-            name=f"Target DHW temperature {dev_name}",
+            name="Target DHW temperature",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2016,7 +2031,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_out_temp",
             translation_key="out_temperature",
             resource_id=f"/dhwCircuits/{dhw_id}/outTemp",
-            name=f"Outlet temperature {dev_name}",
+            name="Outlet temperature",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2029,7 +2044,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_current_friwa_supply_temp",
             translation_key="friwa_supply_temp",
             resource_id=f"/dhwCircuits/{dhw_id}/currentFriwaSupplyTemperature",
-            name=f"Fresh water supply temperature {dev_name}",
+            name="Fresh water supply temperature",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2042,7 +2057,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_friwa_primary_pump_modulation",
             translation_key="friwa_primary_pump_modulation",
             resource_id=f"/dhwCircuits/{dhw_id}/friwaPrimaryPumpModulation",
-            name=f"Fresh water primary pump modulation {dev_name}",
+            name="Fresh water primary pump modulation",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2054,7 +2069,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_volume_flow",
             translation_key="volume_flow",
             resource_id=f"/dhwCircuits/{dhw_id}/volumeFlow",
-            name=f"Flow rate {dev_name}",
+            name="Flow rate",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2067,7 +2082,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_current_temperature_level",
             translation_key="temperature_level",
             resource_id=f"/dhwCircuits/{dhw_id}/currentTemperatureLevel",
-            name=f"Temperature level {dev_name}",
+            name="Temperature level",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2077,7 +2092,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_overall_status",
             translation_key="overall_status",
             resource_id=f"/dhwCircuits/{dhw_id}/overallStatus",
-            name=f"Status {dev_name}",
+            name="Status",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2088,7 +2103,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_charge_remaining_time",
             translation_key="charge_remaining_time",
             resource_id=f"/dhwCircuits/{dhw_id}/chargeRemainingTime",
-            name=f"Charge remaining time {dev_name}",
+            name="Charge remaining time",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2100,7 +2115,7 @@ def build_dhw_circuit_sensors(dhw_id: str) -> list[BoschK40SensorEntityDescripti
             key=f"{dhw_id}_holiday_mode",
             translation_key="holiday_mode",
             resource_id=f"/signals/SC.{dhw_id.upper()}.HolidayMode",
-            name=f"Holiday mode {dev_name}",
+            name="Holiday mode",
             target_device_type=DEV_TYPE_DHW_CIRCUIT,
             device_sub_id=dhw_id,
             device_name=dev_name,
@@ -2119,7 +2134,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
             key=f"{sc_id}_collector_temp",
             translation_key="solar_collector_temperature",
             resource_id=f"/solarCircuits/{sc_id}/collectorTemperature",
-            name=f"Solar collector temperature {dev_name}",
+            name="Solar collector temperature",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
             device_sub_id=sc_id,
             device_name=dev_name,
@@ -2132,7 +2147,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
             key=f"{sc_id}_dhw_tank_bottom_temp",
             translation_key="solar_storage_temperature",
             resource_id=f"/solarCircuits/{sc_id}/dhwTankBottomTemperature",
-            name=f"Solar storage temperature {dev_name}",
+            name="Solar storage temperature",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
             device_sub_id=sc_id,
             device_name=dev_name,
@@ -2145,7 +2160,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
             key=f"{sc_id}_pump_modulation",
             translation_key="solar_pump_modulation",
             resource_id=f"/solarCircuits/{sc_id}/pumpModulation",
-            name=f"Solar pump modulation {dev_name}",
+            name="Solar pump modulation",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
             device_sub_id=sc_id,
             device_name=dev_name,
@@ -2157,7 +2172,7 @@ def build_solar_circuit_sensors(sc_id: str) -> list[BoschK40SensorEntityDescript
             key=f"{sc_id}_solar_yield",
             translation_key="solar_yield",
             resource_id=f"/solarCircuits/{sc_id}/solarYield",
-            name=f"Solar yield {dev_name}",
+            name="Solar yield",
             target_device_type=DEV_TYPE_SOLAR_CIRCUIT,
             device_sub_id=sc_id,
             device_name=dev_name,
@@ -2177,7 +2192,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_outdoor_temp",
             translation_key="outdoor_temperature",
             resource_id=f"/ventilation/{vz_id}/sensors/outdoorTemp",
-            name=f"Outdoor temperature {dev_name}",
+            name="Outdoor temperature",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2190,7 +2205,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_supply_temp",
             translation_key="supply_air_temp",
             resource_id=f"/ventilation/{vz_id}/sensors/supplyTemp",
-            name=f"Supply air temperature {dev_name}",
+            name="Supply air temperature",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2203,7 +2218,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_extract_temp",
             translation_key="extract_air_temp",
             resource_id=f"/ventilation/{vz_id}/sensors/extractTemp",
-            name=f"Extract air temperature {dev_name}",
+            name="Extract air temperature",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2216,7 +2231,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_exhaust_temp",
             translation_key="exhaust_air_temp",
             resource_id=f"/ventilation/{vz_id}/sensors/exhaustTemp",
-            name=f"Exhaust air temperature {dev_name}",
+            name="Exhaust air temperature",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2229,7 +2244,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_internal_humidity",
             translation_key="internal_humidity",
             resource_id=f"/ventilation/{vz_id}/sensors/internalHumidity",
-            name=f"Indoor humidity {dev_name}",
+            name="Indoor humidity",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2242,7 +2257,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_external_humidity",
             translation_key="external_humidity",
             resource_id=f"/ventilation/{vz_id}/sensors/externalHumidity",
-            name=f"Outdoor humidity {dev_name}",
+            name="Outdoor humidity",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2255,7 +2270,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_internal_air_quality",
             translation_key="internal_air_quality",
             resource_id=f"/ventilation/{vz_id}/sensors/internalAirQuality",
-            name=f"Indoor air quality {dev_name}",
+            name="Indoor air quality",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2268,7 +2283,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_external_air_quality",
             translation_key="external_air_quality",
             resource_id=f"/ventilation/{vz_id}/sensors/externalAirQuality",
-            name=f"Outdoor air quality {dev_name}",
+            name="Outdoor air quality",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2281,7 +2296,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_supply_fan_speed",
             translation_key="supply_fan_speed",
             resource_id=f"/ventilation/{vz_id}/sensors/supplyFanRotation",
-            name=f"Supply fan speed {dev_name}",
+            name="Supply fan speed",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2293,7 +2308,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_exhaust_fan_speed",
             translation_key="exhaust_fan_speed",
             resource_id=f"/ventilation/{vz_id}/exhaustFanSpeed",
-            name=f"Exhaust fan speed {dev_name}",
+            name="Exhaust fan speed",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2305,7 +2320,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_supply_fan_power",
             translation_key="supply_fan_power",
             resource_id=f"/ventilation/{vz_id}/supplyFanPower",
-            name=f"Supply fan power {dev_name}",
+            name="Supply fan power",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2317,7 +2332,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_exhaust_fan_power",
             translation_key="exhaust_fan_power",
             resource_id=f"/ventilation/{vz_id}/exhaustFanPower",
-            name=f"Exhaust fan power {dev_name}",
+            name="Exhaust fan power",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2329,7 +2344,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_exhaust_fan_level",
             translation_key="exhaust_fan_level",
             resource_id=f"/ventilation/{vz_id}/exhaustFanLevel",
-            name=f"Fan level {dev_name}",
+            name="Fan level",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2339,7 +2354,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_filter_remaining_time",
             translation_key="filter_remaining_time",
             resource_id=f"/ventilation/{vz_id}/filter/remainingTime",
-            name=f"Filter remaining time {dev_name}",
+            name="Filter remaining time",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2351,7 +2366,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_appliance_run_time",
             translation_key="appliance_run_time",
             resource_id=f"/ventilation/{vz_id}/applianceRunTime",
-            name=f"Operating time {dev_name}",
+            name="Operating time",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2364,7 +2379,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_el_aux_heater_power",
             translation_key="el_aux_heater_power",
             resource_id=f"/ventilation/{vz_id}/elAuxHeaterPower",
-            name=f"Auxiliary heater power {dev_name}",
+            name="Auxiliary heater power",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2376,7 +2391,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_electrical_aux_heater_power",
             translation_key="electrical_aux_heater_power",
             resource_id=f"/ventilation/{vz_id}/electricalAuxHeaterPower",
-            name=f"Electric auxiliary heater power {dev_name}",
+            name="Electric auxiliary heater power",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2388,7 +2403,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_max_indoor_air_quality",
             translation_key="max_indoor_air_quality",
             resource_id=f"/ventilation/{vz_id}/maxIndoorAirQuality",
-            name=f"Max indoor air quality limit {dev_name}",
+            name="Max indoor air quality limit",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2402,7 +2417,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_max_relative_humidity",
             translation_key="max_relative_humidity",
             resource_id=f"/ventilation/{vz_id}/maxRelativeHumidity",
-            name=f"Max relative humidity limit {dev_name}",
+            name="Max relative humidity limit",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2416,7 +2431,7 @@ def build_ventilation_sensors(vz_id: str) -> list[BoschK40SensorEntityDescriptio
             key=f"{vz_id}_summer_bypass_flap_power",
             translation_key="summer_bypass_flap_power",
             resource_id=f"/ventilation/{vz_id}/summerBypass/flapPower",
-            name=f"Summer bypass damper position {dev_name}",
+            name="Summer bypass damper position",
             target_device_type=DEV_TYPE_VENTILATION,
             device_sub_id=vz_id,
             device_name=dev_name,
@@ -2451,7 +2466,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_average_current_temp",
             translation_key="room_temperature",
             resource_id=f"/zones/{zone_id}/averageCurrentTemperature",
-            name=f"Room temperature {dev_name}",
+            name="Room temperature",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2464,7 +2479,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_average_actual_humidity",
             translation_key="actual_humidity",
             resource_id=f"/zones/{zone_id}/averageActualHumidity",
-            name=f"Humidity {dev_name}",
+            name="Humidity",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2477,7 +2492,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_current_room_setpoint",
             translation_key="room_temperature_setpoint",
             resource_id=f"/zones/{zone_id}/currentRoomSetpoint",
-            name=f"Room temperature setpoint {dev_name}",
+            name="Room temperature setpoint",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2490,7 +2505,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_heating_operation_mode",
             translation_key="heating_mode",
             resource_id=f"/zones/{zone_id}/heating/operationMode",
-            name=f"Heating mode {dev_name}",
+            name="Heating mode",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2500,7 +2515,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_cooling_operation_mode",
             translation_key="cooling_mode",
             resource_id=f"/zones/{zone_id}/cooling/operationMode",
-            name=f"Cooling mode {dev_name}",
+            name="Cooling mode",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2510,7 +2525,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_name",
             translation_key="zone_name",
             resource_id=f"/zones/{zone_id}/name",
-            name=f"Zone name {dev_name}",
+            name="Zone name",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2522,7 +2537,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_heating_manual_setpoint",
             translation_key="manual_heating_setpoint",
             resource_id=f"/zones/{zone_id}/heating/manualRoomSetpoint",
-            name=f"Manual heating setpoint {dev_name}",
+            name="Manual heating setpoint",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2535,7 +2550,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_heating_temp_setpoint",
             translation_key="temporary_heating_setpoint",
             resource_id=f"/zones/{zone_id}/heating/temporaryRoomSetpoint",
-            name=f"Temporary heating setpoint {dev_name}",
+            name="Temporary heating setpoint",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2548,7 +2563,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_cooling_manual_setpoint",
             translation_key="manual_cooling_setpoint",
             resource_id=f"/zones/{zone_id}/cooling/manualRoomSetpoint",
-            name=f"Manual cooling setpoint {dev_name}",
+            name="Manual cooling setpoint",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2561,7 +2576,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_cooling_temp_setpoint",
             translation_key="temporary_cooling_setpoint",
             resource_id=f"/zones/{zone_id}/cooling/temporaryRoomSetpoint",
-            name=f"Temporary cooling setpoint {dev_name}",
+            name="Temporary cooling setpoint",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2574,7 +2589,7 @@ def build_zone_sensors(zone_id: str) -> list[BoschK40SensorEntityDescription]:
             key=f"{zone_id}_icon",
             translation_key="zone_icon",
             resource_id=f"/zones/{zone_id}/icon",
-            name=f"Zone icon {dev_name}",
+            name="Zone icon",
             target_device_type=DEV_TYPE_ZONE,
             device_sub_id=zone_id,
             device_name=dev_name,
@@ -2593,7 +2608,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_room_temperature",
             translation_key="room_temperature",
             resource_id=f"/devices/{dev_id}/roomtemperature",
-            name=f"Room temperature {dev_name}",
+            name="Room temperature",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2606,7 +2621,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_current_room_setpoint",
             translation_key="room_temperature_setpoint",
             resource_id=f"/devices/{dev_id}/currentRoomSetpoint",
-            name=f"Room temperature setpoint {dev_name}",
+            name="Room temperature setpoint",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2619,7 +2634,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_actual_humidity",
             translation_key="actual_humidity",
             resource_id=f"/devices/{dev_id}/actualHumidity",
-            name=f"Humidity {dev_name}",
+            name="Humidity",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2632,7 +2647,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_actuator_modulation",
             translation_key="actuator_modulation",
             resource_id=f"/devices/{dev_id}/actuatorModulation",
-            name=f"Actuator modulation {dev_name}",
+            name="Actuator modulation",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2644,7 +2659,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_battery",
             translation_key="battery",
             resource_id=f"/devices/{dev_id}/battery",
-            name=f"Battery {dev_name}",
+            name="Battery",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2654,7 +2669,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_signal",
             translation_key="signal_strength",
             resource_id=f"/devices/{dev_id}/signal",
-            name=f"Signal strength {dev_name}",
+            name="Signal strength",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2668,7 +2683,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_signal_icon",
             translation_key="signal_rating",
             resource_id=f"/devices/{dev_id}/signalIcon",
-            name=f"Signal rating {dev_name}",
+            name="Signal rating",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2679,7 +2694,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_name",
             translation_key="device_model",
             resource_id=f"/devices/{dev_id}/name",
-            name=f"Model {dev_name}",
+            name="Model",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2690,7 +2705,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_type",
             translation_key="device_type",
             resource_id=f"/devices/{dev_id}/type",
-            name=f"Device type {dev_name}",
+            name="Device type",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2701,7 +2716,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_firmware",
             translation_key="device_firmware",
             resource_id=f"/devices/{dev_id}/versionFirmware",
-            name=f"Firmware {dev_name}",
+            name="Firmware",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2712,7 +2727,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_assigned_hc",
             translation_key="assigned_heating_circuit",
             resource_id=f"/devices/{dev_id}/assignedHC",
-            name=f"Assigned heating circuit {dev_name}",
+            name="Assigned heating circuit",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2723,7 +2738,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_actuator_power",
             translation_key="actuator_power",
             resource_id=f"/devices/{dev_id}/actuatorPower",
-            name=f"Actuator power {dev_name}",
+            name="Actuator power",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2735,7 +2750,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_operation_mode",
             translation_key="operation_mode",
             resource_id=f"/devices/{dev_id}/operationMode",
-            name=f"Operation mode {dev_name}",
+            name="Operation mode",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2745,7 +2760,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_rf_error_cause",
             translation_key="rf_error_cause",
             resource_id=f"/devices/{dev_id}/rfErrorCause",
-            name=f"RF error cause {dev_name}",
+            name="RF error cause",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2756,7 +2771,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_rf_time_connection_lost",
             translation_key="rf_connection_lost_time",
             resource_id=f"/devices/{dev_id}/rfTimeofConnectionLost",
-            name=f"Connection lost timestamp {dev_name}",
+            name="Connection lost timestamp",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2767,7 +2782,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_sgtin",
             translation_key="sgtin",
             resource_id=f"/devices/{dev_id}/sgtin",
-            name=f"Serial number (SGTIN) {dev_name}",
+            name="Serial number (SGTIN)",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2778,7 +2793,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_zone_id",
             translation_key="assigned_zone",
             resource_id=f"/devices/{dev_id}/zoneId",
-            name=f"Assigned zone {dev_name}",
+            name="Assigned zone",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -2789,7 +2804,7 @@ def build_rf_device_sensors(dev_id: str) -> list[BoschK40SensorEntityDescription
             key=f"{dev_id}_errors",
             translation_key="device_errors",
             resource_id=f"/devices/{dev_id}/errors",
-            name=f"Device errors {dev_name}",
+            name="Device errors",
             target_device_type=DEV_TYPE_DEVICE,
             device_sub_id=dev_id,
             device_name=dev_name,
@@ -3111,7 +3126,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
                 key=f"{dhw}_td_running_status",
                 translation_key="thermal_disinfection_running",
                 resource_id=f"/dhwCircuits/{dhw}/tdrunningStatus",
-                name=f"Thermal disinfection active {dev_name}",
+                name="Thermal disinfection active",
                 target_device_type=DEV_TYPE_DHW_CIRCUIT,
                 device_sub_id=dhw,
                 device_name=dev_name,
@@ -3129,7 +3144,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
                 key=f"{hc}_pump_status",
                 translation_key="heating_circuit_pump",
                 resource_id=f"/heatingCircuits/{hc}/pumpStatus",
-                name=f"Heating circuit pump {dev_name}",
+                name="Heating circuit pump",
                 target_device_type=DEV_TYPE_HEATING_CIRCUIT,
                 device_sub_id=hc,
                 device_name=dev_name,
@@ -3140,7 +3155,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
                 key=f"{hc}_open_window_status",
                 translation_key="open_window_detection",
                 resource_id=f"/heatingCircuits/{hc}/openWindowDetection/status",
-                name=f"Open window detection {dev_name}",
+                name="Open window detection",
                 target_device_type=DEV_TYPE_HEATING_CIRCUIT,
                 device_sub_id=hc,
                 device_name=dev_name,
@@ -3158,7 +3173,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
                 key=f"{zone}_child_lock",
                 translation_key="child_lock",
                 resource_id=f"/zones/{zone}/childLock",
-                name=f"Child lock {dev_name}",
+                name="Child lock",
                 target_device_type=DEV_TYPE_ZONE,
                 device_sub_id=zone,
                 device_name=dev_name,
@@ -3176,7 +3191,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
                 key=f"{dev}_rf_connection_status",
                 translation_key="rf_connection_status",
                 resource_id=f"/devices/{dev}/rfConnectionStatus",
-                name=f"Connection status {dev_name}",
+                name="Connection status",
                 target_device_type=DEV_TYPE_DEVICE,
                 device_sub_id=dev,
                 device_name=dev_name,
@@ -3187,7 +3202,7 @@ def build_binary_sensors() -> list[BoschK40BinarySensorEntityDescription]:
                 key=f"{dev}_rf_paired_status",
                 translation_key="rf_paired_status",
                 resource_id=f"/devices/{dev}/rfPairedStatus",
-                name=f"Pairing status {dev_name}",
+                name="Pairing status",
                 target_device_type=DEV_TYPE_DEVICE,
                 device_sub_id=dev,
                 device_name=dev_name,
@@ -3343,7 +3358,7 @@ SIGNAL_BINARY_MAP: dict[str, tuple[str, BinarySensorDeviceClass | None, str | No
     "SC.HC1.FPD.Active": ("Frost protection active", None, "mdi:snowflake-alert"),
     "SC.DHW1.SD.ExtraActive": ("DHW extra charge active", BinarySensorDeviceClass.RUNNING, "mdi:water-boiler"),
     "SC.HC1.RoTempSetpOpt.HeatUpStatus": ("Fast heat-up active", BinarySensorDeviceClass.RUNNING, "mdi:fire"),
-    "HC1MOD.FlowCtrl.PumpRequest": ("Heating circuit 1 pump request", BinarySensorDeviceClass.RUNNING, "mdi:pump"),
+    "HC1MOD.FlowCtrl.PumpRequest": ("Pump request", BinarySensorDeviceClass.RUNNING, "mdi:pump"),
 }
 
 
@@ -3567,7 +3582,7 @@ def get_translated_name(
     lang: str = "en",
     device_name: str | None = None,
 ) -> str | None:
-    """Return translated entity name from translation files with optional device suffix.
+    """Return translated entity name from translation files.
 
     Falls back to English when the language has no translation file or no entry for the key.
     """
@@ -3588,11 +3603,6 @@ def get_translated_name(
             break
     if not name:
         return None
-
-    if device_name:
-        dev_local = translate_device_term(device_name, lang_code)
-        if device_name not in name and dev_local not in name:
-            name = f"{name} {dev_local}"
 
     return name
 
@@ -3625,7 +3635,7 @@ def create_dynamic_binary_sensor_description(
     else:
         leaf_name = parts[-1]
         readable_leaf = re.sub(r"([A-Z])", r" \1", leaf_name).strip().title()
-        full_name = f"{readable_leaf} {dev_name}" if dev_name else readable_leaf
+        full_name = readable_leaf
 
     res_lower = resource_id.lower()
 
@@ -3786,7 +3796,7 @@ def create_dynamic_sensor_description(
     else:
         leaf_name = parts[-1]
         readable_leaf = re.sub(r"([A-Z])", r" \1", leaf_name).strip().title()
-        full_name = f"{readable_leaf} {dev_name}" if dev_name else readable_leaf
+        full_name = readable_leaf
 
     value_fn = None
     icon = None

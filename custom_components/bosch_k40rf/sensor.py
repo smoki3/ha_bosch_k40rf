@@ -40,6 +40,7 @@ from .const import (
 from .coordinator import BoschK40DataUpdateCoordinator
 from .models import (
     BoschK40SensorEntityDescription,
+    clean_entity_name,
     clean_non_hybrid_entity_name,
     get_translated_name,
     get_via_device_kwargs,
@@ -147,19 +148,17 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
 
     @property
     def name(self) -> str | None:
-        """Return friendly name in the Home Assistant language with smart hybrid naming."""
+        """Return friendly name in the Home Assistant language with clean entity naming."""
         lang = getattr(self.coordinator.hass.config, "language", "en") or "en"
         desc = self.entity_description
 
         if self.coordinator.is_hybrid_system:
             for resource_id, value_key, translation_key in HYBRID_BOILER_NAME_KEYS:
                 if desc.resource_id == resource_id and (value_key is None or desc.value_key == value_key):
-                    return get_translated_name("sensor", translation_key, lang)
+                    raw = get_translated_name("sensor", translation_key, lang)
+                    return clean_entity_name(raw)
 
-        dev_name = desc.device_name
-        if not self.coordinator.is_hybrid_system and desc.device_sub_id in ("hybman", "kessel", "hs1"):
-            dev_name = None
-        name = get_translated_name("sensor", desc.translation_key, lang, dev_name)
+        name = get_translated_name("sensor", desc.translation_key, lang)
         if not name:
             name = desc.name
             if not name:
@@ -167,15 +166,9 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             name = translate_fallback_name(name, lang)
 
         if not self.coordinator.is_hybrid_system:
-            return clean_non_hybrid_entity_name(name)
+            name = clean_non_hybrid_entity_name(name)
 
-        if desc.device_sub_id == "hs1":
-            boiler = translate_device_term("Boiler", lang)
-            return name.replace(" HS1", f" {boiler}").replace(" hs1", f" {boiler}")
-        if desc.device_sub_id == "hs2":
-            heat_pump = translate_device_term("Heat pump", lang)
-            return name.replace(" HS2", f" {heat_pump}").replace(" hs2", f" {heat_pump}")
-        return name
+        return clean_entity_name(name)
 
     @property
     def device_info(self) -> DeviceInfo:

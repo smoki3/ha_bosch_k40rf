@@ -577,13 +577,13 @@
         "name": "Raumsolltemperatur aktuell"
       },
       "sc_hc1_currentopstatus": {
-        "name": "Betriebsstatus Heizkreis"
+        "name": "Betriebsstatus"
       },
       "sc_hc1_wdc_roominfluence": {
-        "name": "Raumeinfluss Heizkreis"
+        "name": "Raumeinfluss"
       },
       "sc_hc1_wdc_solarinfluence": {
-        "name": "Solareinfluss Heizkreis"
+        "name": "Solareinfluss"
       },
       "sc_rtc_relativetimer": {
         "name": "Relative Betriebszeit Systemregler"
@@ -1125,7 +1125,7 @@
         "name": "Schnellaufheizung aktiv"
       },
       "pump_request_hc": {
-        "name": "Pumpenanforderung Heizkreis 1"
+        "name": "Pumpenanforderung"
       },
       "pump_on_hm200": {
         "name": "Pumpe aktiv"
@@ -1215,7 +1215,7 @@
         "name": "Schnellaufheizung aktiv"
       },
       "hc1mod_flowctrl_pumprequest": {
-        "name": "Pumpenanforderung Heizkreis 1"
+        "name": "Pumpenanforderung"
       }
     }
   },

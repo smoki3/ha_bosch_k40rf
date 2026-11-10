@@ -577,13 +577,13 @@
         "name": "Current room temperature setpoint"
       },
       "sc_hc1_currentopstatus": {
-        "name": "Heating circuit operation status"
+        "name": "Operation status"
       },
       "sc_hc1_wdc_roominfluence": {
-        "name": "Heating circuit room influence"
+        "name": "Room influence"
       },
       "sc_hc1_wdc_solarinfluence": {
-        "name": "Heating circuit solar influence"
+        "name": "Solar influence"
       },
       "sc_rtc_relativetimer": {
         "name": "Relative operating time system controller"
@@ -1125,7 +1125,7 @@
         "name": "Quick heat-up active"
       },
       "pump_request_hc": {
-        "name": "Pump request heating circuit 1"
+        "name": "Pump request"
       },
       "pump_on_hm200": {
         "name": "Pump active"
@@ -1215,7 +1215,7 @@
         "name": "Fast heat-up active"
       },
       "hc1mod_flowctrl_pumprequest": {
-        "name": "Heating circuit 1 pump request"
+        "name": "Pump request"
       }
     }
   },
