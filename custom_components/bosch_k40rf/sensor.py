@@ -577,12 +577,21 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                 return translate_state_value("None (Standby)", lang)
             return None
 
-        # Check invalid sentinel values from device
+        # Check invalid or low-flow sentinel values from device
         if isinstance(state_list, list):
             for s in state_list:
-                if isinstance(s, dict) and "invalid" in s:
-                    if raw_val == s["invalid"]:
+                if isinstance(s, dict):
+                    if "invalid" in s and raw_val == s["invalid"]:
                         return None
+                    for k, v in s.items():
+                        if k.lower() in ("lowflow", "low_flow") and raw_val == v:
+                            raw_val = 0
+        elif isinstance(state_list, dict):
+            for k, v in state_list.items():
+                if k.lower() == "invalid" and raw_val == v:
+                    return None
+                if k.lower() in ("lowflow", "low_flow") and raw_val == v:
+                    raw_val = 0
 
         # Check empty or sentinel strings
         if isinstance(raw_val, str):
@@ -590,10 +599,12 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             if not val_clean or val_clean.lower() in ("unknown", "unavailable", "null"):
                 return None
 
-        # Check standard Bosch sensor fault sentinels (-32768, 65535)
+        # Check standard Bosch sensor fault / low-flow sentinels (-32768, 65535)
         if isinstance(raw_val, (int, float)):
             if raw_val in (-32768, -3276.8, 65535, 255) and self.entity_description.device_class == SensorDeviceClass.TEMPERATURE:
                 return None
+            if self.entity_description.device_class == SensorDeviceClass.VOLUME_FLOW_RATE and raw_val in (65535, 6553.5):
+                raw_val = 0
 
         # Numeric conversions
         if self.entity_description.device_class in (
