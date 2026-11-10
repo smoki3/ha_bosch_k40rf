@@ -102,7 +102,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     gateway_device = dev_reg.async_get_or_create(
         config_entry_id=entry.entry_id,
         identifiers={(DOMAIN, gateway_unique_id)},
-        name=f"{brand} Connect-Key K 40 RF Gateway",
+        name="Connect-Key K 40 RF Gateway",
         manufacturer=brand,
         model=model,
         sw_version=gw_ver,
