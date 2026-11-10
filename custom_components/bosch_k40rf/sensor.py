@@ -652,6 +652,25 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             except (ValueError, TypeError):
                 return raw_val
 
+        # Unit-less integer / numeric signals with an enum state map (e.g. SC.SeasonOpt.Mode, SRC.CUHP.CH.GSOState)
+        if (
+            isinstance(raw_val, (int, float))
+            and not self.entity_description.native_unit_of_measurement
+            and not self.entity_description.device_class
+        ):
+            mapping = {}
+            if isinstance(state_list, dict):
+                mapping = state_list
+            elif isinstance(state_list, list):
+                for s in state_list:
+                    if isinstance(s, dict):
+                        mapping.update(s)
+            if mapping:
+                for k, v in mapping.items():
+                    if k.lower() != "invalid" and raw_val == v:
+                        clean_label = k.replace("_", " ").strip().title()
+                        return translate_state_value(clean_label, lang)
+
         return raw_val
 
     @property

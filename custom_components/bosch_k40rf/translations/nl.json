@@ -893,6 +893,27 @@
       },
       "gweebus_commissioningstatus": {
         "name": "EEBus-inbedrijfstellingsstatus"
+      },
+      "sc_seasonopt_mode": {
+        "name": "Seizoensoptimalisatiemodus"
+      },
+      "sc_seasonopt_timerstopheatingseason": {
+        "name": "Timer stop stookseizoen"
+      },
+      "sc_hc1_locseasonopt_timerstopheatingseason": {
+        "name": "Timer stop stookseizoen"
+      },
+      "src_cuhp_ch_gsostate": {
+        "name": "Bedrijfsstatus verwarming"
+      },
+      "src_cuhp_startupcheck": {
+        "name": "Opstartcontrole status"
+      },
+      "src_cuhp_smartgridmode": {
+        "name": "Smart grid modus"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "Opwarmstatus warm tapwater"
       }
     },
     "binary_sensor": {

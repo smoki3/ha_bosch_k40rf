@@ -3223,6 +3223,15 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "SOLAR.HeatCount.Minus1YearlySolarGain": ("Solar gain previous year", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.TotalLastMinus1HourGain": ("Solar gain last hour", SensorDeviceClass.ENERGY, None, UnitOfEnergy.KILO_WATT_HOUR),
 
+    # Seasonal optimization & CUHP signals
+    "SC.SeasonOpt.Mode": ("Seasonal optimization mode", None, None, None),
+    "SC.SeasonOpt.TimerStopHeatingSeason": ("Timer stop heating season", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
+    "SC.HC1.LocSeasonOpt.TimerStopHeatingSeason": ("Timer stop heating season", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
+    "SRC.CUHP.CH.GSOState": ("Heating operational state", None, None, None),
+    "SRC.CUHP.StartUpCheck": ("Startup check status", None, None, None),
+    "SRC.CUHP.SmartGridMode": ("Smart grid mode", None, None, None),
+    "SRC.IntDHW.HeatUpActive": ("DHW heat-up state", None, None, None),
+
     # Boiler (MC110), heating circuit and solar
     "SRC.RelativeTime": ("Relative operating time boiler", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "SRC.SystemPowerSetp": ("Boiler modulation setpoint", None, SensorStateClass.MEASUREMENT, "%"),

@@ -893,6 +893,27 @@
       },
       "gweebus_commissioningstatus": {
         "name": "EEBus commissioning status"
+      },
+      "sc_seasonopt_mode": {
+        "name": "Seasonal optimization mode"
+      },
+      "sc_seasonopt_timerstopheatingseason": {
+        "name": "Timer stop heating season"
+      },
+      "sc_hc1_locseasonopt_timerstopheatingseason": {
+        "name": "Timer stop heating season"
+      },
+      "src_cuhp_ch_gsostate": {
+        "name": "Heating operational state"
+      },
+      "src_cuhp_startupcheck": {
+        "name": "Startup check status"
+      },
+      "src_cuhp_smartgridmode": {
+        "name": "Smart grid mode"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "DHW heat-up state"
       }
     },
     "binary_sensor": {

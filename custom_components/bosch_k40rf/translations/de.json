@@ -893,6 +893,27 @@
       },
       "gweebus_commissioningstatus": {
         "name": "EEBus Inbetriebnahme Status"
+      },
+      "sc_seasonopt_mode": {
+        "name": "Saisonoptimierung Modus"
+      },
+      "sc_seasonopt_timerstopheatingseason": {
+        "name": "Restzeit Heizsaison-Stopp"
+      },
+      "sc_hc1_locseasonopt_timerstopheatingseason": {
+        "name": "Restzeit Heizsaison-Stopp"
+      },
+      "src_cuhp_ch_gsostate": {
+        "name": "Betriebsstatus Heizen"
+      },
+      "src_cuhp_startupcheck": {
+        "name": "Startprüfung Status"
+      },
+      "src_cuhp_smartgridmode": {
+        "name": "Smart Grid Modus"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "Warmwasser-Aufheizstatus"
       }
     },
     "binary_sensor": {
@@ -1248,6 +1269,21 @@
     "None": "Keine",
     "No errors": "Keine Fehler",
     "Unknown": "Unbekannt",
+    "Heating": "Heizen",
+    "Cooling": "Kühlen",
+    "Idle": "Inaktiv",
+    "Heat": "Heizen",
+    "Cool": "Kühlen",
+    "Startup Completed": "Startprüfung abgeschlossen",
+    "Startup Inprogress": "Startprüfung läuft",
+    "Not Used": "Nicht verwendet",
+    "Evu Block Active": "EVU-Sperre aktiv",
+    "Normal Operation": "Normalbetrieb",
+    "Smart Grid": "Smart Grid",
+    "Force Smart Grid": "Smart Grid erzwungen",
+    "Postheat": "Nachheizen",
+    "Commissioned": "In Betrieb genommen",
+    "Not Commissioned": "Nicht in Betrieb",
     "_active_suffix": " aktiv",
     "_errors_suffix": " Fehler",
     "_mode_prefix": "Modus "
