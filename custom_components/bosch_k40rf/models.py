@@ -3298,8 +3298,8 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "SRC.SystemPumpVolumeFlow": ("System pump flow rate", SensorDeviceClass.VOLUME_FLOW_RATE, SensorStateClass.MEASUREMENT, UnitOfVolumeFlowRate.LITERS_PER_HOUR),
     "SC.HC1.RTSD.CurrentRoomTempSetp": ("Current room temperature setpoint", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.HC1.CurrentOpStatus": ("Heating circuit operation status", None, None, None),
-    "SC.HC1.WDC.RoomInfluence": ("Heating circuit room influence", None, SensorStateClass.MEASUREMENT, "%"),
-    "SC.HC1.WDC.SolarInfluence": ("Heating circuit solar influence", None, SensorStateClass.MEASUREMENT, "%"),
+    "SC.HC1.WDC.RoomInfluence": ("Heating circuit room influence", None, SensorStateClass.MEASUREMENT, UnitOfTemperature.KELVIN),
+    "SC.HC1.WDC.SolarInfluence": ("Heating circuit solar influence", None, SensorStateClass.MEASUREMENT, UnitOfTemperature.KELVIN),
     "SC.RTC.RelativeTimer": ("Relative operating time system controller", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "SOLAR.ActuatorStatistics.PumpRuntimeBasicFunction1": ("Solar pump runtime", SensorDeviceClass.DURATION, None, UnitOfTime.MINUTES),
     "HC1MOD.FlowCtrl.MixerPosition": ("Mixer position", None, SensorStateClass.MEASUREMENT, "%"),
@@ -3711,6 +3711,9 @@ def create_dynamic_sensor_description(
         device_class = SensorDeviceClass.TEMPERATURE
         state_class = SensorStateClass.MEASUREMENT
         unit = UnitOfTemperature.CELSIUS
+    elif unit in ("K", "Kelvin"):
+        state_class = SensorStateClass.MEASUREMENT
+        unit = UnitOfTemperature.KELVIN
     elif unit == "%":
         state_class = SensorStateClass.MEASUREMENT
         unit = PERCENTAGE
