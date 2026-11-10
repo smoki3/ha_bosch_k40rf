@@ -1269,6 +1269,10 @@
     "None": "None",
     "No errors": "No errors",
     "Unknown": "Unknown",
+    "Comfort": "Comfort",
+    "Eco": "Eco",
+    "Summer": "Summer",
+    "Manual": "Manual",
     "_active_suffix": " active",
     "_errors_suffix": " errors",
     "_mode_prefix": "Mode "

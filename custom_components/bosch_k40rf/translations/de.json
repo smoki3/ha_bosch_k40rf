@@ -1284,6 +1284,10 @@
     "Postheat": "Nachheizen",
     "Commissioned": "In Betrieb genommen",
     "Not Commissioned": "Nicht in Betrieb",
+    "Comfort": "Komfort",
+    "Eco": "Eco",
+    "Summer": "Sommer",
+    "Manual": "Manuell",
     "_active_suffix": " aktiv",
     "_errors_suffix": " Fehler",
     "_mode_prefix": "Modus "
