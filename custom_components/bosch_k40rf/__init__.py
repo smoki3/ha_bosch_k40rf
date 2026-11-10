@@ -186,3 +186,18 @@ async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
     await async_unload_entry(hass, entry)
     await async_setup_entry(hass, entry)
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Handle removal of an entry and attempt to revoke access token on gateway."""
+    token = entry.data.get(CONF_ACCESS_TOKEN)
+    host = entry.data.get(CONF_HOST)
+    if not token or not host:
+        return
+
+    session = async_get_clientsession(hass)
+    client = BoschK40Client(host, session)
+    try:
+        await client.async_revoke_token(token)
+    except Exception as err:
+        _LOGGER.debug("Could not revoke token on removal of %s: %s", host, err)

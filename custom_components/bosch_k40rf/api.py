@@ -157,6 +157,72 @@ class BoschK40Client:
             _LOGGER.exception("Unexpected error while authenticating to %s: %s", url, err)
             raise CannotConnect(f"Unexpected error: {err}") from err
 
+    async def async_revoke_token(self, access_token: str) -> bool:
+        """Revoke the access token on the gateway (Port 9442).
+
+        Best-effort method to release token database slots on the gateway when
+        the integration is removed in Home Assistant.
+        """
+        url_revoke = f"https://{self._host}:{AUTH_PORT}/auth/revoke"
+        url_list = f"https://{self._host}:{AUTH_PORT}/auth/token"
+
+        token_id: str | int | None = None
+        # 1. Try to query token list to find token_id
+        try:
+            async with self._session.get(
+                url_list,
+                headers={
+                    "Authorization": f"Bearer {access_token}",
+                    "Accept": "application/json",
+                },
+                ssl=False,
+                timeout=aiohttp.ClientTimeout(total=4),
+            ) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    tokens = data if isinstance(data, list) else data.get("tokens", [])
+                    if isinstance(tokens, list):
+                        for tok in tokens:
+                            if isinstance(tok, dict):
+                                tok_val = tok.get("access_token") or tok.get("token")
+                                if tok_val == access_token or len(tokens) == 1:
+                                    token_id = tok.get("token_id") or tok.get("id")
+                                    break
+        except Exception as err:
+            _LOGGER.debug("Could not query active token list from %s: %s", url_list, err)
+
+        # 2. Call /auth/revoke
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+
+        # Try token_id first if found, otherwise fall back to token string
+        candidate_payloads: list[dict[str, Any]] = []
+        if token_id is not None:
+            candidate_payloads.append({"token_id": str(token_id), "usage_type": "private"})
+        candidate_payloads.append({"token": access_token, "usage_type": "private"})
+
+        for payload in candidate_payloads:
+            try:
+                async with self._session.post(
+                    url_revoke,
+                    data=payload,
+                    headers=headers,
+                    ssl=False,
+                    timeout=aiohttp.ClientTimeout(total=4),
+                ) as response:
+                    status = response.status
+                    _LOGGER.debug("Token revoke response status on %s: %s", self._host, status)
+                    if status in (200, 204):
+                        _LOGGER.info("Successfully revoked access token on gateway %s", self._host)
+                        return True
+            except Exception as err:
+                _LOGGER.debug("Revoke attempt failed on %s: %s", self._host, err)
+
+        return False
+
     async def async_get_resource(
         self,
         endpoint: str,
