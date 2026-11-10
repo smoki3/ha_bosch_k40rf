@@ -241,6 +241,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
                 is_hp_specific = (
                     sub_id == "hs2"
                     or self.entity_description.resource_id.startswith("/heatSources/hs2/")
+                    or "ODUMONITOR" in self.entity_description.resource_id
                 )
                 if not is_hp_specific:
                     # HybridManager (HM200) receives all general system / hybrid binary sensors:
@@ -264,6 +265,7 @@ class BoschK40BinarySensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], Bin
             if (
                 sub_id is None
                 or sub_id == "hs2"
+                or is_hp_specific
                 or (not self.coordinator.is_hybrid_system and sub_id in ("hs1", "hybman", "kessel"))
             ):
                 appliance = self.coordinator.get_basic_info_module(is_appliance=True)

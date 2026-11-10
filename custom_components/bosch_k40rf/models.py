@@ -3421,7 +3421,11 @@ def _determine_target_device(resource_id: str) -> tuple[str, str | None, str | N
         dev_name = f"Heat source {sub_id.upper()}"
     elif parts[0] == "signals" and len(parts) >= 2:
         sig_id = parts[1]
-        if sig_id.startswith("HYBMAN"):
+        if sig_id.startswith("HYBMAN.ODUMONITOR"):
+            dev_type = DEV_TYPE_HEAT_SOURCE
+            sub_id = "hs2"
+            dev_name = "Heat pump"
+        elif sig_id.startswith("HYBMAN"):
             dev_type = DEV_TYPE_HEAT_SOURCE
             sub_id = "hybman"
             dev_name = "HybridManager"

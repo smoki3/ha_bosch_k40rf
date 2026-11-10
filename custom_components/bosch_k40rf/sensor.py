@@ -314,6 +314,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                         and self.entity_description.value_key in ("electricity", "compressor")
                     )
                     or self.entity_description.resource_id.startswith("/heatSources/sensors/")
+                    or "ODUMONITOR" in self.entity_description.resource_id
                 )
                 if not is_hp_specific:
                     # All general heat source & system level resources route to HybridManager (HM200)
@@ -337,6 +338,7 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
             if (
                 sub_id is None
                 or sub_id == "hs2"
+                or is_hp_specific
                 or (not self.coordinator.is_hybrid_system and sub_id in ("hs1", "hybman", "kessel"))
             ):
                 appliance = self.coordinator.get_basic_info_module(is_appliance=True)
