@@ -10,6 +10,14 @@
           "password": "Wachtwoord (van typeplaatje)"
         }
       },
+      "discovery_confirm": {
+        "title": "{model} ontdekt",
+        "description": "Gateway gevonden op **{host}**.\n\nDruk vóór het verzenden de WLAN- en Wireless-knop op de gateway tegelijk 1 seconde in (de leds knipperen kort blauw).\n\nLet op: koppeltekens in het wachtwoord worden automatisch verwijderd.",
+        "data": {
+          "login": "Loginnaam (van typeplaatje)",
+          "password": "Wachtwoord (van typeplaatje)"
+        }
+      },
       "reauth_confirm": {
         "title": "K 40 RF opnieuw authenticeren",
         "description": "Druk opnieuw 1 seconde op de WLAN- en Wireless-knop van de gateway ({host}) en voer daarna je wachtwoord in.",

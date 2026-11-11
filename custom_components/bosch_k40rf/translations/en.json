@@ -10,6 +10,14 @@
           "password": "Password (from device label)"
         }
       },
+      "discovery_confirm": {
+        "title": "Discovered {model}",
+        "description": "Found a gateway at **{host}**.\n\nBefore submitting, press the WLAN and Wireless buttons simultaneously on your gateway for 1 second (LEDs will briefly flash blue).\n\nNote: Hyphens in the password are automatically stripped.",
+        "data": {
+          "login": "Login Name (from device label)",
+          "password": "Password (from device label)"
+        }
+      },
       "reauth_confirm": {
         "title": "Reauthenticate K 40 RF",
         "description": "Please press the WLAN and Wireless buttons on the gateway ({host}) for 1 second again, then enter your password.",

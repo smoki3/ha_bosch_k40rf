@@ -17,6 +17,7 @@ from homeassistant.helpers.selector import (
     TextSelectorConfig,
     TextSelectorType,
 )
+from homeassistant.helpers.service_info.zeroconf import ZeroconfServiceInfo
 
 from .api import (
     BoschK40Client,
@@ -64,6 +65,9 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def __init__(self) -> None:
         """Initialize the config flow."""
         self._reauth_entry: config_entries.ConfigEntry | None = None
+        self._discovered_host: str | None = None
+        self._discovered_model: str | None = None
+        self._discovered_brand: str | None = None
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -128,9 +132,135 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 _LOGGER.exception("Unexpected error setting up %s: %s", host, err)
                 errors["base"] = "unknown"
 
+        schema_dict: dict[Any, Any] = {}
+        if self._discovered_host:
+            schema_dict[vol.Required(CONF_HOST, default=self._discovered_host)] = TextSelector(
+                TextSelectorConfig(type=TextSelectorType.TEXT, autocomplete="url")
+            )
+        else:
+            schema_dict[vol.Required(CONF_HOST)] = TextSelector(
+                TextSelectorConfig(type=TextSelectorType.TEXT, autocomplete="url")
+            )
+        schema_dict[vol.Required(CONF_LOGIN)] = TextSelector(
+            TextSelectorConfig(type=TextSelectorType.TEXT)
+        )
+        schema_dict[vol.Required(CONF_PASSWORD)] = TextSelector(
+            TextSelectorConfig(type=TextSelectorType.PASSWORD)
+        )
+
         return self.async_show_form(
             step_id="user",
-            data_schema=USER_DATA_SCHEMA,
+            data_schema=vol.Schema(schema_dict),
+            errors=errors,
+        )
+
+    async def async_step_zeroconf(
+        self, discovery_info: ZeroconfServiceInfo
+    ) -> FlowResult:
+        """Handle zeroconf discovery for Bosch Connect-Key K 40 RF / Buderus MX400."""
+        host = discovery_info.host
+        self._discovered_host = host
+
+        # Properties may contain model, brand, uuid
+        props = discovery_info.properties
+        self._discovered_model = props.get("model")
+        self._discovered_brand = props.get("brand")
+        uuid = props.get("uuid")
+
+        if uuid:
+            await self.async_set_unique_id(str(uuid))
+            self._abort_if_unique_id_configured(updates={CONF_HOST: host})
+
+        # Check if already configured with this host
+        for entry in self._async_current_entries():
+            if entry.data.get(CONF_HOST) == host:
+                return self.async_abort(reason="already_configured")
+
+        brand = self._discovered_brand or "Bosch"
+        model = self._discovered_model or "Connect-Key K 40 RF"
+        self.context["title_placeholders"] = {"name": f"{brand} {model} ({host})"}
+
+        return await self.async_step_discovery_confirm()
+
+    async def async_step_discovery_confirm(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Confirm discovery of a Bosch / Buderus gateway and collect credentials."""
+        errors: dict[str, str] = {}
+        assert self._discovered_host is not None
+        host = self._discovered_host
+
+        if user_input is not None:
+            raw_login = user_input[CONF_LOGIN]
+            raw_password = user_input[CONF_PASSWORD]
+
+            login = raw_login.strip()
+            password = clean_password(raw_password)
+
+            session = async_create_clientsession(self.hass, verify_ssl=False)
+            client = BoschK40Client(host, session)
+
+            try:
+                auth_data = await client.async_authenticate(login, password)
+                access_token = auth_data["access_token"]
+
+                # Fetch gateway metadata for unique_id, brand, and model
+                gateway_info = await client.async_get_gateway_info(access_token)
+                unique_id = gateway_info.get("unique_id")
+
+                if unique_id:
+                    await self.async_set_unique_id(unique_id)
+                    self._abort_if_unique_id_configured()
+
+                brand = gateway_info.get("brand") or self._discovered_brand or "Bosch"
+                model = gateway_info.get("model") or self._discovered_model or "Connect-Key K 40 RF"
+                title = f"{brand} {model} ({host})"
+
+                return self.async_create_entry(
+                    title=title,
+                    data={
+                        CONF_HOST: host,
+                        CONF_LOGIN: login,
+                        CONF_ACCESS_TOKEN: access_token,
+                        CONF_GATEWAY_BRAND: brand,
+                        CONF_GATEWAY_MODEL: model,
+                        CONF_GATEWAY_MAC: gateway_info.get("mac"),
+                        CONF_GATEWAY_SERIAL: gateway_info.get("serial_number"),
+                    },
+                )
+
+            except ProximityError:
+                _LOGGER.warning("Physical proximity unproven during setup for %s", host)
+                errors["base"] = "proximity_unproven"
+            except InvalidAuth:
+                _LOGGER.warning("Invalid credentials during setup for %s", host)
+                errors["base"] = "invalid_auth"
+            except TokenDatabaseFullError:
+                _LOGGER.warning("Gateway token database full on %s", host)
+                errors["base"] = "token_database_full"
+            except CannotConnect:
+                _LOGGER.warning("Cannot connect to %s", host)
+                errors["base"] = "cannot_connect"
+            except Exception as err:
+                _LOGGER.exception("Unexpected error setting up %s: %s", host, err)
+                errors["base"] = "unknown"
+
+        schema = vol.Schema(
+            {
+                vol.Required(CONF_LOGIN): TextSelector(
+                    TextSelectorConfig(type=TextSelectorType.TEXT)
+                ),
+                vol.Required(CONF_PASSWORD): TextSelector(
+                    TextSelectorConfig(type=TextSelectorType.PASSWORD)
+                ),
+            }
+        )
+
+        model_name = f"{self._discovered_brand or 'Bosch'} {self._discovered_model or 'Connect-Key K 40 RF'}"
+        return self.async_show_form(
+            step_id="discovery_confirm",
+            data_schema=schema,
+            description_placeholders={"host": host, "model": model_name},
             errors=errors,
         )
 

@@ -10,6 +10,14 @@
           "password": "Passwort (vom Typenschild)"
         }
       },
+      "discovery_confirm": {
+        "title": "{model} entdeckt",
+        "description": "Gateway unter **{host}** im Netzwerk gefunden.\n\nBitte vor dem Absenden die WLAN- und Wireless-Taste am Gateway gleichzeitig für 1 Sekunde drücken (die LEDs blinken kurz blau).\n\nHinweis: Bindestriche im Passwort werden automatisch entfernt.",
+        "data": {
+          "login": "Login-Name (vom Typenschild)",
+          "password": "Passwort (vom Typenschild)"
+        }
+      },
       "reauth_confirm": {
         "title": "Erneute Authentifizierung K 40 RF",
         "description": "Bitte drücken Sie erneut für 1 Sekunde die WLAN- und Wireless-Taste am Gateway ({host}) und geben Sie das Passwort ein.",
