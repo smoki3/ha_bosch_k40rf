@@ -146,19 +146,19 @@
         "name": "Outdoor temperature"
       },
       "supply_temperature": {
-        "name": "Supply temperature"
+        "name": "System supply temperature"
       },
       "actual_supply_temperature": {
-        "name": "Supply temperature"
+        "name": "System supply temperature"
       },
       "target_supply_temperature": {
-        "name": "Target supply temperature"
+        "name": "System supply temperature (setpoint)"
       },
       "current_supply_setpoint": {
-        "name": "Target supply temperature"
+        "name": "System supply temperature (setpoint)"
       },
       "return_temperature": {
-        "name": "Return temperature"
+        "name": "Heat source return temperature"
       },
       "system_pressure": {
         "name": "System pressure"
@@ -259,7 +259,7 @@
         "name": "Pump flow rate"
       },
       "return_flow_temperature": {
-        "name": "Return temperature"
+        "name": "Heat pump return temperature (internal)"
       },
       "fan_speed": {
         "name": "Fan speed"
@@ -346,7 +346,7 @@
         "name": "Humidity"
       },
       "max_flow_temp": {
-        "name": "Max flow temperature"
+        "name": "Max heating circuit flow temperature"
       },
       "mixer_position": {
         "name": "Mixer position"
@@ -720,7 +720,7 @@
         "name": "Pump flow rate"
       },
       "return_flow_temp": {
-        "name": "Return flow temperature"
+        "name": "Heat pump return temperature (internal)"
       },
       "supply_flow_condenser_temp": {
         "name": "Condenser supply temperature"
@@ -846,7 +846,10 @@
         "name": "Outdoor temperature"
       },
       "src_intflowtemp": {
-        "name": "Supply temperature"
+        "name": "Boiler supply temperature"
+      },
+      "internal_supply_temperature": {
+        "name": "Internal supply temperature"
       },
       "src_intdhw_cyltemp": {
         "name": "DHW cylinder temperature"
@@ -867,13 +870,13 @@
         "name": "System pump flow rate"
       },
       "hc1mod_flowtemp": {
-        "name": "Supply temperature"
+        "name": "Heating circuit supply temperature"
       },
       "sc_hc1_flowtempsetp": {
-        "name": "Supply temperature setpoint"
+        "name": "Heating circuit supply temperature (setpoint)"
       },
       "sc_hc1_maxflowtempsetp": {
-        "name": "Max supply temperature setpoint"
+        "name": "Max heating circuit supply temperature (setpoint)"
       },
       "sc_introomtemp": {
         "name": "Internal room temperature"

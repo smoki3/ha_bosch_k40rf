@@ -79,14 +79,12 @@ _DEVICE_SUFFIX_RE = re.compile(
     r"|DHW \d+|Warmwasser \d+"
     r"|Solar circuit \d+|Solarkreis \d+"
     r"|Hybrid\s*Manager"
-    r"|Boiler|Kessel"
-    r"|Heat\s*pump|Wärmepumpe"
     r"|HS[12]|hs[12]"
     r"|Ventilation\s+\w+"
     r"|Lüftung\s+\w+"
     r"|Zone \d+"
     r"|Device \d+|Gerät \d+"
-    r"|Connect-Key(?:\s*K\s*40(?:\s*RF)?)?|MX\s*400|Gateway"
+    r"|Connect-Key(?:\s*K\s*40(?:\s*RF)?)?|MX\s*400"
     r")$",
     re.IGNORECASE,
 )
@@ -97,14 +95,12 @@ _DEVICE_PREFIX_RE = re.compile(
     r"|DHW \d+|Warmwasser \d+"
     r"|Solar circuit \d+|Solarkreis \d+"
     r"|Hybrid\s*Manager"
-    r"|Boiler|Kessel"
-    r"|Heat\s*pump|Wärmepumpe"
     r"|HS[12]|hs[12]"
     r"|Ventilation\s+\w+"
     r"|Lüftung\s+\w+"
     r"|Zone \d+"
     r"|Device \d+|Gerät \d+"
-    r"|Connect-Key(?:\s*K\s*40(?:\s*RF)?)?|MX\s*400|Gateway"
+    r"|Connect-Key(?:\s*K\s*40(?:\s*RF)?)?|MX\s*400"
     r")\s+",
     re.IGNORECASE,
 )
@@ -757,7 +753,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
             key="actual_supply_temperature",
             translation_key="actual_supply_temperature",
             resource_id="/heatSources/actualSupplyTemperature",
-            name="Supply temperature",
+            name="System supply temperature",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class=SensorStateClass.MEASUREMENT,
@@ -768,7 +764,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
             key="current_supply_setpoint",
             translation_key="current_supply_setpoint",
             resource_id="/heatSources/currentSupplySetpoint",
-            name="Target supply temperature",
+            name="System supply temperature (setpoint)",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class=SensorStateClass.MEASUREMENT,
@@ -779,7 +775,7 @@ def build_heat_source_global_sensors() -> list[BoschK40SensorEntityDescription]:
             key="return_temperature",
             translation_key="return_temperature",
             resource_id="/heatSources/returnTemperature",
-            name="Return temperature",
+            name="Heat source return temperature",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
             device_class=SensorDeviceClass.TEMPERATURE,
             state_class=SensorStateClass.MEASUREMENT,
@@ -1534,7 +1530,7 @@ def build_heat_source_unit_sensors(hs_id: str) -> list[BoschK40SensorEntityDescr
             key=f"{hs_id}_return_flow_temp",
             translation_key="return_flow_temp",
             resource_id=f"/heatSources/{hs_id}/returnFlowTemp",
-            name=f"Return flow temperature {sub_title}",
+            name=f"Heat pump return temperature (internal) {sub_title}",
             target_device_type=DEV_TYPE_HEAT_SOURCE,
             device_sub_id=hs_id,
             device_name=f"Heat source {sub_title}",
@@ -1947,7 +1943,7 @@ def build_heating_circuit_sensors(hc_id: str) -> list[BoschK40SensorEntityDescri
             key=f"{hc_id}_max_flow_temp",
             translation_key="max_flow_temp",
             resource_id=f"/heatingCircuits/{hc_id}/maxFlowTemp",
-            name="Max flow temperature",
+            name="Max heating circuit flow temperature",
             target_device_type=DEV_TYPE_HEATING_CIRCUIT,
             device_sub_id=hc_id,
             device_name=dev_name,
@@ -3300,14 +3296,14 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "HYBMAN.SmartGridMode": ("Smart grid mode", None, None, None),
     "HYBMAN.EmergencyModeStatus": ("Emergency mode status", None, None, None),
     "SRC.OutdoorTemp": ("Outdoor temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "SRC.IntFlowTemp": ("Supply temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "SRC.IntFlowTemp": ("Boiler supply temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SRC.IntDHW.CylTemp": ("DHW cylinder temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SRC.Fan.ActualSpeed": ("Fan speed", None, SensorStateClass.MEASUREMENT, "rpm"),
     "SRC.FlameCurrent": ("Flame current", None, SensorStateClass.MEASUREMENT, "µA"),
     "SRC.DisplayCode": ("Display code", None, None, None),
-    "HC1MOD.FlowTemp": ("Supply temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "SC.HC1.FlowTempSetp": ("Supply temperature setpoint", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
-    "SC.HC1.MaxFlowTempSetp": ("Max supply temperature setpoint", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HC1MOD.FlowTemp": ("Heating circuit supply temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "SC.HC1.FlowTempSetp": ("Heating circuit supply temperature (setpoint)", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "SC.HC1.MaxFlowTempSetp": ("Max heating circuit supply temperature (setpoint)", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.IntRoomTemp": ("Internal room temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.DampOutdTemp": ("Damped outdoor temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.HC1.HolidayMode": ("Holiday mode", None, None, None),

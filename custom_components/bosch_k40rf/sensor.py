@@ -158,6 +158,11 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                     raw = get_translated_name("sensor", translation_key, lang)
                     return clean_entity_name(raw)
 
+        if not self.coordinator.is_hybrid_system and desc.resource_id == "/signals/SRC.IntFlowTemp":
+            raw = get_translated_name("sensor", "internal_supply_temperature", lang)
+            if raw:
+                return clean_entity_name(raw)
+
         name = get_translated_name("sensor", desc.translation_key, lang)
         if not name:
             name = desc.name

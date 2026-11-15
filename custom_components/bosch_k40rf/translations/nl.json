@@ -146,19 +146,19 @@
         "name": "Buitentemperatuur"
       },
       "supply_temperature": {
-        "name": "Aanvoertemperatuur"
+        "name": "Systeem-aanvoertemperatuur"
       },
       "actual_supply_temperature": {
-        "name": "Aanvoertemperatuur"
+        "name": "Systeem-aanvoertemperatuur"
       },
       "target_supply_temperature": {
-        "name": "Gewenste aanvoertemperatuur"
+        "name": "Systeem-aanvoertemperatuur (gewenst)"
       },
       "current_supply_setpoint": {
-        "name": "Gewenste aanvoertemperatuur"
+        "name": "Systeem-aanvoertemperatuur (gewenst)"
       },
       "return_temperature": {
-        "name": "Retourtemperatuur"
+        "name": "Retourtemperatuur warmtebron"
       },
       "system_pressure": {
         "name": "Systeemdruk"
@@ -259,7 +259,7 @@
         "name": "Pompdebiet"
       },
       "return_flow_temperature": {
-        "name": "Retourtemperatuur"
+        "name": "Retourtemperatuur warmtepomp (intern)"
       },
       "fan_speed": {
         "name": "Ventilatortoerental"
@@ -346,7 +346,7 @@
         "name": "Luchtvochtigheid"
       },
       "max_flow_temp": {
-        "name": "Max. aanvoertemperatuur"
+        "name": "Max. aanvoertemperatuur verwarmingscircuit"
       },
       "mixer_position": {
         "name": "Mengklepstand"
@@ -714,7 +714,7 @@
         "name": "Pompdebiet"
       },
       "return_flow_temp": {
-        "name": "Retourtemperatuur"
+        "name": "Retourtemperatuur warmtepomp (intern)"
       },
       "supply_flow_condenser_temp": {
         "name": "Aanvoertemperatuur condensor"
@@ -840,7 +840,10 @@
         "name": "Buitentemperatuur"
       },
       "src_intflowtemp": {
-        "name": "Aanvoertemperatuur"
+        "name": "Aanvoertemperatuur ketel"
+      },
+      "internal_supply_temperature": {
+        "name": "Interne aanvoertemperatuur"
       },
       "src_intdhw_cyltemp": {
         "name": "Temperatuur tapwaterboiler"
@@ -861,13 +864,13 @@
         "name": "Debiet systeempomp"
       },
       "hc1mod_flowtemp": {
-        "name": "Aanvoertemperatuur"
+        "name": "Aanvoertemperatuur verwarmingscircuit"
       },
       "sc_hc1_flowtempsetp": {
-        "name": "Gewenste aanvoertemperatuur"
+        "name": "Aanvoertemperatuur verwarmingscircuit (gewenst)"
       },
       "sc_hc1_maxflowtempsetp": {
-        "name": "Max. gewenste aanvoertemperatuur"
+        "name": "Max. aanvoertemperatuur verwarmingscircuit (gewenst)"
       },
       "sc_introomtemp": {
         "name": "Interne kamertemperatuur"

@@ -146,19 +146,19 @@
         "name": "Außentemperatur"
       },
       "supply_temperature": {
-        "name": "Vorlauftemperatur Ist"
+        "name": "System-Vorlauftemperatur"
       },
       "actual_supply_temperature": {
-        "name": "Vorlauftemperatur Ist"
+        "name": "System-Vorlauftemperatur"
       },
       "target_supply_temperature": {
-        "name": "Vorlauftemperatur Soll"
+        "name": "System-Vorlauftemperatur (Soll)"
       },
       "current_supply_setpoint": {
-        "name": "Vorlauftemperatur Soll"
+        "name": "System-Vorlauftemperatur (Soll)"
       },
       "return_temperature": {
-        "name": "Rücklauftemperatur"
+        "name": "Rücklauftemperatur Wärmeerzeuger"
       },
       "system_pressure": {
         "name": "Systemdruck"
@@ -259,7 +259,7 @@
         "name": "Pumpen-Durchfluss"
       },
       "return_flow_temperature": {
-        "name": "Rücklauftemperatur"
+        "name": "Rücklauftemperatur Wärmepumpe (Intern)"
       },
       "fan_speed": {
         "name": "Lüfterdrehzahl"
@@ -346,7 +346,7 @@
         "name": "Luftfeuchtigkeit"
       },
       "max_flow_temp": {
-        "name": "Maximale Vorlauftemperatur"
+        "name": "Max. Heizkreis-Vorlauftemperatur"
       },
       "mixer_position": {
         "name": "Mischerposition"
@@ -720,7 +720,7 @@
         "name": "Pumpendurchfluss"
       },
       "return_flow_temp": {
-        "name": "Rücklauftemperatur"
+        "name": "Rücklauftemperatur Wärmepumpe (Intern)"
       },
       "supply_flow_condenser_temp": {
         "name": "Kondensator Vorlauftemperatur"
@@ -846,7 +846,10 @@
         "name": "Außentemperatur"
       },
       "src_intflowtemp": {
-        "name": "Vorlauftemperatur"
+        "name": "Vorlauftemperatur Kessel"
+      },
+      "internal_supply_temperature": {
+        "name": "Interne Vorlauftemperatur"
       },
       "src_intdhw_cyltemp": {
         "name": "Warmwassertemperatur"
@@ -867,13 +870,13 @@
         "name": "Systempumpe Durchfluss"
       },
       "hc1mod_flowtemp": {
-        "name": "Vorlauftemperatur"
+        "name": "Heizkreis-Vorlauftemperatur"
       },
       "sc_hc1_flowtempsetp": {
-        "name": "Vorlauf Sollwert"
+        "name": "Heizkreis-Vorlauftemperatur (Soll)"
       },
       "sc_hc1_maxflowtempsetp": {
-        "name": "Max. Vorlauf Sollwert"
+        "name": "Max. Heizkreis-Vorlauftemperatur (Soll)"
       },
       "sc_introomtemp": {
         "name": "Raumtemperatur Intern"
