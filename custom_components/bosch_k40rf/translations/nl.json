@@ -564,22 +564,22 @@
         "name": "Compressortoerental buitenunit"
       },
       "hybman_odumonitor_jr0temp": {
-        "name": "Buitenunit temperatuur JR0"
+        "name": "Lagedruktemperatuur (JR0)"
       },
       "hybman_odumonitor_ta4temp": {
-        "name": "Buitenunit temperatuur TA4"
+        "name": "Temperatuur condensaatbak (TA4)"
       },
       "hybman_odumonitor_tc0temp": {
-        "name": "Buitenunit temperatuur TC0"
+        "name": "Retourtemperatuur (TC0)"
       },
       "hybman_odumonitor_tc3temp": {
-        "name": "Buitenunit temperatuur TC3"
+        "name": "Condensortemperatuur (TC3)"
       },
       "hybman_odumonitor_tl2temp": {
-        "name": "Buitenunit temperatuur TL2"
+        "name": "Luchtinlaattemperatuur (TL2)"
       },
       "hybman_odumonitor_tr1temp": {
-        "name": "Buitenunit temperatuur TR1"
+        "name": "Compressortemperatuur (TR1)"
       },
       "src_relativetime": {
         "name": "Relatieve bedrijfstijd ketel"
@@ -801,19 +801,19 @@
         "name": "Toegewezen zone"
       },
       "hybman_odumonitor_jr1temp": {
-        "name": "Buitenunit temperatuur JR1"
+        "name": "Hogedruktemperatuur (JR1)"
       },
       "hybman_odumonitor_tr3temp": {
-        "name": "Buitenunit temperatuur TR3"
+        "name": "Condensortemperatuur verwarmen (TR3)"
       },
       "hybman_odumonitor_tr4temp": {
-        "name": "Buitenunit temperatuur TR4"
+        "name": "Condensortemperatuur koelen (TR4)"
       },
       "hybman_odumonitor_tr5temp": {
-        "name": "Buitenunit temperatuur TR5"
+        "name": "Zuigleidingtemperatuur (TR5)"
       },
       "hybman_odumonitor_tr6temp": {
-        "name": "Buitenunit temperatuur TR6"
+        "name": "Heetgastemperatuur (TR6)"
       },
       "hybman_highestpermittedtemp": {
         "name": "Hoogst toegestane temperatuur"

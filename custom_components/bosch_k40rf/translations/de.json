@@ -570,22 +570,22 @@
         "name": "Verdichterdrehzahl Außeneinheit"
       },
       "hybman_odumonitor_jr0temp": {
-        "name": "Außeneinheit JR0 Temperatur"
+        "name": "Niederdrucktemperatur (JR0)"
       },
       "hybman_odumonitor_ta4temp": {
-        "name": "Außeneinheit TA4 Temperatur"
+        "name": "Temperatur Kondensatwanne (TA4)"
       },
       "hybman_odumonitor_tc0temp": {
-        "name": "Außeneinheit TC0 Temperatur"
+        "name": "Rücklauftemperatur (TC0)"
       },
       "hybman_odumonitor_tc3temp": {
-        "name": "Außeneinheit TC3 Temperatur"
+        "name": "Verflüssigertemperatur (TC3)"
       },
       "hybman_odumonitor_tl2temp": {
-        "name": "Außeneinheit TL2 Temperatur"
+        "name": "Lufteintrittstemperatur (TL2)"
       },
       "hybman_odumonitor_tr1temp": {
-        "name": "Außeneinheit TR1 Temperatur"
+        "name": "Kompressortemperatur (TR1)"
       },
       "src_relativetime": {
         "name": "Relative Betriebszeit Kessel"
@@ -807,19 +807,19 @@
         "name": "Zugeordnete Zone"
       },
       "hybman_odumonitor_jr1temp": {
-        "name": "Außeneinheit JR1 Temperatur"
+        "name": "Hochdrucktemperatur (JR1)"
       },
       "hybman_odumonitor_tr3temp": {
-        "name": "Außeneinheit TR3 Temperatur"
+        "name": "Verflüssigertemperatur Heizen (TR3)"
       },
       "hybman_odumonitor_tr4temp": {
-        "name": "Außeneinheit TR4 Temperatur"
+        "name": "Verflüssigertemperatur Kühlen (TR4)"
       },
       "hybman_odumonitor_tr5temp": {
-        "name": "Außeneinheit TR5 Temperatur"
+        "name": "Saugrohrtemperatur (TR5)"
       },
       "hybman_odumonitor_tr6temp": {
-        "name": "Außeneinheit TR6 Temperatur"
+        "name": "Heißgastemperatur (TR6)"
       },
       "hybman_highestpermittedtemp": {
         "name": "Höchste zulässige Temperatur"

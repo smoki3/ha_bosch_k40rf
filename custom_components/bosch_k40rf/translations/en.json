@@ -570,22 +570,22 @@
         "name": "Outdoor unit compressor speed"
       },
       "hybman_odumonitor_jr0temp": {
-        "name": "Outdoor unit JR0 temperature"
+        "name": "Low pressure temperature (JR0)"
       },
       "hybman_odumonitor_ta4temp": {
-        "name": "Outdoor unit TA4 temperature"
+        "name": "Condensate pan temperature (TA4)"
       },
       "hybman_odumonitor_tc0temp": {
-        "name": "Outdoor unit TC0 temperature"
+        "name": "Return temperature (TC0)"
       },
       "hybman_odumonitor_tc3temp": {
-        "name": "Outdoor unit TC3 temperature"
+        "name": "Condenser temperature (TC3)"
       },
       "hybman_odumonitor_tl2temp": {
-        "name": "Outdoor unit TL2 temperature"
+        "name": "Air intake temperature (TL2)"
       },
       "hybman_odumonitor_tr1temp": {
-        "name": "Outdoor unit TR1 temperature"
+        "name": "Compressor temperature (TR1)"
       },
       "src_relativetime": {
         "name": "Relative operating time boiler"
@@ -807,19 +807,19 @@
         "name": "Assigned zone"
       },
       "hybman_odumonitor_jr1temp": {
-        "name": "Outdoor unit JR1 temperature"
+        "name": "High pressure temperature (JR1)"
       },
       "hybman_odumonitor_tr3temp": {
-        "name": "Outdoor unit TR3 temperature"
+        "name": "Condenser temperature heating (TR3)"
       },
       "hybman_odumonitor_tr4temp": {
-        "name": "Outdoor unit TR4 temperature"
+        "name": "Condenser temperature cooling (TR4)"
       },
       "hybman_odumonitor_tr5temp": {
-        "name": "Outdoor unit TR5 temperature"
+        "name": "Suction pipe temperature (TR5)"
       },
       "hybman_odumonitor_tr6temp": {
-        "name": "Outdoor unit TR6 temperature"
+        "name": "Hot gas temperature (TR6)"
       },
       "hybman_highestpermittedtemp": {
         "name": "Highest permitted temperature"
