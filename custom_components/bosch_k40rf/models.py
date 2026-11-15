@@ -334,8 +334,12 @@ def parse_active_heat_source(raw_val: Any) -> str:
     mapping = {
         "none": "None (Standby)",
         "heatpump_only": "Heat pump",
+        "appliance_only": "Boiler",
         "boiler_only": "Boiler",
+        "both": "Parallel operation (heat pump + boiler)",
         "parallel": "Parallel operation (heat pump + boiler)",
+        "additionalheater_only": "Auxiliary heater",
+        "heatpump_and_additionalheater": "Heat pump + auxiliary heater",
         "unknown": "Determining",
         "off": "Off",
     }

@@ -204,8 +204,14 @@
         "state": {
           "none": "None (Standby)",
           "heat_pump": "Heat pump",
+          "heatpump_only": "Heat pump",
           "boiler": "Boiler",
-          "parallel": "Parallel operation",
+          "appliance_only": "Boiler",
+          "both": "Parallel operation (heat pump + boiler)",
+          "parallel": "Parallel operation (heat pump + boiler)",
+          "additional_heater": "Auxiliary heater",
+          "additionalheater_only": "Auxiliary heater",
+          "heatpump_and_additionalheater": "Heat pump + auxiliary heater",
           "unknown": "Determining",
           "off": "Off"
         }
@@ -1281,7 +1287,10 @@
     "None (Standby)": "None (Standby)",
     "Heat pump": "Heat pump",
     "Boiler": "Boiler",
+    "Appliance Only": "Boiler",
     "Parallel operation (heat pump + boiler)": "Parallel operation (heat pump + boiler)",
+    "Auxiliary heater": "Auxiliary heater",
+    "Heat pump + auxiliary heater": "Heat pump + auxiliary heater",
     "Determining": "Determining",
     "None": "None",
     "No errors": "No errors",

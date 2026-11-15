@@ -204,8 +204,14 @@
         "state": {
           "none": "Keiner (Standby)",
           "heat_pump": "Wärmepumpe",
+          "heatpump_only": "Wärmepumpe",
           "boiler": "Kessel",
-          "parallel": "Parallelbetrieb",
+          "appliance_only": "Kessel",
+          "both": "Parallelbetrieb (WP + Kessel)",
+          "parallel": "Parallelbetrieb (WP + Kessel)",
+          "additional_heater": "Zuheizer",
+          "additionalheater_only": "Zuheizer",
+          "heatpump_and_additionalheater": "Wärmepumpe + Zuheizer",
           "unknown": "Wird ermittelt",
           "off": "Aus"
         }
@@ -1281,7 +1287,10 @@
     "None (Standby)": "Keiner (Standby)",
     "Heat pump": "Wärmepumpe",
     "Boiler": "Kessel",
+    "Appliance Only": "Kessel",
     "Parallel operation (heat pump + boiler)": "Parallelbetrieb (WP + Kessel)",
+    "Auxiliary heater": "Zuheizer",
+    "Heat pump + auxiliary heater": "Wärmepumpe + Zuheizer",
     "Determining": "Wird ermittelt",
     "None": "Keine",
     "No errors": "Keine Fehler",

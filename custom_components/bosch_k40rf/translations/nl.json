@@ -204,8 +204,14 @@
         "state": {
           "none": "Geen (stand-by)",
           "heat_pump": "Warmtepomp",
+          "heatpump_only": "Warmtepomp",
           "boiler": "Ketel",
-          "parallel": "Parallel bedrijf",
+          "appliance_only": "Ketel",
+          "both": "Parallelbedrijf (WP + ketel)",
+          "parallel": "Parallelbedrijf (WP + ketel)",
+          "additional_heater": "Bijverwarming",
+          "additionalheater_only": "Bijverwarming",
+          "heatpump_and_additionalheater": "Warmtepomp + bijverwarming",
           "unknown": "Wordt bepaald",
           "off": "Uit"
         }
@@ -1275,7 +1281,10 @@
     "None (Standby)": "Geen (Stand-by)",
     "Heat pump": "Warmtepomp",
     "Boiler": "Ketel",
+    "Appliance Only": "Ketel",
     "Parallel operation (heat pump + boiler)": "Parallelbedrijf (WP + ketel)",
+    "Auxiliary heater": "Bijverwarming",
+    "Heat pump + auxiliary heater": "Warmtepomp + bijverwarming",
     "Determining": "Wordt bepaald",
     "None": "Geen",
     "No errors": "Geen fouten",
