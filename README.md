@@ -17,7 +17,7 @@ Based on the official specification of the [Bosch Home Comfort Developer API](ht
 - **Structured device hierarchy:** Entities are automatically split across the gateway and the individual system components (heating circuits, domestic hot water, solar circuits, ventilation, room controllers and wireless thermostats).
 - **Dynamic discovery:** Only creates entities for functions that actually exist in your system and prevents phantom sensors.
 - **Simple & secure pairing:** Local token authentication directly on the gateway, confirmed with a button press.
-- **Multilingual:** Entity names and the setup dialog are available in English, German and Dutch and follow the language of your Home Assistant instance (English is used as fallback).
+- **Multilingual:** Entity names and the setup dialog are available in English, German, Dutch and Spanish and follow the language of your Home Assistant instance (English is used as fallback).
 
 ---
 
