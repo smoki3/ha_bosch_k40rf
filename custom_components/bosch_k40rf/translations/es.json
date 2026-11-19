@@ -1,0 +1,1319 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bosch Connect-Key K 40 RF / Buderus MX400",
+        "description": "Antes de enviar, pulsa a la vez los botones WLAN y Wireless de la puerta de enlace durante 1 segundo (los LED parpadearán brevemente en azul).\n\nNota: los guiones de la contraseña se eliminan automáticamente.",
+        "data": {
+          "host": "Host / dirección IP",
+          "login": "Login (de la etiqueta del dispositivo)",
+          "password": "Contraseña (de la etiqueta del dispositivo)"
+        }
+      },
+      "discovery_confirm": {
+        "title": "{model} detectado",
+        "description": "Se ha encontrado una puerta de enlace en **{host}**.\n\nAntes de enviar, pulsa a la vez los botones WLAN y Wireless de la puerta de enlace durante 1 segundo (los LED parpadearán brevemente en azul).\n\nNota: los guiones de la contraseña se eliminan automáticamente.",
+        "data": {
+          "login": "Login (de la etiqueta del dispositivo)",
+          "password": "Contraseña (de la etiqueta del dispositivo)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Volver a autenticar K 40 RF",
+        "description": "Vuelve a pulsar durante 1 segundo los botones WLAN y Wireless de la puerta de enlace ({host}) y, después, introduce la contraseña.",
+        "data": {
+          "password": "Contraseña"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigurar / volver a escanear K 40 RF",
+        "description": "Actualiza el host o la dirección IP, o inicia manualmente una búsqueda de dispositivos y mediciones añadidos recientemente en la puerta de enlace ({host}).",
+        "data": {
+          "host": "Host / dirección IP",
+          "rescan_devices": "Buscar nuevos dispositivos y entidades",
+          "prune_orphaned": "Eliminar manualmente las entidades huérfanas sin datos"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se ha podido conectar con la puerta de enlace. Comprueba el host o la dirección IP y la red.",
+      "different_device": "La dirección IP indicada pertenece a otra puerta de enlace.",
+      "invalid_auth": "Credenciales no válidas. Comprueba el login y la contraseña de la etiqueta del dispositivo.",
+      "proximity_unproven": "No se han pulsado los botones o ha caducado el plazo de emparejamiento de 5 minutos. Pulsa los botones WLAN y Wireless durante 1 segundo.",
+      "token_database_full": "La base de datos de tokens de la puerta de enlace está llena (máx. 10 tokens). Revoca los tokens que no uses.",
+      "unknown": "Se ha producido un error inesperado."
+    },
+    "abort": {
+      "already_configured": "Esta puerta de enlace ya está configurada.",
+      "reauth_successful": "La reautenticación se ha realizado correctamente.",
+      "reconfigure_successful": "La reconfiguración y la búsqueda de nuevas entidades se han completado correctamente."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones de Bosch K 40 RF",
+        "description": "Gestiona los ajustes de la puerta de enlace.",
+        "data": {
+          "rescan_devices": "Buscar ahora nuevos dispositivos y entidades",
+          "prune_orphaned": "Eliminar las entidades huérfanas sin datos"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "gateway_uuid": {
+        "name": "UUID"
+      },
+      "gateway_brand": {
+        "name": "Marca"
+      },
+      "gateway_firmware": {
+        "name": "Versión de firmware"
+      },
+      "gateway_hardware": {
+        "name": "Versión de hardware"
+      },
+      "gateway_eth_mac": {
+        "name": "Dirección MAC Ethernet"
+      },
+      "gateway_wifi_mac": {
+        "name": "Dirección MAC Wi-Fi"
+      },
+      "gateway_eth_ip": {
+        "name": "Dirección IP Ethernet"
+      },
+      "gateway_wifi_ip": {
+        "name": "Dirección IP Wi-Fi"
+      },
+      "gateway_wifi_ssid": {
+        "name": "SSID Wi-Fi"
+      },
+      "gateway_wifi_rssi": {
+        "name": "Intensidad de la señal Wi-Fi"
+      },
+      "gateway_data_processing": {
+        "name": "Estado del procesamiento de datos"
+      },
+      "gateway_timezone": {
+        "name": "Zona horaria"
+      },
+      "gateway_hotspot_remaining": {
+        "name": "Tiempo restante del punto de acceso"
+      },
+      "system_bus": {
+        "name": "Sistema de bus"
+      },
+      "system_type": {
+        "name": "Tipo de sistema"
+      },
+      "system_notifications": {
+        "name": "Notificaciones del sistema"
+      },
+      "gateway_update_status": {
+        "name": "Estado de actualización de la puerta de enlace"
+      },
+      "system_update_status": {
+        "name": "Estado de actualización del sistema"
+      },
+      "gateway_update_report": {
+        "name": "Informe de actualización de la puerta de enlace"
+      },
+      "gateway_wifi_pairing_status": {
+        "name": "Estado del emparejamiento Wi-Fi"
+      },
+      "sc_installation_date": {
+        "name": "Fecha de instalación"
+      },
+      "smart_grid_mode": {
+        "name": "Modo Smart Grid",
+        "state": {
+          "0": "Estándar",
+          "1": "Bloqueado (modo 1)",
+          "2": "Funcionamiento normal (modo 2)",
+          "3": "Funcionamiento recomendado (modo 3)",
+          "4": "Arranque forzado (modo 4)"
+        }
+      },
+      "time_till_next_compressor_start": {
+        "name": "Tiempo hasta el arranque del compresor"
+      },
+      "time_till_next_compressor_stop": {
+        "name": "Tiempo hasta la parada del compresor"
+      },
+      "outdoor_temperature": {
+        "name": "Temperatura exterior"
+      },
+      "supply_temperature": {
+        "name": "Temperatura de impulsión del sistema"
+      },
+      "actual_supply_temperature": {
+        "name": "Temperatura de impulsión del sistema"
+      },
+      "target_supply_temperature": {
+        "name": "Temperatura de impulsión del sistema (consigna)"
+      },
+      "current_supply_setpoint": {
+        "name": "Temperatura de impulsión del sistema (consigna)"
+      },
+      "return_temperature": {
+        "name": "Temperatura de retorno del generador de calor"
+      },
+      "system_pressure": {
+        "name": "Presión del sistema"
+      },
+      "boiler_actual_modulation": {
+        "name": "Modulación de la caldera"
+      },
+      "actual_modulation": {
+        "name": "Modulación"
+      },
+      "boiler_actual_heat_demand": {
+        "name": "Demanda de calor de la caldera"
+      },
+      "actual_heat_demand": {
+        "name": "Demanda de calor"
+      },
+      "boiler_number_of_starts": {
+        "name": "Arranques totales del quemador"
+      },
+      "boiler_working_time_total_system": {
+        "name": "Tiempo total de funcionamiento de la caldera"
+      },
+      "boiler_emon_total_output": {
+        "name": "Energía térmica total producida por la caldera"
+      },
+      "boiler_emon_ch_output": {
+        "name": "Energía térmica producida por la caldera para calefacción"
+      },
+      "boiler_emon_dhw_output": {
+        "name": "Energía térmica producida por la caldera para ACS"
+      },
+      "number_of_starts": {
+        "name": "Arranques totales"
+      },
+      "working_time_total_system": {
+        "name": "Tiempo total de funcionamiento del sistema"
+      },
+      "refrigerant_circuits_online": {
+        "name": "Circuitos de refrigerante en línea"
+      },
+      "active_heat_source": {
+        "name": "Generador de calor activo",
+        "state": {
+          "none": "Ninguno (en espera)",
+          "heat_pump": "Bomba de calor",
+          "heatpump_only": "Bomba de calor",
+          "boiler": "Caldera",
+          "appliance_only": "Caldera",
+          "both": "Funcionamiento en paralelo (bomba de calor + caldera)",
+          "parallel": "Funcionamiento en paralelo (bomba de calor + caldera)",
+          "additional_heater": "Calentador auxiliar",
+          "additionalheater_only": "Calentador auxiliar",
+          "heatpump_and_additionalheater": "Bomba de calor + calentador auxiliar",
+          "unknown": "Determinando",
+          "off": "Apagado"
+        }
+      },
+      "evaporator_temp_tl1": {
+        "name": "Temperatura del evaporador TL1"
+      },
+      "evaporator_temp_tl2": {
+        "name": "Temperatura del evaporador TL2"
+      },
+      "cylinder_temperature": {
+        "name": "Temperatura del acumulador de ACS"
+      },
+      "cylinder_upper_temp": {
+        "name": "Temperatura superior del acumulador de ACS"
+      },
+      "collector_temperature": {
+        "name": "Temperatura del captador"
+      },
+      "compressor_power_actual": {
+        "name": "Potencia eléctrica del compresor"
+      },
+      "compressor_frequency": {
+        "name": "Frecuencia del compresor"
+      },
+      "compressor_speed": {
+        "name": "Velocidad del compresor"
+      },
+      "eheater_power_actual": {
+        "name": "Potencia del calentador auxiliar eléctrico"
+      },
+      "working_time_total": {
+        "name": "Tiempo total de funcionamiento"
+      },
+      "working_time_ch": {
+        "name": "Tiempo de funcionamiento en calefacción"
+      },
+      "working_time_dhw": {
+        "name": "Tiempo de funcionamiento en ACS"
+      },
+      "starts_total": {
+        "name": "Arranques totales"
+      },
+      "starts_ch": {
+        "name": "Arranques en calefacción"
+      },
+      "starts_dhw": {
+        "name": "Arranques en ACS"
+      },
+      "pump_flow_rate": {
+        "name": "Caudal de la bomba"
+      },
+      "return_flow_temperature": {
+        "name": "Temperatura de retorno de la bomba de calor (interna)"
+      },
+      "fan_speed": {
+        "name": "Velocidad del ventilador"
+      },
+      "flame_current": {
+        "name": "Corriente de llama"
+      },
+      "nominal_power": {
+        "name": "Potencia nominal"
+      },
+      "max_nominal_power": {
+        "name": "Potencia nominal máxima"
+      },
+      "min_nominal_power": {
+        "name": "Potencia nominal mínima"
+      },
+      "chimney_temperature": {
+        "name": "Temperatura de humos"
+      },
+      "oil_preheater_temperature": {
+        "name": "Temperatura del precalentador de gasóleo"
+      },
+      "oil_pressure": {
+        "name": "Presión del gasóleo"
+      },
+      "condensate_level": {
+        "name": "Nivel de condensados"
+      },
+      "burner_run_time_stage1": {
+        "name": "Tiempo de funcionamiento del quemador, etapa 1"
+      },
+      "burner_run_time_stage2": {
+        "name": "Tiempo de funcionamiento del quemador, etapa 2"
+      },
+      "burner_starts_stage1": {
+        "name": "Arranques del quemador, etapa 1"
+      },
+      "burner_starts_stage2": {
+        "name": "Arranques del quemador, etapa 2"
+      },
+      "emon_total_output": {
+        "name": "Energía térmica total producida"
+      },
+      "emon_total_electricity": {
+        "name": "Consumo eléctrico total"
+      },
+      "emon_total_gas": {
+        "name": "Consumo total de gas"
+      },
+      "emon_total_oil": {
+        "name": "Consumo total de gasóleo"
+      },
+      "emon_total_solar": {
+        "name": "Aporte solar total"
+      },
+      "emon_total_compressor": {
+        "name": "Energía total del compresor"
+      },
+      "emon_ch_output": {
+        "name": "Energía térmica producida en calefacción"
+      },
+      "emon_ch_electricity": {
+        "name": "Consumo eléctrico en calefacción"
+      },
+      "emon_ch_compressor": {
+        "name": "Energía del compresor en calefacción"
+      },
+      "emon_dhw_output": {
+        "name": "Energía térmica producida en ACS"
+      },
+      "emon_dhw_electricity": {
+        "name": "Consumo eléctrico en ACS"
+      },
+      "emon_dhw_compressor": {
+        "name": "Energía del compresor en ACS"
+      },
+      "room_temperature": {
+        "name": "Temperatura ambiente"
+      },
+      "room_temperature_setpoint": {
+        "name": "Consigna de temperatura ambiente"
+      },
+      "actual_humidity": {
+        "name": "Humedad"
+      },
+      "max_flow_temp": {
+        "name": "Temperatura de impulsión máxima del circuito de calefacción"
+      },
+      "mixer_position": {
+        "name": "Posición del mezclador"
+      },
+      "current_su_wi_mode": {
+        "name": "Modo verano/invierno",
+        "state": {
+          "forced": "Invierno",
+          "off": "Verano",
+          "auto": "Automático",
+          "cooling": "Refrigeración"
+        }
+      },
+      "overall_status": {
+        "name": "Estado general",
+        "state": {
+          "dhw_enabled": "ACS activada",
+          "dhw_disabled": "ACS desactivada",
+          "floor_drying": "Secado de solado",
+          "td": "Desinfección térmica",
+          "extra": "Carga extra (Boost)",
+          "away": "Ausente",
+          "holiday": "Vacaciones",
+          "manual_on_high": "Manual (alto)",
+          "manual_on_low": "Manual (bajo)",
+          "manual_on_eco": "Manual (Eco)",
+          "manual_off": "Manual apagado",
+          "auto": "Automático",
+          "ch_enabled": "Calefacción activada",
+          "ch_disabled": "Calefacción desactivada",
+          "emergency_mode": "Modo de emergencia",
+          "summer_idle": "Modo verano (inactivo)",
+          "boost": "Calentamiento rápido (Boost)",
+          "cooling_manual_on": "Refrigeración manual encendida",
+          "cooling_manual_off": "Refrigeración manual apagada",
+          "heating_manual_on": "Calefacción manual encendida",
+          "heating_manual_off": "Calefacción manual apagada",
+          "heating_auto": "Calefacción automática"
+        }
+      },
+      "boost_remaining_time": {
+        "name": "Tiempo restante de Boost"
+      },
+      "holiday_mode": {
+        "name": "Modo vacaciones",
+        "state": {
+          "0": "Apagado",
+          "1": "Vacaciones en casa",
+          "2": "Vacaciones fuera de casa"
+        }
+      },
+      "dhw_temperature": {
+        "name": "Temperatura de ACS"
+      },
+      "target_dhw_temperature": {
+        "name": "Temperatura objetivo de ACS"
+      },
+      "out_temperature": {
+        "name": "Temperatura de salida"
+      },
+      "friwa_supply_temp": {
+        "name": "Temperatura de impulsión de la estación de agua sanitaria"
+      },
+      "friwa_primary_pump_modulation": {
+        "name": "Modulación de la bomba primaria de la estación de agua sanitaria"
+      },
+      "volume_flow": {
+        "name": "Caudal"
+      },
+      "temperature_level": {
+        "name": "Nivel de temperatura"
+      },
+      "charge_remaining_time": {
+        "name": "Tiempo restante de carga"
+      },
+      "thermal_disinfection_status": {
+        "name": "Estado de la desinfección térmica"
+      },
+      "solar_collector_temperature": {
+        "name": "Temperatura del captador solar"
+      },
+      "solar_storage_temperature": {
+        "name": "Temperatura del acumulador solar"
+      },
+      "solar_pump_modulation": {
+        "name": "Modulación de la bomba solar"
+      },
+      "solar_yield": {
+        "name": "Aporte solar"
+      },
+      "supply_air_temp": {
+        "name": "Temperatura del aire de impulsión"
+      },
+      "extract_air_temp": {
+        "name": "Temperatura del aire de extracción"
+      },
+      "exhaust_air_temp": {
+        "name": "Temperatura del aire de expulsión"
+      },
+      "internal_humidity": {
+        "name": "Humedad interior"
+      },
+      "external_humidity": {
+        "name": "Humedad exterior"
+      },
+      "internal_air_quality": {
+        "name": "Calidad del aire interior"
+      },
+      "external_air_quality": {
+        "name": "Calidad del aire exterior"
+      },
+      "supply_fan_speed": {
+        "name": "Velocidad del ventilador de impulsión"
+      },
+      "exhaust_fan_speed": {
+        "name": "Velocidad del ventilador de extracción"
+      },
+      "supply_fan_power": {
+        "name": "Potencia del ventilador de impulsión"
+      },
+      "exhaust_fan_power": {
+        "name": "Potencia del ventilador de extracción"
+      },
+      "exhaust_fan_level": {
+        "name": "Nivel del ventilador"
+      },
+      "filter_remaining_time": {
+        "name": "Tiempo restante del filtro"
+      },
+      "appliance_run_time": {
+        "name": "Tiempo de funcionamiento"
+      },
+      "el_aux_heater_power": {
+        "name": "Potencia del calentador auxiliar"
+      },
+      "electrical_aux_heater_power": {
+        "name": "Potencia del calentador auxiliar eléctrico"
+      },
+      "summer_bypass_flap_power": {
+        "name": "Posición de la compuerta de bypass de verano"
+      },
+      "pool_temperature": {
+        "name": "Temperatura de la piscina"
+      },
+      "heating_mode": {
+        "name": "Modo de calefacción"
+      },
+      "cooling_mode": {
+        "name": "Modo de refrigeración"
+      },
+      "manual_heating_setpoint": {
+        "name": "Consigna manual de calefacción"
+      },
+      "temporary_heating_setpoint": {
+        "name": "Consigna temporal de calefacción"
+      },
+      "manual_cooling_setpoint": {
+        "name": "Consigna manual de refrigeración"
+      },
+      "temporary_cooling_setpoint": {
+        "name": "Consigna temporal de refrigeración"
+      },
+      "battery": {
+        "name": "Batería"
+      },
+      "signal_strength": {
+        "name": "Intensidad de la señal"
+      },
+      "signal_rating": {
+        "name": "Calidad de la señal"
+      },
+      "actuator_modulation": {
+        "name": "Modulación del actuador"
+      },
+      "actuator_power": {
+        "name": "Potencia del actuador"
+      },
+      "operation_mode": {
+        "name": "Modo de funcionamiento"
+      },
+      "rf_error_cause": {
+        "name": "Causa del error de RF"
+      },
+      "rf_connection_lost_time": {
+        "name": "Hora de pérdida de conexión"
+      },
+      "sgtin": {
+        "name": "Número de serie (SGTIN)"
+      },
+      "device_errors": {
+        "name": "Errores del dispositivo"
+      },
+      "hybman_can_positionvr1": {
+        "name": "Posición de la válvula de 3 vías VR1"
+      },
+      "hybman_can_compressorsetp": {
+        "name": "Velocidad objetivo del compresor"
+      },
+      "hybman_pumpspeedsetp": {
+        "name": "Consigna de velocidad de la bomba"
+      },
+      "hybman_tempflowheatpump": {
+        "name": "Temperatura de impulsión de la bomba de calor"
+      },
+      "hybman_tempreturnheatpump": {
+        "name": "Temperatura de retorno de la bomba de calor"
+      },
+      "hybman_tempsysreturn": {
+        "name": "Temperatura de retorno del sistema"
+      },
+      "hybman_tempmaxhp": {
+        "name": "Temperatura máxima de la bomba de calor"
+      },
+      "hybman_odumonitor_compressorspeedcurr": {
+        "name": "Velocidad del compresor de la unidad exterior"
+      },
+      "hybman_odumonitor_jr0temp": {
+        "name": "Temperatura de baja presión (JR0)"
+      },
+      "hybman_odumonitor_ta4temp": {
+        "name": "Temperatura de la bandeja de condensados (TA4)"
+      },
+      "hybman_odumonitor_tc0temp": {
+        "name": "Temperatura de retorno (TC0)"
+      },
+      "hybman_odumonitor_tc3temp": {
+        "name": "Temperatura del condensador (TC3)"
+      },
+      "hybman_odumonitor_tl2temp": {
+        "name": "Temperatura de entrada de aire (TL2)"
+      },
+      "hybman_odumonitor_tr1temp": {
+        "name": "Temperatura del compresor (TR1)"
+      },
+      "src_relativetime": {
+        "name": "Tiempo de funcionamiento relativo de la caldera"
+      },
+      "src_systempowersetp": {
+        "name": "Consigna de modulación de la caldera"
+      },
+      "sc_hc1_rtsd_currentroomtempsetp": {
+        "name": "Consigna actual de temperatura ambiente"
+      },
+      "sc_hc1_currentopstatus": {
+        "name": "Estado de funcionamiento"
+      },
+      "sc_hc1_wdc_roominfluence": {
+        "name": "Influencia ambiente"
+      },
+      "sc_hc1_wdc_solarinfluence": {
+        "name": "Influencia solar"
+      },
+      "sc_rtc_relativetimer": {
+        "name": "Tiempo de funcionamiento relativo del controlador del sistema"
+      },
+      "solar_actuatorstatistics_pumpruntimebasicfunction1": {
+        "name": "Tiempo de funcionamiento de la bomba solar"
+      },
+      "hc1mod_flowctrl_mixerposition": {
+        "name": "Posición del mezclador"
+      },
+      "additional_heater_flow_temp": {
+        "name": "Temperatura de impulsión del calentador auxiliar"
+      },
+      "eheater_power_actual_low_res": {
+        "name": "Potencia eléctrica del calentador auxiliar"
+      },
+      "emon_total_burner": {
+        "name": "Energía total del quemador"
+      },
+      "emon_total_eheater": {
+        "name": "Energía total del calentador auxiliar"
+      },
+      "emon_ch_burner": {
+        "name": "Energía del quemador en calefacción"
+      },
+      "emon_ch_eheater": {
+        "name": "Energía del calentador auxiliar en calefacción"
+      },
+      "emon_dhw_burner": {
+        "name": "Energía del quemador en ACS"
+      },
+      "emon_dhw_eheater": {
+        "name": "Energía del calentador auxiliar en ACS"
+      },
+      "emon_cooling_output": {
+        "name": "Energía de refrigeración producida"
+      },
+      "emon_cooling_electricity": {
+        "name": "Consumo eléctrico en refrigeración"
+      },
+      "emon_pool_output": {
+        "name": "Energía térmica producida en piscina"
+      },
+      "tariff_ch_setpoint": {
+        "name": "Consigna de temperatura de calefacción según tarifa"
+      },
+      "tariff_price_categorization": {
+        "name": "Nivel de precio de la electricidad"
+      },
+      "tariff_id": {
+        "name": "Tarifa eléctrica activa"
+      },
+      "heat_sources_em_status": {
+        "name": "Estado de la gestión energética"
+      },
+      "variable_tariff_support_status": {
+        "name": "Compatibilidad con tarifa eléctrica variable"
+      },
+      "variable_tariff_ch_status": {
+        "name": "Estado de la tarifa variable en calefacción"
+      },
+      "variable_tariff_dhw_status": {
+        "name": "Estado de la tarifa variable en ACS"
+      },
+      "variable_tariff_dhw_current_opmode": {
+        "name": "Modo de funcionamiento de ACS con tarifa variable"
+      },
+      "variable_tariff_ch_high_price_delta": {
+        "name": "Delta de precio alto de la tarifa variable"
+      },
+      "variable_tariff_ch_low_price_delta": {
+        "name": "Delta de precio bajo de la tarifa variable"
+      },
+      "variable_tariff_ch_mid_price_setpoint": {
+        "name": "Consigna de precio normal de la tarifa variable"
+      },
+      "devices_inclusion_time": {
+        "name": "Tiempo restante de emparejamiento de dispositivos"
+      },
+      "devices_rhc_assigned": {
+        "name": "Asignación de circuito del termostato de ambiente"
+      },
+      "devices_uhc_assigned": {
+        "name": "Asignación de circuito de suelo radiante"
+      },
+      "zones_configuration_max": {
+        "name": "Número máximo de zonas admitidas"
+      },
+      "pc_aff_additional_heater_ch": {
+        "name": "Límite de potencia del calentador auxiliar en calefacción"
+      },
+      "pc_aff_additional_heater_dhw_tank": {
+        "name": "Límite de potencia del calentador auxiliar en ACS"
+      },
+      "pc_aff_additional_heater_pri": {
+        "name": "Límite de potencia del calentador auxiliar primario"
+      },
+      "pc_aff_ch": {
+        "name": "Límite de potencia en calefacción"
+      },
+      "pc_aff_cooling": {
+        "name": "Límite de potencia en refrigeración"
+      },
+      "pc_aff_dhw": {
+        "name": "Límite de potencia en ACS"
+      },
+      "pc_aff_pool": {
+        "name": "Límite de potencia en piscina"
+      },
+      "pc_aff_refrigerant_circuit": {
+        "name": "Límite de potencia del circuito de refrigerante"
+      },
+      "heat_pump_type": {
+        "name": "Tipo de bomba de calor"
+      },
+      "odu_fan_speed": {
+        "name": "Velocidad del ventilador de la unidad exterior"
+      },
+      "pump_volume_flow": {
+        "name": "Caudal de la bomba"
+      },
+      "return_flow_temp": {
+        "name": "Temperatura de retorno de la bomba de calor (interna)"
+      },
+      "supply_flow_condenser_temp": {
+        "name": "Temperatura de impulsión del condensador"
+      },
+      "compressor_actual_speed": {
+        "name": "Velocidad del compresor"
+      },
+      "compressor_temp": {
+        "name": "Temperatura del compresor"
+      },
+      "heat_carrier_pump_speed": {
+        "name": "Velocidad de la bomba del fluido caloportador"
+      },
+      "high_pressure_temp": {
+        "name": "Temperatura de alta presión"
+      },
+      "hot_gas_temp": {
+        "name": "Temperatura del gas caliente"
+      },
+      "liquid_pipe_cooling_temp": {
+        "name": "Temperatura de la tubería de líquido en refrigeración"
+      },
+      "liquid_pipe_heating_temp": {
+        "name": "Temperatura de la tubería de líquido en calefacción"
+      },
+      "low_pressure_temp": {
+        "name": "Temperatura de baja presión"
+      },
+      "refrigerant_status": {
+        "name": "Estado del circuito de refrigerante"
+      },
+      "suction_gas_temp": {
+        "name": "Temperatura del gas de aspiración"
+      },
+      "safety_board_status": {
+        "name": "Estado de la placa de seguridad"
+      },
+      "brine_collector_inflow": {
+        "name": "Temperatura de entrada del circuito de salmuera"
+      },
+      "brine_collector_outflow": {
+        "name": "Temperatura de salida del circuito de salmuera"
+      },
+      "brine_pressure": {
+        "name": "Presión de la salmuera"
+      },
+      "brine_pump_speed": {
+        "name": "Velocidad de la bomba de salmuera"
+      },
+      "brine_volume_flow": {
+        "name": "Caudal de salmuera"
+      },
+      "max_indoor_air_quality": {
+        "name": "Límite máximo de calidad del aire interior"
+      },
+      "max_relative_humidity": {
+        "name": "Límite máximo de humedad relativa"
+      },
+      "zone_name": {
+        "name": "Nombre de la zona"
+      },
+      "zone_icon": {
+        "name": "Icono de la zona"
+      },
+      "device_model": {
+        "name": "Modelo"
+      },
+      "device_type": {
+        "name": "Tipo de dispositivo"
+      },
+      "device_firmware": {
+        "name": "Versión de firmware"
+      },
+      "assigned_heating_circuit": {
+        "name": "Circuito de calefacción asignado"
+      },
+      "assigned_zone": {
+        "name": "Zona asignada"
+      },
+      "hybman_odumonitor_jr1temp": {
+        "name": "Temperatura de alta presión (JR1)"
+      },
+      "hybman_odumonitor_tr3temp": {
+        "name": "Temperatura del condensador en calefacción (TR3)"
+      },
+      "hybman_odumonitor_tr4temp": {
+        "name": "Temperatura del condensador en refrigeración (TR4)"
+      },
+      "hybman_odumonitor_tr5temp": {
+        "name": "Temperatura de la tubería de aspiración (TR5)"
+      },
+      "hybman_odumonitor_tr6temp": {
+        "name": "Temperatura del gas caliente (TR6)"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Temperatura máxima permitida"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Límite mínimo de temperatura exterior para calefacción"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Temperatura exterior máxima de desconexión en verano"
+      },
+      "hybman_timetillnextcompressorstart": {
+        "name": "Tiempo hasta el próximo arranque del compresor"
+      },
+      "hybman_timetillnextcompressorstop": {
+        "name": "Tiempo hasta la próxima parada del compresor"
+      },
+      "hybman_optimecompressorheating": {
+        "name": "Tiempo de funcionamiento del compresor en calefacción"
+      },
+      "hybman_optimecompressordhw": {
+        "name": "Tiempo de funcionamiento del compresor en ACS"
+      },
+      "hybman_smartgridmode": {
+        "name": "Modo Smart Grid"
+      },
+      "hybman_emergencymodestatus": {
+        "name": "Estado del modo de emergencia"
+      },
+      "src_outdoortemp": {
+        "name": "Temperatura exterior"
+      },
+      "src_intflowtemp": {
+        "name": "Temperatura de impulsión de la caldera"
+      },
+      "internal_supply_temperature": {
+        "name": "Temperatura de impulsión interna"
+      },
+      "src_intdhw_cyltemp": {
+        "name": "Temperatura del acumulador de ACS"
+      },
+      "src_fan_actualspeed": {
+        "name": "Velocidad del ventilador"
+      },
+      "src_flamecurrent": {
+        "name": "Corriente de llama"
+      },
+      "src_displaycode": {
+        "name": "Código de pantalla"
+      },
+      "src_systempumppressuredifference": {
+        "name": "Presión diferencial de la bomba del sistema"
+      },
+      "src_systempumpvolumeflow": {
+        "name": "Caudal de la bomba del sistema"
+      },
+      "hc1mod_flowtemp": {
+        "name": "Temperatura de impulsión del circuito de calefacción"
+      },
+      "sc_hc1_flowtempsetp": {
+        "name": "Temperatura de impulsión del circuito de calefacción (consigna)"
+      },
+      "sc_hc1_maxflowtempsetp": {
+        "name": "Temperatura de impulsión máxima del circuito de calefacción (consigna)"
+      },
+      "sc_introomtemp": {
+        "name": "Temperatura ambiente interna"
+      },
+      "sc_dampoutdtemp": {
+        "name": "Temperatura exterior amortiguada"
+      },
+      "sc_hc1_holidaymode": {
+        "name": "Modo vacaciones"
+      },
+      "sc_dhw1_holidaymode": {
+        "name": "Modo vacaciones"
+      },
+      "solar_heatcount_minus1dailysolargain": {
+        "name": "Aporte solar del día anterior"
+      },
+      "solar_heatcount_minus1monthlysolargain": {
+        "name": "Aporte solar del mes anterior"
+      },
+      "solar_heatcount_minus1yearlysolargain": {
+        "name": "Aporte solar del año anterior"
+      },
+      "solar_heatcount_totallastminus1hourgain": {
+        "name": "Aporte solar de la última hora"
+      },
+      "gweebus_cem_id": {
+        "name": "ID de CEM EEBus"
+      },
+      "gweebus_status": {
+        "name": "Estado de EEBus"
+      },
+      "gweebus_commissioningstatus": {
+        "name": "Estado de puesta en marcha de EEBus"
+      },
+      "sc_seasonopt_mode": {
+        "name": "Modo de optimización estacional"
+      },
+      "sc_seasonopt_timerstopheatingseason": {
+        "name": "Temporizador de fin de temporada de calefacción"
+      },
+      "sc_hc1_locseasonopt_timerstopheatingseason": {
+        "name": "Temporizador de fin de temporada de calefacción"
+      },
+      "src_cuhp_ch_gsostate": {
+        "name": "Estado operativo de calefacción"
+      },
+      "src_cuhp_startupcheck": {
+        "name": "Estado de la comprobación de arranque"
+      },
+      "src_cuhp_smartgridmode": {
+        "name": "Modo Smart Grid"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "Estado de calentamiento de ACS"
+      }
+    },
+    "binary_sensor": {
+      "flame_status": {
+        "name": "Estado de la llama"
+      },
+      "boiler_flame_status": {
+        "name": "Estado de la llama de la caldera"
+      },
+      "smart_function_active": {
+        "name": "Función inteligente activa"
+      },
+      "pv_contact_state": {
+        "name": "Contacto FV"
+      },
+      "fallback_operation_status": {
+        "name": "Funcionamiento de respaldo activo"
+      },
+      "power_guard_active": {
+        "name": "Power Guard activo"
+      },
+      "power_limitation_active": {
+        "name": "Limitación de potencia activa"
+      },
+      "silent_mode_status": {
+        "name": "Modo silencioso activo"
+      },
+      "maintenance_mode_status": {
+        "name": "Modo de mantenimiento"
+      },
+      "pc_heating_block": {
+        "name": "Calefacción bloqueada"
+      },
+      "pc_cooling_block": {
+        "name": "Refrigeración bloqueada"
+      },
+      "pc_dhw_block": {
+        "name": "ACS bloqueada"
+      },
+      "pc_pv_status": {
+        "name": "Excedente FV activo"
+      },
+      "pc_additional_heater_block": {
+        "name": "Calentador auxiliar bloqueado"
+      },
+      "pc_appliance_power_block": {
+        "name": "Potencia del aparato bloqueada"
+      },
+      "pc_high_source_temp_stop_cooling": {
+        "name": "Parada de refrigeración por temperatura de fuente alta activa"
+      },
+      "pc_high_source_temp_stop_heating": {
+        "name": "Parada de calefacción por temperatura de fuente alta activa"
+      },
+      "pc_low_source_temp_stop_cooling": {
+        "name": "Parada de refrigeración por temperatura de fuente baja activa"
+      },
+      "pc_low_source_temp_stop_heating": {
+        "name": "Parada de calefacción por temperatura de fuente baja activa"
+      },
+      "pc_power_elec_desired": {
+        "name": "Potencia eléctrica deseada activa"
+      },
+      "pc_user_additional_heater_block": {
+        "name": "Calentador auxiliar bloqueado por el usuario"
+      },
+      "vt_dhw_high_price_enable": {
+        "name": "Tarifa variable de ACS: precio alto activo"
+      },
+      "vt_dhw_low_price_enable": {
+        "name": "Tarifa variable de ACS: precio bajo activo"
+      },
+      "additional_heater_primary_status": {
+        "name": "Estado del calentador auxiliar primario"
+      },
+      "eheater_status": {
+        "name": "Estado del calentador auxiliar eléctrico"
+      },
+      "external_input_1_state": {
+        "name": "Entrada externa 1"
+      },
+      "external_input_2_state": {
+        "name": "Entrada externa 2"
+      },
+      "external_input_3_state": {
+        "name": "Entrada externa 3"
+      },
+      "external_input_4_state": {
+        "name": "Entrada externa 4"
+      },
+      "external_inputs_cooling_block": {
+        "name": "Refrigeración bloqueada externamente"
+      },
+      "power_constraints_power_guard_status": {
+        "name": "Estado de PowerGuard"
+      },
+      "power_constraints_power_elec_limitation_status": {
+        "name": "Limitación de potencia eléctrica activa"
+      },
+      "power_constraints_dhw_reduce_alarm": {
+        "name": "Reducción de ACS por alarma activa"
+      },
+      "power_constraints_appliance_power_limit": {
+        "name": "Límite de potencia del aparato activo"
+      },
+      "variable_tariff_ch_optimization": {
+        "name": "Optimización de calefacción por tarifa variable activa"
+      },
+      "variable_tariff_dhw_optimization": {
+        "name": "Optimización de ACS por tarifa variable activa"
+      },
+      "thermal_disinfection_running": {
+        "name": "Desinfección térmica activa"
+      },
+      "child_lock": {
+        "name": "Bloqueo infantil"
+      },
+      "heating_circuit_pump": {
+        "name": "Bomba del circuito de calefacción"
+      },
+      "open_window_detection": {
+        "name": "Detección de ventana abierta"
+      },
+      "rf_connection_status": {
+        "name": "Estado de la conexión"
+      },
+      "rf_paired_status": {
+        "name": "Estado del emparejamiento"
+      },
+      "burner_active": {
+        "name": "Quemador activo"
+      },
+      "defrost_active": {
+        "name": "Desescarche activo"
+      },
+      "four_way_valve": {
+        "name": "Válvula de 4 vías activa"
+      },
+      "drip_pan_heater": {
+        "name": "Resistencia de la bandeja de condensados activa"
+      },
+      "silent_mode": {
+        "name": "Modo silencioso activo"
+      },
+      "compressor_silent_limited": {
+        "name": "Compresor limitado por el modo silencioso"
+      },
+      "heat_up_sequence": {
+        "name": "Secuencia de calentamiento activa"
+      },
+      "low_outdoor_temp_stop": {
+        "name": "Parada de calefacción por temperatura exterior baja"
+      },
+      "high_outdoor_temp_stop": {
+        "name": "Parada de calefacción por temperatura exterior alta (verano)"
+      },
+      "highest_permitted_temp": {
+        "name": "Temperatura máxima permitida superada"
+      },
+      "three_way_valve_boiler": {
+        "name": "Válvula de 3 vías de la caldera"
+      },
+      "air_pressure_switch": {
+        "name": "Presostato de aire de la caldera"
+      },
+      "auto_filling_active": {
+        "name": "Llenado automático activo"
+      },
+      "ch_pump_boiler": {
+        "name": "Bomba del circuito de calefacción de la caldera"
+      },
+      "chimney_sweeper": {
+        "name": "Modo deshollinador"
+      },
+      "circ_pump_dhw": {
+        "name": "Bomba de recirculación de ACS"
+      },
+      "dhw_running": {
+        "name": "Calentamiento de ACS activo"
+      },
+      "ext_cut_off": {
+        "name": "Desconexión externa de la caldera"
+      },
+      "extra_dhw_active": {
+        "name": "Carga extra de ACS activa"
+      },
+      "fan_boiler": {
+        "name": "Ventilador de la caldera"
+      },
+      "gas_valve_1": {
+        "name": "Válvula de gas 1 de la caldera"
+      },
+      "gas_valve_2": {
+        "name": "Válvula de gas 2 de la caldera"
+      },
+      "oil_temperature_high": {
+        "name": "Temperatura del gasóleo alta"
+      },
+      "dhw_heat_up_active": {
+        "name": "Calentamiento de ACS activo"
+      },
+      "frost_protection_eco": {
+        "name": "Protección antiheladas en modo eco activa"
+      },
+      "frost_protection_active": {
+        "name": "Protección antiheladas activa"
+      },
+      "quick_heat_up_active": {
+        "name": "Calentamiento rápido activo"
+      },
+      "pump_request_hc": {
+        "name": "Solicitud de bomba"
+      },
+      "pump_on_hm200": {
+        "name": "Bomba activa"
+      },
+      "hybman_pumpon": {
+        "name": "Bomba activa"
+      },
+      "hybman_can_defrostactive": {
+        "name": "Desescarche activo"
+      },
+      "hybman_can_fourwayvalveactive": {
+        "name": "Válvula de 4 vías activa"
+      },
+      "hybman_can_drippanheateractive": {
+        "name": "Resistencia de la bandeja de condensados activa"
+      },
+      "hybman_lownoisemodeactive": {
+        "name": "Modo de bajo ruido activo"
+      },
+      "hybman_heatupsequence": {
+        "name": "Secuencia de calentamiento activa"
+      },
+      "hybman_compspeedlimitedduetosilentmode": {
+        "name": "Compresor limitado por el modo silencioso"
+      },
+      "hybman_lowoutdoortempstopheating": {
+        "name": "Calefacción detenida por temperatura exterior baja"
+      },
+      "hybman_highestpermittedtemp": {
+        "name": "Temperatura máxima permitida superada"
+      },
+      "hybman_highoutdoortempstopheating": {
+        "name": "Calefacción detenida por temperatura exterior alta (verano)"
+      },
+      "src_relaystatus_3wayvalve": {
+        "name": "Válvula de 3 vías de la caldera"
+      },
+      "src_diginput_airpressureswitch": {
+        "name": "Presostato de aire de la caldera"
+      },
+      "src_autofillingactive": {
+        "name": "Llenado automático activo"
+      },
+      "src_relaystatus_chpump": {
+        "name": "Bomba del circuito de calefacción de la caldera"
+      },
+      "src_opstatus_chimneysweeper": {
+        "name": "Modo deshollinador"
+      },
+      "src_intdhw_circpumpstatus": {
+        "name": "Bomba de recirculación de ACS"
+      },
+      "src_intdhw_dhurunning": {
+        "name": "Calentamiento de ACS activo"
+      },
+      "src_diginput_extcutoff": {
+        "name": "Desconexión externa de la caldera"
+      },
+      "src_intdhw_extraactive": {
+        "name": "Carga extra de ACS activa"
+      },
+      "src_relaystatus_fan": {
+        "name": "Ventilador de la caldera"
+      },
+      "src_relaystatus_gasvalve1": {
+        "name": "Válvula de gas 1 de la caldera"
+      },
+      "src_relaystatus_gasvalve2": {
+        "name": "Válvula de gas 2 de la caldera"
+      },
+      "src_diginput_oiltemperaturehigh": {
+        "name": "Temperatura del gasóleo alta"
+      },
+      "src_intdhw_heatupactive": {
+        "name": "Calentamiento de ACS activo"
+      },
+      "sc_hc1_rtsd_preventionecomodeactive": {
+        "name": "Protección antiheladas en modo eco activa"
+      },
+      "sc_hc1_fpd_active": {
+        "name": "Protección antiheladas activa"
+      },
+      "sc_dhw1_sd_extraactive": {
+        "name": "Carga extra de ACS activa"
+      },
+      "sc_hc1_rotempsetpopt_heatupstatus": {
+        "name": "Calentamiento rápido activo"
+      },
+      "hc1mod_flowctrl_pumprequest": {
+        "name": "Solicitud de bomba"
+      }
+    }
+  },
+  "device_terms": {
+    "Boiler / Burner": "Caldera / Quemador",
+    "Heat source / heat pump": "Generador de calor / bomba de calor",
+    "DHW circuit": "Circuito de ACS",
+    "Ventilation unit": "Unidad de ventilación",
+    "Heating zone": "Zona de calefacción",
+    "RF device": "Dispositivo RF",
+    "Heating circuit": "Circuito de calefacción",
+    "Solar circuit": "Circuito solar",
+    "Heat source": "Generador de calor",
+    "Heat pump": "Bomba de calor",
+    "Ventilation": "Ventilación",
+    "Boiler": "Caldera",
+    "Device": "Dispositivo",
+    "DHW": "ACS"
+  },
+  "state_values": {
+    "Heating enabled": "Calefacción activada",
+    "Heating disabled": "Calefacción desactivada",
+    "Emergency mode": "Modo de emergencia",
+    "Screed drying": "Secado de solado",
+    "Summer mode (Idle)": "Modo verano (inactivo)",
+    "Boost heating": "Calentamiento rápido (Boost)",
+    "Away": "Ausente",
+    "Holiday": "Vacaciones",
+    "Cooling manual on": "Refrigeración manual encendida",
+    "Cooling manual off": "Refrigeración manual apagada",
+    "Heating manual on": "Calefacción manual encendida",
+    "Heating manual off": "Calefacción manual apagada",
+    "Heating auto": "Calefacción automática",
+    "DHW enabled": "ACS activada",
+    "DHW disabled": "ACS desactivada",
+    "Thermal disinfection": "Desinfección térmica",
+    "Extra charge (Boost)": "Carga extra (Boost)",
+    "Manual (High)": "Manual (alto)",
+    "Manual (Low)": "Manual (bajo)",
+    "Manual (Eco)": "Manual (Eco)",
+    "Manual off": "Manual apagado",
+    "Auto": "Automático",
+    "Off": "Apagado",
+    "Holiday at home": "Vacaciones en casa",
+    "Holiday away": "Vacaciones fuera de casa",
+    "None (Standby)": "Ninguno (en espera)",
+    "Heat pump": "Bomba de calor",
+    "Boiler": "Caldera",
+    "Appliance Only": "Caldera",
+    "Parallel operation (heat pump + boiler)": "Funcionamiento en paralelo (bomba de calor + caldera)",
+    "Auxiliary heater": "Calentador auxiliar",
+    "Heat pump + auxiliary heater": "Bomba de calor + calentador auxiliar",
+    "Determining": "Determinando",
+    "None": "Ninguna",
+    "No errors": "Sin errores",
+    "Unknown": "Desconocido",
+    "Comfort": "Confort",
+    "Eco": "Eco",
+    "Summer": "Verano",
+    "Manual": "Manual",
+    "Commissioned": "Puesta en marcha completada",
+    "Not Commissioned": "Sin puesta en marcha",
+    "Ok": "OK",
+    "Internal Error": "Error interno",
+    "No Lan Connection": "Sin conexión LAN",
+    "No Updateserver Connection": "Sin conexión con el servidor de actualizaciones",
+    "No Hp Connection": "Sin conexión con la bomba de calor",
+    "No Eebus Connection": "Sin conexión EEBUS",
+    "Ohpcf Active": "OHPCF activo",
+    "Power Limitation Active": "Limitación de potencia activa",
+    "No Eebus No Trust": "Sin relación de confianza EEBUS",
+    "No Eebus No Usecase Active": "Ningún caso de uso EEBUS activo",
+    "_active_suffix": " activas",
+    "_errors_suffix": " errores",
+    "_mode_prefix": "Modo "
+  },
+  "fallback_words": {}
+}

@@ -3551,7 +3551,7 @@ def _load_translations(lang_code: str) -> dict[str, Any]:
 async def async_preload_translations(hass: Any) -> None:
     """Preload translation files in an executor thread to avoid blocking the event loop."""
     lang = _lang_code(getattr(hass.config, "language", "en"))
-    codes_to_load = [c for c in dict.fromkeys((lang, "en", "de", "nl")) if c not in _TRANSLATION_CACHE]
+    codes_to_load = [c for c in dict.fromkeys((lang, "en", "de", "nl", "es")) if c not in _TRANSLATION_CACHE]
     if not codes_to_load:
         return
 
