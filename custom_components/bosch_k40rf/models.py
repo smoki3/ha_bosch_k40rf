@@ -3382,6 +3382,19 @@ SIGNAL_BINARY_MAP: dict[str, tuple[str, BinarySensorDeviceClass | None, str | No
 }
 
 
+_SIGNAL_HC_RE = re.compile(r"^(?:SC\.)?HC(\d+)(?:MOD|ROOMREMOTE)?(?:\.|$)")
+_SIGNAL_DHW_RE = re.compile(r"^(?:SC\.)?DHW(\d+)(?:MOD)?(?:\.|$)")
+
+
+def _normalize_circuit_signal_id(sig_id: str) -> str:
+    """Normalize multi-circuit signal IDs (e.g. SC.HC2.*, HC2MOD.*, SC.DHW2.*) to circuit 1 for map lookup."""
+    if _SIGNAL_HC_RE.match(sig_id):
+        return re.sub(r"^((?:SC\.)?HC)\d+", r"\g<1>1", sig_id, count=1)
+    if _SIGNAL_DHW_RE.match(sig_id):
+        return re.sub(r"^((?:SC\.)?DHW)\d+", r"\g<1>1", sig_id, count=1)
+    return sig_id
+
+
 def _determine_target_device(resource_id: str) -> tuple[str, str | None, str | None]:
     """Determine (target_device_type, device_sub_id, device_name) from resource path."""
     cleaned_path = resource_id.strip("/")
@@ -3435,10 +3448,18 @@ def _determine_target_device(resource_id: str) -> tuple[str, str | None, str | N
             dev_type = DEV_TYPE_HEAT_SOURCE
             sub_id = "kessel"
             dev_name = "Boiler"
-        elif sig_id.startswith("SC.HC") or sig_id.startswith("HC1MOD"):
+        elif (hc_match := _SIGNAL_HC_RE.match(sig_id)) is not None:
+            dev_type = DEV_TYPE_HEATING_CIRCUIT
+            sub_id = f"hc{hc_match.group(1)}"
+            dev_name = f"Heating circuit {hc_match.group(1)}"
+        elif sig_id.startswith("SC.HC."):
             dev_type = DEV_TYPE_HEATING_CIRCUIT
             sub_id = "hc1"
             dev_name = "Heating circuit 1"
+        elif (dhw_match := _SIGNAL_DHW_RE.match(sig_id)) is not None:
+            dev_type = DEV_TYPE_DHW_CIRCUIT
+            sub_id = f"dhw{dhw_match.group(1)}"
+            dev_name = f"DHW {dhw_match.group(1)}"
         elif sig_id.startswith("SC.DHW"):
             dev_type = DEV_TYPE_DHW_CIRCUIT
             sub_id = "dhw1"
@@ -3470,7 +3491,7 @@ def is_boolean_endpoint(
     parts = resource_id.strip("/").split("/")
     if parts[0] == "signals" and len(parts) >= 2:
         sig_id = parts[1]
-        if sig_id in SIGNAL_BINARY_MAP:
+        if sig_id in SIGNAL_BINARY_MAP or _normalize_circuit_signal_id(sig_id) in SIGNAL_BINARY_MAP:
             return True
 
     # 2. Check Bosch type
@@ -3648,9 +3669,10 @@ def create_dynamic_binary_sensor_description(
     trans_key: str | None = None
     if parts[0] == "signals" and len(parts) >= 2:
         sig_id = parts[1]
-        if sig_id in SIGNAL_BINARY_MAP:
-            trans_key = sig_id.lower().replace(".", "_")
-            full_name, device_class, icon = SIGNAL_BINARY_MAP[sig_id]
+        map_sig_id = sig_id if sig_id in SIGNAL_BINARY_MAP else _normalize_circuit_signal_id(sig_id)
+        if map_sig_id in SIGNAL_BINARY_MAP:
+            trans_key = map_sig_id.lower().replace(".", "_")
+            full_name, device_class, icon = SIGNAL_BINARY_MAP[map_sig_id]
         else:
             clean_leaf = sig_id.split(".")[-1]
             readable_leaf = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", clean_leaf)
@@ -3797,9 +3819,10 @@ def create_dynamic_sensor_description(
     trans_key: str | None = None
     if parts[0] == "signals" and len(parts) >= 2:
         sig_id = parts[1]
-        if sig_id in SIGNAL_NAME_MAP:
-            trans_key = sig_id.lower().replace(".", "_")
-            friendly_name, mapped_class, mapped_state, mapped_unit = SIGNAL_NAME_MAP[sig_id]
+        map_sig_id = sig_id if sig_id in SIGNAL_NAME_MAP else _normalize_circuit_signal_id(sig_id)
+        if map_sig_id in SIGNAL_NAME_MAP:
+            trans_key = map_sig_id.lower().replace(".", "_")
+            friendly_name, mapped_class, mapped_state, mapped_unit = SIGNAL_NAME_MAP[map_sig_id]
             if mapped_class:
                 device_class = mapped_class
             if mapped_state:
