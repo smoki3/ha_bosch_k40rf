@@ -9,5 +9,5 @@
   "zeroconf": [
     "_hvac-open-api._tcp.local."
   ],
-  "version": "0.2.7b2"
+  "version": "0.2.7"
 }
