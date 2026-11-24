@@ -887,7 +887,31 @@
       "sc_hc1_holidaymode": {
         "name": "Vakantiemodus"
       },
+      "sc_hc1_dewpointtemperature": {
+        "name": "Dauwpunttemperatuur"
+      },
+      "hc1roomremote_dewpointtemperature": {
+        "name": "Dauwpunttemperatuur (afstandsbediening)"
+      },
+      "hc1roomremote_introomtemp": {
+        "name": "Kamertemperatuur (afstandsbediening)"
+      },
+      "hc1roomremote_relativehumidity": {
+        "name": "Relatieve luchtvochtigheid (afstandsbediening)"
+      },
+      "hc1roomremote_roomtempgradient": {
+        "name": "Kamertemperatuurgradiënt"
+      },
+      "src_hc1_flowctrl_pumpvolumeflow": {
+        "name": "Debiet verwarmingscircuitpomp"
+      },
+      "src_hc1_flowctrl_reqflowtemp": {
+        "name": "Gevraagde aanvoertemperatuur"
+      },
       "sc_dhw1_holidaymode": {
+        "name": "Vakantiemodus"
+      },
+      "sc_dhw1_holidaymodenew": {
         "name": "Vakantiemodus"
       },
       "solar_heatcount_minus1dailysolargain": {
@@ -1142,7 +1166,7 @@
         "name": "Snel opwarmen actief"
       },
       "pump_request_hc": {
-        "name": "Pompaanvraag verwarmingscircuit 1"
+        "name": "Pompaanvraag"
       },
       "pump_on_hm200": {
         "name": "Pomp actief"
@@ -1228,11 +1252,32 @@
       "sc_dhw1_sd_extraactive": {
         "name": "Extra lading warm tapwater actief"
       },
+      "sc_dhw1_holidayautotd": {
+        "name": "Automatische thermische desinfectie tijdens vakantie"
+      },
       "sc_hc1_rotempsetpopt_heatupstatus": {
         "name": "Snel opwarmen actief"
       },
       "hc1mod_flowctrl_pumprequest": {
-        "name": "Pompaanvraag verwarmingscircuit 1"
+        "name": "Pompaanvraag"
+      },
+      "src_hc1_flowctrl_pumprequest": {
+        "name": "Pompaanvraag"
+      },
+      "src_cuhp_ch_hc1pumprelay": {
+        "name": "Relais verwarmingscircuitpomp"
+      },
+      "src_cuhp_additional_externblocked": {
+        "name": "Bijverwarming extern geblokkeerd"
+      },
+      "src_cuhp_ch_externblocked": {
+        "name": "Verwarming extern geblokkeerd"
+      },
+      "src_cuhp_dhw_externblocked": {
+        "name": "Warm tapwater extern geblokkeerd"
+      },
+      "src_cuhp_cooling_active": {
+        "name": "Koeling actief"
       }
     }
   },
@@ -1278,6 +1323,16 @@
     "Off": "Uit",
     "Holiday at home": "Vakantie thuis",
     "Holiday away": "Vakantie afwezig",
+    "Auto Sat": "Automatisch (verlaging)",
+    "Fix Temp": "Vaste temperatuur",
+    "On Eco": "Aan (Eco)",
+    "On Low": "Aan (Laag)",
+    "On High": "Aan (Hoog)",
+    "Not Used": "Niet gebruikt",
+    "Evu Block Active": "EVU-blokkering actief",
+    "Normal Operation": "Normaal bedrijf",
+    "Smart Grid": "Smart Grid",
+    "Force Smart Grid": "Smart Grid geforceerd",
     "None (Standby)": "Geen (Stand-by)",
     "Heat pump": "Warmtepomp",
     "Boiler": "Ketel",

@@ -893,7 +893,31 @@
       "sc_hc1_holidaymode": {
         "name": "Holiday mode"
       },
+      "sc_hc1_dewpointtemperature": {
+        "name": "Dew point temperature"
+      },
+      "hc1roomremote_dewpointtemperature": {
+        "name": "Dew point temperature (remote)"
+      },
+      "hc1roomremote_introomtemp": {
+        "name": "Room temperature (remote)"
+      },
+      "hc1roomremote_relativehumidity": {
+        "name": "Relative humidity (remote)"
+      },
+      "hc1roomremote_roomtempgradient": {
+        "name": "Room temperature gradient"
+      },
+      "src_hc1_flowctrl_pumpvolumeflow": {
+        "name": "Heating circuit pump flow rate"
+      },
+      "src_hc1_flowctrl_reqflowtemp": {
+        "name": "Requested supply temperature"
+      },
       "sc_dhw1_holidaymode": {
+        "name": "Holiday mode"
+      },
+      "sc_dhw1_holidaymodenew": {
         "name": "Holiday mode"
       },
       "solar_heatcount_minus1dailysolargain": {
@@ -1234,11 +1258,32 @@
       "sc_dhw1_sd_extraactive": {
         "name": "DHW extra charge active"
       },
+      "sc_dhw1_holidayautotd": {
+        "name": "Holiday automatic thermal disinfection"
+      },
       "sc_hc1_rotempsetpopt_heatupstatus": {
         "name": "Fast heat-up active"
       },
       "hc1mod_flowctrl_pumprequest": {
         "name": "Pump request"
+      },
+      "src_hc1_flowctrl_pumprequest": {
+        "name": "Pump request"
+      },
+      "src_cuhp_ch_hc1pumprelay": {
+        "name": "Heating circuit pump relay"
+      },
+      "src_cuhp_additional_externblocked": {
+        "name": "Auxiliary heater externally blocked"
+      },
+      "src_cuhp_ch_externblocked": {
+        "name": "Heating externally blocked"
+      },
+      "src_cuhp_dhw_externblocked": {
+        "name": "DHW externally blocked"
+      },
+      "src_cuhp_cooling_active": {
+        "name": "Cooling active"
       }
     }
   },
@@ -1284,6 +1329,16 @@
     "Off": "Off",
     "Holiday at home": "Holiday at home",
     "Holiday away": "Holiday away",
+    "Auto Sat": "Auto (setback)",
+    "Fix Temp": "Fixed temperature",
+    "On Eco": "On (Eco)",
+    "On Low": "On (Low)",
+    "On High": "On (High)",
+    "Not Used": "Not used",
+    "Evu Block Active": "EVU block active",
+    "Normal Operation": "Normal operation",
+    "Smart Grid": "Smart Grid",
+    "Force Smart Grid": "Force Smart Grid",
     "None (Standby)": "None (Standby)",
     "Heat pump": "Heat pump",
     "Boiler": "Boiler",

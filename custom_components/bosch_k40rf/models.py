@@ -3311,7 +3311,15 @@ SIGNAL_NAME_MAP: dict[str, tuple[str, SensorDeviceClass | None, SensorStateClass
     "SC.IntRoomTemp": ("Internal room temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.DampOutdTemp": ("Damped outdoor temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.HC1.HolidayMode": ("Holiday mode", None, None, None),
+    "SC.HC1.DewPointTemperature": ("Dew point temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HC1ROOMREMOTE.DewPointTemperature": ("Dew point temperature (remote)", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HC1ROOMREMOTE.IntRoomTemp": ("Room temperature (remote)", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
+    "HC1ROOMREMOTE.RelativeHumidity": ("Relative humidity (remote)", SensorDeviceClass.HUMIDITY, SensorStateClass.MEASUREMENT, PERCENTAGE),
+    "HC1ROOMREMOTE.RoomTempGradient": ("Room temperature gradient", None, SensorStateClass.MEASUREMENT, "K/min"),
+    "SRC.HC1.FlowCtrl.PumpVolumeFlow": ("Heating circuit pump flow rate", SensorDeviceClass.VOLUME_FLOW_RATE, SensorStateClass.MEASUREMENT, UnitOfVolumeFlowRate.LITERS_PER_HOUR),
+    "SRC.HC1.FlowCtrl.ReqFlowTemp": ("Requested supply temperature", SensorDeviceClass.TEMPERATURE, SensorStateClass.MEASUREMENT, UnitOfTemperature.CELSIUS),
     "SC.DHW1.HolidayMode": ("Holiday mode", None, None, None),
+    "SC.DHW1.HolidayModeNew": ("Holiday mode", None, None, None),
     "SOLAR.HeatCount.Minus1DailySolarGain": ("Solar gain previous day", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.Minus1MonthlySolarGain": ("Solar gain previous month", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
     "SOLAR.HeatCount.Minus1YearlySolarGain": ("Solar gain previous year", SensorDeviceClass.ENERGY, SensorStateClass.TOTAL_INCREASING, UnitOfEnergy.KILO_WATT_HOUR),
@@ -3377,19 +3385,31 @@ SIGNAL_BINARY_MAP: dict[str, tuple[str, BinarySensorDeviceClass | None, str | No
     "SC.HC1.RTSD.PreventionEcoModeActive": ("Frost protection eco mode active", None, "mdi:snowflake-check"),
     "SC.HC1.FPD.Active": ("Frost protection active", None, "mdi:snowflake-alert"),
     "SC.DHW1.SD.ExtraActive": ("DHW extra charge active", BinarySensorDeviceClass.RUNNING, "mdi:water-boiler"),
+    "SC.DHW1.HolidayAutoTD": ("Holiday automatic thermal disinfection", None, "mdi:shield-bug-outline"),
     "SC.HC1.RoTempSetpOpt.HeatUpStatus": ("Fast heat-up active", BinarySensorDeviceClass.RUNNING, "mdi:fire"),
     "HC1MOD.FlowCtrl.PumpRequest": ("Pump request", BinarySensorDeviceClass.RUNNING, "mdi:pump"),
+    "SRC.HC1.FlowCtrl.PumpRequest": ("Pump request", BinarySensorDeviceClass.RUNNING, "mdi:pump"),
+    "SRC.CUHP.CH.HC1PumpRelay": ("Heating circuit pump relay", BinarySensorDeviceClass.RUNNING, "mdi:pump"),
+
+    # Heat pump CUHP status & external blocks
+    "SRC.CUHP.Additional.ExternBlocked": ("Auxiliary heater externally blocked", None, "mdi:heating-coil-off"),
+    "SRC.CUHP.CH.ExternBlocked": ("Heating externally blocked", None, "mdi:radiator-off"),
+    "SRC.CUHP.DHW.ExternBlocked": ("DHW externally blocked", None, "mdi:water-boiler-off"),
+    "SRC.CUHP.Cooling.Active": ("Cooling active", BinarySensorDeviceClass.COLD, "mdi:snowflake"),
 }
 
 
 _SIGNAL_HC_RE = re.compile(r"^(?:SC\.)?HC(\d+)(?:MOD|ROOMREMOTE)?(?:\.|$)")
+_SIGNAL_SRC_HC_RE = re.compile(r"^SRC\.(?:CUHP\.CH\.)?HC(\d+)(?:\.|PumpRelay$)")
 _SIGNAL_DHW_RE = re.compile(r"^(?:SC\.)?DHW(\d+)(?:MOD)?(?:\.|$)")
 
 
 def _normalize_circuit_signal_id(sig_id: str) -> str:
-    """Normalize multi-circuit signal IDs (e.g. SC.HC2.*, HC2MOD.*, SC.DHW2.*) to circuit 1 for map lookup."""
+    """Normalize multi-circuit signal IDs (e.g. SC.HC2.*, HC2MOD.*, SRC.HC2.*, SC.DHW2.*) to circuit 1 for map lookup."""
     if _SIGNAL_HC_RE.match(sig_id):
         return re.sub(r"^((?:SC\.)?HC)\d+", r"\g<1>1", sig_id, count=1)
+    if _SIGNAL_SRC_HC_RE.match(sig_id):
+        return re.sub(r"^(SRC\.(?:CUHP\.CH\.)?HC)\d+", r"\g<1>1", sig_id, count=1)
     if _SIGNAL_DHW_RE.match(sig_id):
         return re.sub(r"^((?:SC\.)?DHW)\d+", r"\g<1>1", sig_id, count=1)
     return sig_id
@@ -3444,6 +3464,10 @@ def _determine_target_device(resource_id: str) -> tuple[str, str | None, str | N
             dev_type = DEV_TYPE_HEAT_SOURCE
             sub_id = "hybman"
             dev_name = "HybridManager"
+        elif (src_hc_match := _SIGNAL_SRC_HC_RE.match(sig_id)) is not None:
+            dev_type = DEV_TYPE_HEATING_CIRCUIT
+            sub_id = f"hc{src_hc_match.group(1)}"
+            dev_name = f"Heating circuit {src_hc_match.group(1)}"
         elif sig_id.startswith("SRC"):
             dev_type = DEV_TYPE_HEAT_SOURCE
             sub_id = "kessel"
@@ -3848,8 +3872,13 @@ def create_dynamic_sensor_description(
     value_fn = None
     icon = None
     res_lower = resource_id.lower()
+    raw_state_map = res_data.get("state")
+    has_enum_state_map = isinstance(raw_state_map, dict) and any(
+        k.lower() != "invalid" for k in raw_state_map
+    )
     if "smartgridmode" in res_lower:
-        value_fn = parse_smart_grid_mode
+        if not has_enum_state_map:
+            value_fn = parse_smart_grid_mode
         icon = "mdi:transmission-tower"
     elif "overallstatus" in res_lower:
         if "dhw" in res_lower:
@@ -3859,7 +3888,8 @@ def create_dynamic_sensor_description(
             value_fn = parse_hc_overall_status
             icon = "mdi:radiator"
     elif "holidaymode" in res_lower:
-        value_fn = parse_holiday_mode
+        if not has_enum_state_map:
+            value_fn = parse_holiday_mode
         icon = "mdi:bag-suitcase"
     elif "suwimode" in res_lower:
         value_fn = parse_su_wi_mode

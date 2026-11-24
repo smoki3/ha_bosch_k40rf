@@ -44,6 +44,8 @@ from .models import (
     clean_non_hybrid_entity_name,
     get_translated_name,
     get_via_device_kwargs,
+    parse_holiday_mode,
+    parse_smart_grid_mode,
     sanitize_serial_number,
     translate_device_term,
     translate_fallback_name,
@@ -560,8 +562,15 @@ class BoschK40Sensor(CoordinatorEntity[BoschK40DataUpdateCoordinator], SensorEnt
                 if isinstance(first, dict):
                     raw_val = first.get("total", next(iter(first.values()), None))
 
-        # Custom transformation function if provided (e.g. basicInfo, notifications, working_time)
-        if self.entity_description.value_fn:
+        # Custom transformation function if provided (e.g. basicInfo, notifications, working_time).
+        # For holiday/smart-grid signals, prefer an explicit gateway enum state map if present.
+        use_enum_state_map = (
+            self.entity_description.value_fn in (parse_holiday_mode, parse_smart_grid_mode)
+            and isinstance(raw_val, (int, float))
+            and isinstance(state_list, dict)
+            and any(k.lower() != "invalid" for k in state_list)
+        )
+        if self.entity_description.value_fn and not use_enum_state_map:
             try:
                 # If value_key was used, pass the extracted subkey value;
                 # otherwise pass values list (if present) or raw_val

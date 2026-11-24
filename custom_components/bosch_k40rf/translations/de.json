@@ -893,7 +893,31 @@
       "sc_hc1_holidaymode": {
         "name": "Urlaubsmodus"
       },
+      "sc_hc1_dewpointtemperature": {
+        "name": "Taupunkttemperatur"
+      },
+      "hc1roomremote_dewpointtemperature": {
+        "name": "Taupunkttemperatur (Fernbedienung)"
+      },
+      "hc1roomremote_introomtemp": {
+        "name": "Raumtemperatur (Fernbedienung)"
+      },
+      "hc1roomremote_relativehumidity": {
+        "name": "Luftfeuchtigkeit (Fernbedienung)"
+      },
+      "hc1roomremote_roomtempgradient": {
+        "name": "Raumtemperatur-Gradient"
+      },
+      "src_hc1_flowctrl_pumpvolumeflow": {
+        "name": "Heizkreispumpe Durchfluss"
+      },
+      "src_hc1_flowctrl_reqflowtemp": {
+        "name": "Angeforderte Vorlauftemperatur"
+      },
       "sc_dhw1_holidaymode": {
+        "name": "Urlaubsmodus"
+      },
+      "sc_dhw1_holidaymodenew": {
         "name": "Urlaubsmodus"
       },
       "solar_heatcount_minus1dailysolargain": {
@@ -1234,11 +1258,32 @@
       "sc_dhw1_sd_extraactive": {
         "name": "Warmwasser Extra-Ladung aktiv"
       },
+      "sc_dhw1_holidayautotd": {
+        "name": "Automatische thermische Desinfektion im Urlaub"
+      },
       "sc_hc1_rotempsetpopt_heatupstatus": {
         "name": "Schnellaufheizung aktiv"
       },
       "hc1mod_flowctrl_pumprequest": {
         "name": "Pumpenanforderung"
+      },
+      "src_hc1_flowctrl_pumprequest": {
+        "name": "Pumpenanforderung"
+      },
+      "src_cuhp_ch_hc1pumprelay": {
+        "name": "Heizkreispumpenrelais"
+      },
+      "src_cuhp_additional_externblocked": {
+        "name": "Zuheizer extern gesperrt"
+      },
+      "src_cuhp_ch_externblocked": {
+        "name": "Heizung extern gesperrt"
+      },
+      "src_cuhp_dhw_externblocked": {
+        "name": "Warmwasser extern gesperrt"
+      },
+      "src_cuhp_cooling_active": {
+        "name": "Kühlung aktiv"
       }
     }
   },
@@ -1284,6 +1329,11 @@
     "Off": "Aus",
     "Holiday at home": "Urlaub zu Hause",
     "Holiday away": "Urlaub abwesend",
+    "Auto Sat": "Automatik (Absenkung)",
+    "Fix Temp": "Feste Temperatur",
+    "On Eco": "Ein (Eco)",
+    "On Low": "Ein (Niedrig)",
+    "On High": "Ein (Hoch)",
     "None (Standby)": "Keiner (Standby)",
     "Heat pump": "Wärmepumpe",
     "Boiler": "Kessel",
