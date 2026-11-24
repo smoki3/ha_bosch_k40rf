@@ -13,10 +13,6 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.helpers.selector import (
-    SelectOptionDict,
-    SelectSelector,
-    SelectSelectorConfig,
-    SelectSelectorMode,
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
@@ -335,6 +331,9 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             client = BoschK40Client(host, session)
 
             try:
+                old_token = self._reauth_entry.data.get(CONF_ACCESS_TOKEN)
+                old_token_id = self._reauth_entry.data.get(CONF_TOKEN_ID)
+
                 auth_data = await client.async_authenticate(login, password)
                 new_token = auth_data["access_token"]
                 new_token_id = await _async_resolve_current_token_id(client, new_token, auth_data)
@@ -345,6 +344,16 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 }
                 if new_token_id is not None:
                     new_data[CONF_TOKEN_ID] = new_token_id
+
+                # Best-effort revoke of the previous token (each token can only revoke itself)
+                if old_token and old_token != new_token:
+                    try:
+                        await client.async_revoke_token(
+                            old_token,
+                            token_id=str(old_token_id) if old_token_id else None,
+                        )
+                    except Exception as err:
+                        _LOGGER.debug("Could not revoke previous token during reauth on %s: %s", host, err)
 
                 self.hass.config_entries.async_update_entry(
                     self._reauth_entry,
@@ -357,6 +366,8 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "proximity_unproven"
             except InvalidAuth:
                 errors["base"] = "invalid_auth"
+            except TokenDatabaseFullError:
+                errors["base"] = "token_database_full"
             except CannotConnect:
                 errors["base"] = "cannot_connect"
             except Exception:
@@ -526,36 +537,16 @@ class BoschK40OptionsFlowHandler(config_entries.OptionsFlow):
     async def async_step_manage_tokens(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
-        """List and revoke old tokens stored on the gateway."""
+        """Show active tokens stored on the gateway (read-only overview)."""
+        if user_input is not None:
+            return self.async_create_entry(title="", data={})
+
         errors: dict[str, str] = {}
         host = self._config_entry.data.get(CONF_HOST, "")
         access_token = self._config_entry.data.get(CONF_ACCESS_TOKEN, "")
 
         session = async_create_clientsession(self.hass, verify_ssl=False)
         client = BoschK40Client(host, session)
-
-        if user_input is not None:
-            selected_ids: list[str] = user_input.get("tokens_to_revoke", [])
-            if not selected_ids:
-                return self.async_create_entry(title="", data={})
-
-            token_usage_map = {
-                tok["token_id"]: tok.get("usage_type", "private")
-                for tok in self._tokens
-            }
-            all_revoked = True
-            for token_id in selected_ids:
-                ok = await client.async_revoke_token_by_id(
-                    access_token,
-                    token_id,
-                    token_usage_map.get(token_id, "private"),
-                )
-                if not ok:
-                    all_revoked = False
-
-            if all_revoked:
-                return self.async_create_entry(title="", data={})
-            errors["base"] = "revoke_failed"
 
         try:
             self._tokens = await client.async_list_tokens(access_token)
@@ -573,6 +564,9 @@ class BoschK40OptionsFlowHandler(config_entries.OptionsFlow):
         used_slots = len(self._tokens)
         saved_token_id = self._config_entry.data.get(CONF_TOKEN_ID)
         current_token_id: str | None = str(saved_token_id) if saved_token_id is not None else None
+
+        if current_token_id is None and len(self._tokens) == 1:
+            current_token_id = self._tokens[0]["token_id"]
 
         if current_token_id is None:
             for tok in self._tokens:
@@ -606,48 +600,27 @@ class BoschK40OptionsFlowHandler(config_entries.OptionsFlow):
             ),
         )
 
-        options: list[SelectOptionDict] = []
-        if len(sorted_tokens) > 1:
-            for tok in sorted_tokens:
-                if current_token_id is not None and tok["token_id"] == current_token_id:
-                    continue
-                created_at = tok.get("created_at")
-                if created_at is not None:
-                    dt_local = dt_util.as_local(dt_util.utc_from_timestamp(created_at))
-                    label = f"ID {tok['token_id']} – {tok['client_name']} ({dt_local.strftime('%d.%m.%Y %H:%M')})"
-                else:
-                    label = f"ID {tok['token_id']} – {tok['client_name']}"
-                options.append(
-                    SelectOptionDict(
-                        value=tok["token_id"],
-                        label=label,
-                    )
-                )
+        token_lines: list[str] = []
+        for tok in sorted_tokens:
+            created_at = tok.get("created_at")
+            if created_at is not None:
+                dt_local = dt_util.as_local(dt_util.utc_from_timestamp(created_at))
+                date_str = f" ({dt_local.strftime('%d.%m.%Y %H:%M')})"
+            else:
+                date_str = ""
+            active_mark = " ✓" if current_token_id is not None and tok["token_id"] == current_token_id else ""
+            token_lines.append(f"- **ID {tok['token_id']}** – {tok['client_name']}{date_str}{active_mark}")
 
-        if options:
-            schema = vol.Schema(
-                {
-                    vol.Optional("tokens_to_revoke", default=[]): SelectSelector(
-                        SelectSelectorConfig(
-                            options=options,
-                            multiple=True,
-                            mode=SelectSelectorMode.LIST,
-                        )
-                    )
-                }
-            )
-        else:
-            schema = vol.Schema({})
-            if not errors:
-                errors["base"] = "no_other_tokens"
+        token_list_md = "\n".join(token_lines) if token_lines else "–"
 
         return self.async_show_form(
             step_id="manage_tokens",
-            data_schema=schema,
+            data_schema=vol.Schema({}),
             description_placeholders={
                 "host": host,
                 "used_slots": str(used_slots),
                 "max_slots": "10",
+                "token_list": token_list_md,
             },
             errors=errors,
         )

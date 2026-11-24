@@ -57,22 +57,17 @@
         "data": {
           "rescan_devices": "Nu zoeken naar nieuwe apparaten & entiteiten",
           "prune_orphaned": "Verweesde entiteiten zonder data verwijderen",
-          "manage_tokens": "Tokens op de gateway beheren"
+          "manage_tokens": "Tokens op de gateway weergeven"
         }
       },
       "manage_tokens": {
-        "title": "Gateway-tokens beheren",
-        "description": "Op gateway **{host}** zijn momenteel **{used_slots} / {max_slots}** tokenslots in gebruik.\n\nSelecteer ongebruikte tokens om in te trekken. Het actieve token van deze Home Assistant-instantie wordt beschermd zodra dit wordt herkend.",
-        "data": {
-          "tokens_to_revoke": "In te trekken tokens"
-        }
+        "title": "Gateway-tokens",
+        "description": "Op gateway **{host}** zijn momenteel **{used_slots} / {max_slots}** tokenslots in gebruik:\n\n{token_list}\n\n*(✓ = actief token van deze Home Assistant-instantie)*\n\nOpmerking: Door een beperking in de gateway-firmware kan elk token alleen zichzelf intrekken (dit gebeurt automatisch bij het verwijderen van deze integratie). Verweesde tokens van andere instanties kunnen alleen worden gewist door de gateway te resetten."
       }
     },
     "error": {
       "cannot_connect": "Kon de tokenlijst niet ophalen van de gateway.",
-      "invalid_auth": "Het toegangstoken is geweigerd door de gateway.",
-      "revoke_failed": "Een of meer geselecteerde tokens konden niet worden ingetrokken.",
-      "no_other_tokens": "Er zijn geen andere tokens op de gateway om in te trekken."
+      "invalid_auth": "Het toegangstoken is geweigerd door de gateway."
     }
   },
   "entity": {

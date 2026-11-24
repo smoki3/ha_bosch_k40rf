@@ -57,22 +57,17 @@
         "data": {
           "rescan_devices": "Search for new devices & entities now",
           "prune_orphaned": "Delete orphaned entities without data",
-          "manage_tokens": "Manage tokens on the gateway"
+          "manage_tokens": "Show tokens on the gateway"
         }
       },
       "manage_tokens": {
-        "title": "Manage Gateway Tokens",
-        "description": "Gateway **{host}** currently has **{used_slots} / {max_slots}** token slots in use.\n\nSelect unused tokens to revoke. The active token of this Home Assistant instance is protected when identified.",
-        "data": {
-          "tokens_to_revoke": "Tokens to revoke"
-        }
+        "title": "Gateway Tokens",
+        "description": "Gateway **{host}** currently has **{used_slots} / {max_slots}** token slots in use:\n\n{token_list}\n\n*(✓ = active token of this Home Assistant instance)*\n\nNote: Due to a gateway firmware limitation, each token can only revoke itself (this happens automatically when removing this integration). Orphaned tokens from other instances can only be cleared by resetting the gateway."
       }
     },
     "error": {
       "cannot_connect": "Could not load token list from the gateway.",
-      "invalid_auth": "Access token was rejected by the gateway.",
-      "revoke_failed": "One or more selected tokens could not be revoked.",
-      "no_other_tokens": "No other tokens are available to revoke on the gateway."
+      "invalid_auth": "Access token was rejected by the gateway."
     }
   },
   "entity": {
