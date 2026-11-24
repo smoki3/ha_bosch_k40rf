@@ -13,6 +13,10 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 from homeassistant.helpers.selector import (
+    SelectOptionDict,
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
@@ -432,6 +436,7 @@ class BoschK40OptionsFlowHandler(config_entries.OptionsFlow):
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
         """Initialize options flow."""
         self._config_entry = config_entry
+        self._tokens: list[dict[str, Any]] = []
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -457,12 +462,104 @@ class BoschK40OptionsFlowHandler(config_entries.OptionsFlow):
                     if reg_entry.unique_id not in active_unique_ids:
                         ent_reg.async_remove(reg_entry.entity_id)
 
-            return self.async_create_entry(title="", data=user_input)
+            if user_input.get("manage_tokens"):
+                return await self.async_step_manage_tokens()
+
+            return self.async_create_entry(title="", data={})
 
         schema = vol.Schema(
             {
                 vol.Optional("rescan_devices", default=True): bool,
                 vol.Optional("prune_orphaned", default=False): bool,
+                vol.Optional("manage_tokens", default=False): bool,
             }
         )
         return self.async_show_form(step_id="init", data_schema=schema)
+
+    async def async_step_manage_tokens(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """List and revoke old tokens stored on the gateway."""
+        errors: dict[str, str] = {}
+        host = self._config_entry.data.get(CONF_HOST, "")
+        access_token = self._config_entry.data.get(CONF_ACCESS_TOKEN, "")
+
+        session = async_create_clientsession(self.hass, verify_ssl=False)
+        client = BoschK40Client(host, session)
+
+        if user_input is not None:
+            selected_ids: list[str] = user_input.get("tokens_to_revoke", [])
+            if not selected_ids:
+                return self.async_create_entry(title="", data={})
+
+            token_usage_map = {
+                tok["token_id"]: tok.get("usage_type", "private")
+                for tok in self._tokens
+            }
+            all_revoked = True
+            for token_id in selected_ids:
+                ok = await client.async_revoke_token_by_id(
+                    access_token,
+                    token_id,
+                    token_usage_map.get(token_id, "private"),
+                )
+                if not ok:
+                    all_revoked = False
+
+            if all_revoked:
+                return self.async_create_entry(title="", data={})
+            errors["base"] = "revoke_failed"
+
+        try:
+            self._tokens = await client.async_list_tokens(access_token)
+        except InvalidAuth:
+            self._tokens = []
+            errors["base"] = "invalid_auth"
+        except CannotConnect:
+            self._tokens = []
+            errors["base"] = "cannot_connect"
+        except Exception as err:
+            _LOGGER.debug("Unexpected error loading token list from %s: %s", host, err)
+            self._tokens = []
+            errors["base"] = "cannot_connect"
+
+        used_slots = len(self._tokens)
+        options: list[SelectOptionDict] = []
+        if len(self._tokens) > 1:
+            for tok in self._tokens:
+                if tok.get("is_current"):
+                    continue
+                options.append(
+                    SelectOptionDict(
+                        value=tok["token_id"],
+                        label=f"ID {tok['token_id']} – {tok['client_name']} ({tok['usage_type']})",
+                    )
+                )
+
+        if options:
+            schema = vol.Schema(
+                {
+                    vol.Optional("tokens_to_revoke", default=[]): SelectSelector(
+                        SelectSelectorConfig(
+                            options=options,
+                            multiple=True,
+                            mode=SelectSelectorMode.LIST,
+                        )
+                    )
+                }
+            )
+        else:
+            schema = vol.Schema({})
+            if not errors:
+                errors["base"] = "no_other_tokens"
+
+        return self.async_show_form(
+            step_id="manage_tokens",
+            data_schema=schema,
+            description_placeholders={
+                "host": host,
+                "used_slots": str(used_slots),
+                "max_slots": "10",
+            },
+            errors=errors,
+        )

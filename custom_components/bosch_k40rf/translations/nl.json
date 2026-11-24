@@ -56,9 +56,23 @@
         "description": "Instellingen voor de gateway beheren.",
         "data": {
           "rescan_devices": "Nu zoeken naar nieuwe apparaten & entiteiten",
-          "prune_orphaned": "Verweesde entiteiten zonder data verwijderen"
+          "prune_orphaned": "Verweesde entiteiten zonder data verwijderen",
+          "manage_tokens": "Tokens op de gateway beheren"
+        }
+      },
+      "manage_tokens": {
+        "title": "Gateway-tokens beheren",
+        "description": "Op gateway **{host}** zijn momenteel **{used_slots} / {max_slots}** tokenslots in gebruik.\n\nSelecteer ongebruikte tokens om in te trekken. Het actieve token van deze Home Assistant-instantie wordt beschermd zodra dit wordt herkend.",
+        "data": {
+          "tokens_to_revoke": "In te trekken tokens"
         }
       }
+    },
+    "error": {
+      "cannot_connect": "Kon de tokenlijst niet ophalen van de gateway.",
+      "invalid_auth": "Het toegangstoken is geweigerd door de gateway.",
+      "revoke_failed": "Een of meer geselecteerde tokens konden niet worden ingetrokken.",
+      "no_other_tokens": "Er zijn geen andere tokens op de gateway om in te trekken."
     }
   },
   "entity": {

@@ -56,9 +56,23 @@
         "description": "Verwalten Sie die Einstellungen für das Gateway.",
         "data": {
           "rescan_devices": "Jetzt nach neuen Geräten & Entitäten suchen",
-          "prune_orphaned": "Nicht mehr vorhandene Entitäten ohne Daten löschen"
+          "prune_orphaned": "Nicht mehr vorhandene Entitäten ohne Daten löschen",
+          "manage_tokens": "Tokens auf dem Gateway verwalten"
+        }
+      },
+      "manage_tokens": {
+        "title": "Gateway-Tokens verwalten",
+        "description": "Auf dem Gateway **{host}** sind aktuell **{used_slots} / {max_slots}** Token-Slots belegt.\n\nWählen Sie nicht mehr benötigte Tokens zum Widerrufen aus. Das aktive Token dieser Home-Assistant-Instanz wird geschützt, sofern es identifiziert werden kann.",
+        "data": {
+          "tokens_to_revoke": "Zu widerrufende Tokens"
         }
       }
+    },
+    "error": {
+      "cannot_connect": "Die Token-Liste konnte nicht vom Gateway abgerufen werden.",
+      "invalid_auth": "Das Zugriffstoken wurde vom Gateway abgelehnt.",
+      "revoke_failed": "Mindestens ein ausgewähltes Token konnte nicht widerrufen werden.",
+      "no_other_tokens": "Auf dem Gateway sind keine weiteren Tokens zum Widerrufen vorhanden."
     }
   },
   "entity": {

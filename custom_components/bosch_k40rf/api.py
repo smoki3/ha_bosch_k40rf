@@ -157,69 +157,151 @@ class BoschK40Client:
             _LOGGER.exception("Unexpected error while authenticating to %s: %s", url, err)
             raise CannotConnect(f"Unexpected error: {err}") from err
 
+    async def async_list_tokens(self, access_token: str) -> list[dict[str, Any]]:
+        """List active tokens stored on the gateway (Port 9442)."""
+        url_list = f"https://{self._host}:{AUTH_PORT}/auth/token"
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Accept": "application/json",
+        }
+        try:
+            async with self._session.get(
+                url_list,
+                headers=headers,
+                ssl=False,
+                timeout=aiohttp.ClientTimeout(total=10),
+            ) as response:
+                if response.status in (401, 403):
+                    raise InvalidAuth("Access token rejected while listing tokens.")
+                if response.status != 200:
+                    raise CannotConnect(
+                        f"Failed to list tokens from {url_list} (status {response.status})"
+                    )
+                data = await response.json()
+        except (InvalidAuth, CannotConnect):
+            raise
+        except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as err:
+            raise CannotConnect(f"Connection error listing tokens from {url_list}: {err}") from err
+        except Exception as err:
+            raise CannotConnect(f"Unexpected error listing tokens from {url_list}: {err}") from err
+
+        raw_tokens = data if isinstance(data, list) else data.get("tokens", []) if isinstance(data, dict) else []
+        result: list[dict[str, Any]] = []
+        if not isinstance(raw_tokens, list):
+            return result
+
+        for tok in raw_tokens:
+            if not isinstance(tok, dict):
+                continue
+            token_id = tok.get("token_id") if tok.get("token_id") is not None else tok.get("id")
+            if token_id is None:
+                continue
+            client_name = str(
+                tok.get("client_name") or tok.get("clientName") or tok.get("name") or "Unknown"
+            ).strip()
+            usage_type = str(
+                tok.get("usage_type") or tok.get("usageType") or "private"
+            ).strip()
+            tok_val = tok.get("access_token") or tok.get("token")
+            is_current = bool(tok_val and str(tok_val) == access_token) or bool(
+                tok.get("is_current") or tok.get("current")
+            )
+            result.append(
+                {
+                    "token_id": str(token_id),
+                    "client_name": client_name,
+                    "usage_type": usage_type,
+                    "is_current": is_current,
+                }
+            )
+        return result
+
+    async def async_revoke_token_by_id(
+        self,
+        access_token: str,
+        token_id: str,
+        usage_type: str = "private",
+    ) -> bool:
+        """Revoke a specific token by token_id on the gateway (Port 9442)."""
+        url_revoke = f"https://{self._host}:{AUTH_PORT}/auth/revoke"
+        headers = {
+            "Authorization": f"Bearer {access_token}",
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+        payload = {"token_id": str(token_id), "usage_type": usage_type}
+        try:
+            async with self._session.post(
+                url_revoke,
+                data=payload,
+                headers=headers,
+                ssl=False,
+                timeout=aiohttp.ClientTimeout(total=6),
+            ) as response:
+                status = response.status
+                _LOGGER.debug(
+                    "Token revoke (token_id=%s) response status on %s: %s",
+                    token_id,
+                    self._host,
+                    status,
+                )
+                if status in (200, 204):
+                    _LOGGER.info(
+                        "Successfully revoked token_id=%s on gateway %s",
+                        token_id,
+                        self._host,
+                    )
+                    return True
+        except Exception as err:
+            _LOGGER.debug("Revoke attempt for token_id=%s failed on %s: %s", token_id, self._host, err)
+        return False
+
     async def async_revoke_token(self, access_token: str) -> bool:
         """Revoke the access token on the gateway (Port 9442).
 
         Best-effort method to release token database slots on the gateway when
         the integration is removed in Home Assistant.
         """
-        url_revoke = f"https://{self._host}:{AUTH_PORT}/auth/revoke"
-        url_list = f"https://{self._host}:{AUTH_PORT}/auth/token"
-
-        token_id: str | int | None = None
+        token_id: str | None = None
+        usage_type = "private"
         # 1. Try to query token list to find token_id
         try:
-            async with self._session.get(
-                url_list,
-                headers={
-                    "Authorization": f"Bearer {access_token}",
-                    "Accept": "application/json",
-                },
-                ssl=False,
-                timeout=aiohttp.ClientTimeout(total=4),
-            ) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    tokens = data if isinstance(data, list) else data.get("tokens", [])
-                    if isinstance(tokens, list):
-                        for tok in tokens:
-                            if isinstance(tok, dict):
-                                tok_val = tok.get("access_token") or tok.get("token")
-                                if tok_val == access_token or len(tokens) == 1:
-                                    token_id = tok.get("token_id") or tok.get("id")
-                                    break
+            tokens = await self.async_list_tokens(access_token)
+            for tok in tokens:
+                if tok["is_current"] or len(tokens) == 1:
+                    token_id = tok["token_id"]
+                    usage_type = tok["usage_type"]
+                    break
         except Exception as err:
-            _LOGGER.debug("Could not query active token list from %s: %s", url_list, err)
+            _LOGGER.debug("Could not query active token list from %s: %s", self._host, err)
 
-        # 2. Call /auth/revoke
+        # 2. Try token_id first if found
+        if token_id is not None:
+            if await self.async_revoke_token_by_id(access_token, token_id, usage_type):
+                return True
+
+        # 3. Fall back to revoking by token string directly
+        url_revoke = f"https://{self._host}:{AUTH_PORT}/auth/revoke"
         headers = {
             "Authorization": f"Bearer {access_token}",
             "Accept": "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
         }
-
-        # Try token_id first if found, otherwise fall back to token string
-        candidate_payloads: list[dict[str, Any]] = []
-        if token_id is not None:
-            candidate_payloads.append({"token_id": str(token_id), "usage_type": "private"})
-        candidate_payloads.append({"token": access_token, "usage_type": "private"})
-
-        for payload in candidate_payloads:
-            try:
-                async with self._session.post(
-                    url_revoke,
-                    data=payload,
-                    headers=headers,
-                    ssl=False,
-                    timeout=aiohttp.ClientTimeout(total=4),
-                ) as response:
-                    status = response.status
-                    _LOGGER.debug("Token revoke response status on %s: %s", self._host, status)
-                    if status in (200, 204):
-                        _LOGGER.info("Successfully revoked access token on gateway %s", self._host)
-                        return True
-            except Exception as err:
-                _LOGGER.debug("Revoke attempt failed on %s: %s", self._host, err)
+        try:
+            async with self._session.post(
+                url_revoke,
+                data={"token": access_token, "usage_type": "private"},
+                headers=headers,
+                ssl=False,
+                timeout=aiohttp.ClientTimeout(total=4),
+            ) as response:
+                status = response.status
+                _LOGGER.debug("Token revoke fallback response status on %s: %s", self._host, status)
+                if status in (200, 204):
+                    _LOGGER.info("Successfully revoked access token on gateway %s", self._host)
+                    return True
+        except Exception as err:
+            _LOGGER.debug("Revoke fallback attempt failed on %s: %s", self._host, err)
 
         return False
 
