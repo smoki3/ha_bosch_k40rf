@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+from datetime import datetime, timezone
 import logging
 import re
 from typing import Any, Iterable
@@ -208,11 +209,22 @@ class BoschK40Client:
             )
             created_at_raw = tok.get("created_at") if tok.get("created_at") is not None else tok.get("createdAt")
             created_at: int | None = None
-            if created_at_raw is not None:
-                try:
-                    created_at = int(created_at_raw)
-                except (ValueError, TypeError):
-                    created_at = None
+            if isinstance(created_at_raw, (int, float)):
+                created_at = int(created_at_raw)
+            elif isinstance(created_at_raw, str):
+                raw_str = created_at_raw.strip()
+                if raw_str:
+                    try:
+                        created_at = int(float(raw_str))
+                    except ValueError:
+                        try:
+                            iso_str = raw_str[:-1] + "+00:00" if raw_str.endswith("Z") else raw_str
+                            dt_obj = datetime.fromisoformat(iso_str)
+                            if dt_obj.tzinfo is None:
+                                dt_obj = dt_obj.replace(tzinfo=timezone.utc)
+                            created_at = int(dt_obj.timestamp())
+                        except ValueError:
+                            created_at = None
             result.append(
                 {
                     "token_id": str(token_id),
