@@ -206,11 +206,19 @@ class BoschK40Client:
             is_current = bool(tok_val and str(tok_val) == access_token) or bool(
                 tok.get("is_current") or tok.get("current")
             )
+            created_at_raw = tok.get("created_at") if tok.get("created_at") is not None else tok.get("createdAt")
+            created_at: int | None = None
+            if created_at_raw is not None:
+                try:
+                    created_at = int(created_at_raw)
+                except (ValueError, TypeError):
+                    created_at = None
             result.append(
                 {
                     "token_id": str(token_id),
                     "client_name": client_name,
                     "usage_type": usage_type,
+                    "created_at": created_at,
                     "is_current": is_current,
                 }
             )
@@ -256,24 +264,28 @@ class BoschK40Client:
             _LOGGER.debug("Revoke attempt for token_id=%s failed on %s: %s", token_id, self._host, err)
         return False
 
-    async def async_revoke_token(self, access_token: str) -> bool:
+    async def async_revoke_token(
+        self,
+        access_token: str,
+        token_id: str | None = None,
+    ) -> bool:
         """Revoke the access token on the gateway (Port 9442).
 
         Best-effort method to release token database slots on the gateway when
         the integration is removed in Home Assistant.
         """
-        token_id: str | None = None
         usage_type = "private"
-        # 1. Try to query token list to find token_id
-        try:
-            tokens = await self.async_list_tokens(access_token)
-            for tok in tokens:
-                if tok["is_current"] or len(tokens) == 1:
-                    token_id = tok["token_id"]
-                    usage_type = tok["usage_type"]
-                    break
-        except Exception as err:
-            _LOGGER.debug("Could not query active token list from %s: %s", self._host, err)
+        # 1. If token_id was not stored, try to query token list to find it
+        if token_id is None:
+            try:
+                tokens = await self.async_list_tokens(access_token)
+                for tok in tokens:
+                    if tok["is_current"] or len(tokens) == 1:
+                        token_id = tok["token_id"]
+                        usage_type = tok["usage_type"]
+                        break
+            except Exception as err:
+                _LOGGER.debug("Could not query active token list from %s: %s", self._host, err)
 
         # 2. Try token_id first if found
         if token_id is not None:

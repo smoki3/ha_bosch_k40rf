@@ -22,6 +22,7 @@ from homeassistant.helpers.selector import (
     TextSelectorType,
 )
 from homeassistant.helpers.service_info.zeroconf import ZeroconfServiceInfo
+from homeassistant.util import dt as dt_util
 
 from .api import (
     BoschK40Client,
@@ -41,10 +42,41 @@ from .const import (
     CONF_HOST,
     CONF_LOGIN,
     CONF_PASSWORD,
+    CONF_TOKEN_ID,
+    DEFAULT_CLIENT_NAME,
     DOMAIN,
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+
+async def _async_resolve_current_token_id(
+    client: BoschK40Client,
+    access_token: str,
+    auth_data: dict[str, Any],
+) -> str | None:
+    """Determine the token_id of a newly created token (best-effort)."""
+    direct_id = auth_data.get("token_id") if auth_data.get("token_id") is not None else auth_data.get("id")
+    if direct_id is not None:
+        return str(direct_id)
+    try:
+        tokens = await client.async_list_tokens(access_token)
+    except Exception:
+        return None
+    if not tokens:
+        return None
+    for tok in tokens:
+        if tok.get("is_current"):
+            return tok["token_id"]
+    matching = [t for t in tokens if t.get("client_name") == DEFAULT_CLIENT_NAME] or tokens
+    newest = max(
+        matching,
+        key=lambda t: (
+            t.get("created_at") or 0,
+            int(t["token_id"]) if str(t["token_id"]).isdigit() else 0,
+        ),
+    )
+    return newest["token_id"]
 
 USER_DATA_SCHEMA = vol.Schema(
     {
@@ -94,6 +126,7 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 auth_data = await client.async_authenticate(login, password)
                 access_token = auth_data["access_token"]
+                token_id = await _async_resolve_current_token_id(client, access_token, auth_data)
 
                 # Fetch gateway metadata for unique_id, brand, and model
                 gateway_info = await client.async_get_gateway_info(access_token)
@@ -107,17 +140,21 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 model = gateway_info.get("model") or "Connect-Key K 40 RF"
                 title = f"{brand} {model} ({host})"
 
+                entry_data = {
+                    CONF_HOST: host,
+                    CONF_LOGIN: login,
+                    CONF_ACCESS_TOKEN: access_token,
+                    CONF_GATEWAY_BRAND: brand,
+                    CONF_GATEWAY_MODEL: model,
+                    CONF_GATEWAY_MAC: gateway_info.get("mac"),
+                    CONF_GATEWAY_SERIAL: gateway_info.get("serial_number"),
+                }
+                if token_id is not None:
+                    entry_data[CONF_TOKEN_ID] = token_id
+
                 return self.async_create_entry(
                     title=title,
-                    data={
-                        CONF_HOST: host,
-                        CONF_LOGIN: login,
-                        CONF_ACCESS_TOKEN: access_token,
-                        CONF_GATEWAY_BRAND: brand,
-                        CONF_GATEWAY_MODEL: model,
-                        CONF_GATEWAY_MAC: gateway_info.get("mac"),
-                        CONF_GATEWAY_SERIAL: gateway_info.get("serial_number"),
-                    },
+                    data=entry_data,
                 )
 
             except ProximityError:
@@ -207,6 +244,7 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 auth_data = await client.async_authenticate(login, password)
                 access_token = auth_data["access_token"]
+                token_id = await _async_resolve_current_token_id(client, access_token, auth_data)
 
                 # Fetch gateway metadata for unique_id, brand, and model
                 gateway_info = await client.async_get_gateway_info(access_token)
@@ -220,17 +258,21 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 model = gateway_info.get("model") or self._discovered_model or "Connect-Key K 40 RF"
                 title = f"{brand} {model} ({host})"
 
+                entry_data = {
+                    CONF_HOST: host,
+                    CONF_LOGIN: login,
+                    CONF_ACCESS_TOKEN: access_token,
+                    CONF_GATEWAY_BRAND: brand,
+                    CONF_GATEWAY_MODEL: model,
+                    CONF_GATEWAY_MAC: gateway_info.get("mac"),
+                    CONF_GATEWAY_SERIAL: gateway_info.get("serial_number"),
+                }
+                if token_id is not None:
+                    entry_data[CONF_TOKEN_ID] = token_id
+
                 return self.async_create_entry(
                     title=title,
-                    data={
-                        CONF_HOST: host,
-                        CONF_LOGIN: login,
-                        CONF_ACCESS_TOKEN: access_token,
-                        CONF_GATEWAY_BRAND: brand,
-                        CONF_GATEWAY_MODEL: model,
-                        CONF_GATEWAY_MAC: gateway_info.get("mac"),
-                        CONF_GATEWAY_SERIAL: gateway_info.get("serial_number"),
-                    },
+                    data=entry_data,
                 )
 
             except ProximityError:
@@ -295,13 +337,18 @@ class BoschK40ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             try:
                 auth_data = await client.async_authenticate(login, password)
                 new_token = auth_data["access_token"]
+                new_token_id = await _async_resolve_current_token_id(client, new_token, auth_data)
+
+                new_data = {
+                    **self._reauth_entry.data,
+                    CONF_ACCESS_TOKEN: new_token,
+                }
+                if new_token_id is not None:
+                    new_data[CONF_TOKEN_ID] = new_token_id
 
                 self.hass.config_entries.async_update_entry(
                     self._reauth_entry,
-                    data={
-                        **self._reauth_entry.data,
-                        CONF_ACCESS_TOKEN: new_token,
-                    },
+                    data=new_data,
                 )
                 await self.hass.config_entries.async_reload(self._reauth_entry.entry_id)
                 return self.async_abort(reason="reauth_successful")
@@ -524,15 +571,56 @@ class BoschK40OptionsFlowHandler(config_entries.OptionsFlow):
             errors["base"] = "cannot_connect"
 
         used_slots = len(self._tokens)
-        options: list[SelectOptionDict] = []
-        if len(self._tokens) > 1:
+        saved_token_id = self._config_entry.data.get(CONF_TOKEN_ID)
+        current_token_id: str | None = str(saved_token_id) if saved_token_id is not None else None
+
+        if current_token_id is None:
             for tok in self._tokens:
                 if tok.get("is_current"):
+                    current_token_id = tok["token_id"]
+                    break
+
+        # Fallback heuristic for existing entries without saved token_id:
+        # match token created_at against config entry created_at / modified_at (±120s)
+        if current_token_id is None and len(self._tokens) > 1:
+            ref_timestamps: list[float] = []
+            for dt_attr in ("created_at", "modified_at"):
+                dt_obj = getattr(self._config_entry, dt_attr, None)
+                if dt_obj is not None and hasattr(dt_obj, "timestamp"):
+                    ref_timestamps.append(dt_obj.timestamp())
+            if ref_timestamps:
+                matched_ids = [
+                    tok["token_id"]
+                    for tok in self._tokens
+                    if tok.get("created_at") is not None
+                    and any(abs(tok["created_at"] - ref_ts) <= 120 for ref_ts in ref_timestamps)
+                ]
+                if len(matched_ids) == 1:
+                    current_token_id = matched_ids[0]
+
+        sorted_tokens = sorted(
+            self._tokens,
+            key=lambda t: (
+                t.get("created_at") or 0,
+                int(t["token_id"]) if str(t["token_id"]).isdigit() else 0,
+            ),
+        )
+
+        options: list[SelectOptionDict] = []
+        if len(sorted_tokens) > 1:
+            for tok in sorted_tokens:
+                if current_token_id is not None and tok["token_id"] == current_token_id:
                     continue
+                created_at = tok.get("created_at")
+                if created_at is not None:
+                    dt_local = dt_util.as_local(dt_util.utc_from_timestamp(created_at))
+                    label = f"ID {tok['token_id']} – {tok['client_name']} ({dt_local.strftime('%d.%m.%Y %H:%M')})"
+                else:
+                    label = f"ID {tok['token_id']} – {tok['client_name']}"
                 options.append(
                     SelectOptionDict(
                         value=tok["token_id"],
-                        label=f"ID {tok['token_id']} – {tok['client_name']} ({tok['usage_type']})",
+                        label=label,
                     )
                 )
 

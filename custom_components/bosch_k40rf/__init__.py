@@ -18,6 +18,7 @@ from .const import (
     CONF_GATEWAY_MAC,
     CONF_GATEWAY_MODEL,
     CONF_HOST,
+    CONF_TOKEN_ID,
     DOMAIN,
     PLATFORMS,
 )
@@ -197,12 +198,13 @@ async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Handle removal of an entry and attempt to revoke access token on gateway."""
     token = entry.data.get(CONF_ACCESS_TOKEN)
     host = entry.data.get(CONF_HOST)
+    token_id = entry.data.get(CONF_TOKEN_ID)
     if not token or not host:
         return
 
     session = async_get_clientsession(hass)
     client = BoschK40Client(host, session)
     try:
-        await client.async_revoke_token(token)
+        await client.async_revoke_token(token, token_id=str(token_id) if token_id else None)
     except Exception as err:
         _LOGGER.debug("Could not revoke token on removal of %s: %s", host, err)
